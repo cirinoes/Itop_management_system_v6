@@ -172,13 +172,29 @@ final class TraineeController
     {
         Auth::requireRole(['trainee']);
         Security::verifyCsrf();
+        
+        $likertData = [
+            'content_met_expectations' => (int) ($_POST['content_met_expectations'] ?? 0),
+            'trainer_explained_clearly' => (int) ($_POST['trainer_explained_clearly'] ?? 0),
+            'materials_useful' => (int) ($_POST['materials_useful'] ?? 0),
+            'environment_comfortable' => (int) ($_POST['environment_comfortable'] ?? 0),
+            'activities_engaging' => (int) ($_POST['activities_engaging'] ?? 0),
+            'practical_sessions_effective' => (int) ($_POST['practical_sessions_effective'] ?? 0),
+            'gained_knowledge' => (int) ($_POST['gained_knowledge'] ?? 0),
+            'overall_satisfaction' => (int) ($_POST['overall_satisfaction'] ?? 0),
+            'recommend_course' => Security::cleanString($_POST['recommend_course'] ?? ''),
+            'nps' => (int) ($_POST['nps'] ?? 0),
+            'liked_most' => Security::cleanString($_POST['liked_most'] ?? '', 1000),
+            'needs_improvement' => Security::cleanString($_POST['needs_improvement'] ?? '', 1000),
+        ];
+
         (new Evaluation())->save([
             'course_id' => (int) ($_POST['course_id'] ?? 0),
             'trainee_id' => Auth::id(),
             'course_rating' => max(1, min(5, (int) ($_POST['course_rating'] ?? 1))),
             'instructor_rating' => max(1, min(5, (int) ($_POST['instructor_rating'] ?? 1))),
             'feedback' => Security::cleanString($_POST['feedback'] ?? '', 3000),
-            'comments' => Security::cleanString($_POST['comments'] ?? '', 3000),
+            'comments' => json_encode($likertData),
         ]);
         Activity::log('Submitted course evaluation');
         header('Location: index.php?page=trainee-evaluations');

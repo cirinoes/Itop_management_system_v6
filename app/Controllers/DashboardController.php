@@ -91,10 +91,26 @@ final class DashboardController
     public function trainee(): void
     {
         Auth::requireRole(['trainee']);
+        $userId = (int) Auth::id();
+        $enrolments = (new Enrollment())->forTrainee($userId);
+        
+        $lms = new Lms();
+        $coursesWithMaterials = [];
+        
+        foreach ($enrolments as $enrolment) {
+            $courseId = (int) $enrolment['course_id'];
+            $materials = $lms->materials($courseId);
+            $assignments = $lms->assignments($courseId);
+            
+            $enrolment['materials'] = $materials;
+            $enrolment['assignments'] = $assignments;
+            $coursesWithMaterials[] = $enrolment;
+        }
+
         View::render('dashboard/trainee', [
-            'enrolments' => (new Enrollment())->forTrainee((int) Auth::id()),
-            'pendingEvaluations' => (new Evaluation())->completedCoursesNeedingEvaluation((int) Auth::id()),
-            'announcements' => (new Content())->announcements(false, 'trainee', (int) Auth::id()),
+            'enrolments' => $coursesWithMaterials,
+            'pendingEvaluations' => (new Evaluation())->completedCoursesNeedingEvaluation($userId),
+            'announcements' => (new Content())->announcements(false, 'trainee', $userId),
         ]);
     }
 }
