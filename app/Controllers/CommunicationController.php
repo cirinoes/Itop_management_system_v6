@@ -79,7 +79,7 @@ final class CommunicationController
         } else {
             $model->markRead((int) Auth::id(), (int) ($_POST['id'] ?? 0));
         }
-        $this->jsonOrRedirect(['ok' => true], 'index.php?page=notifications');
+        $this->jsonOrRedirect(['ok' => true], $_SERVER['HTTP_REFERER'] ?? 'index.php');
     }
 
     public function deleteNotification(): void
@@ -87,7 +87,7 @@ final class CommunicationController
         Auth::requireLogin();
         Security::verifyCsrf();
         (new Notification())->delete((int) Auth::id(), (int) ($_POST['id'] ?? 0));
-        $this->jsonOrRedirect(['ok' => true], 'index.php?page=notifications');
+        $this->jsonOrRedirect(['ok' => true], $_SERVER['HTTP_REFERER'] ?? 'index.php');
     }
 
     public function badgeCounts(): void

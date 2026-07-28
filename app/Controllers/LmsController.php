@@ -81,5 +81,42 @@ final class LmsController
         Activity::log('Submitted assignment');
         header('Location: index.php?page=trainee-dashboard');
     }
+
+    public function cancelSubmission(): void
+    {
+        Auth::requireRole(['trainee']);
+        Security::verifyCsrf();
+        $assignmentId = (int) $_POST['assignment_id'];
+        $traineeId = (int) Auth::id();
+
+        // Check if due date has passed
+        $lms = new Lms();
+        $db = \App\Core\Model::getDb();
+        $stmt = $db->prepare('SELECT due_date FROM assignments WHERE id = ?');
+        $stmt->execute([$assignmentId]);
+        $assignment = $stmt->fetch();
+
+        if ($assignment && $assignment['due_date']) {
+            if (strtotime($assignment['due_date']) < time()) {
+                exit('You cannot cancel a submission after the due date.');
+            }
+        }
+
+        // Fetch submission to delete file (if needed)
+        $stmt = $db->prepare('SELECT file_path FROM assignment_submissions WHERE assignment_id = ? AND trainee_id = ?');
+        $stmt->execute([$assignmentId, $traineeId]);
+        $submission = $stmt->fetch();
+
+        if ($submission && $submission['file_path']) {
+            $filePath = SUBMISSION_PATH . '/' . $submission['file_path'];
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
+
+        $lms->removeSubmission($assignmentId, $traineeId);
+        Activity::log('Cancelled assignment submission');
+        header('Location: index.php?page=trainee-dashboard');
+    }
 }
 

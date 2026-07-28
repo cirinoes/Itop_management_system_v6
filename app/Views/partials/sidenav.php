@@ -95,6 +95,28 @@ $initials = strtoupper(substr($user['name'] ?? 'U', 0, 1));
                 <span>Reports</span>
             </a>
 
+            <div class="sidenav-section-label">Communication</div>
+
+            <a href="index.php?page=messages" class="sidenav-link <?= $currentPage === 'messages' ? 'active' : '' ?>">
+                <div class="d-flex align-items-center flex-grow-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Messages</span>
+                </div>
+                <?php if (($messageCount ?? 0) > 0): ?>
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill fw-semibold ms-auto" style="font-size: 0.7rem; padding: 4px 8px;"><?= (int) $messageCount ?></span>
+                <?php endif; ?>
+            </a>
+
+            <a href="#notificationsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="notificationsOffcanvas" class="sidenav-link <?= $currentPage === 'notifications' ? 'active' : '' ?>">
+                <div class="d-flex align-items-center flex-grow-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span>Notifications</span>
+                </div>
+                <?php if (($notificationCount ?? 0) > 0): ?>
+                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill fw-semibold ms-auto" style="font-size: 0.7rem; padding: 4px 8px;"><?= (int) $notificationCount ?></span>
+                <?php endif; ?>
+            </a>
+
             <div class="sidenav-section-label">System</div>
 
             <a href="index.php?page=admin-master-data" class="sidenav-link <?= $currentPage === 'admin-master-data' ? 'active' : '' ?>">
@@ -149,13 +171,23 @@ $initials = strtoupper(substr($user['name'] ?? 'U', 0, 1));
             <div class="sidenav-section-label">Communication</div>
 
             <a href="index.php?page=messages" class="sidenav-link <?= $currentPage === 'messages' ? 'active' : '' ?>">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                <span>Messages</span>
+                <div class="d-flex align-items-center flex-grow-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Messages</span>
+                </div>
+                <?php if (($messageCount ?? 0) > 0): ?>
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill fw-semibold ms-auto" style="font-size: 0.7rem; padding: 4px 8px;"><?= (int) $messageCount ?></span>
+                <?php endif; ?>
             </a>
 
-            <a href="index.php?page=notifications" class="sidenav-link <?= $currentPage === 'notifications' ? 'active' : '' ?>">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <span>Notifications</span>
+            <a href="#notificationsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="notificationsOffcanvas" class="sidenav-link <?= $currentPage === 'notifications' ? 'active' : '' ?>">
+                <div class="d-flex align-items-center flex-grow-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span>Notifications</span>
+                </div>
+                <?php if (($notificationCount ?? 0) > 0): ?>
+                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill fw-semibold ms-auto" style="font-size: 0.7rem; padding: 4px 8px;"><?= (int) $notificationCount ?></span>
+                <?php endif; ?>
             </a>
 
         <?php else: ?>
@@ -195,13 +227,23 @@ $initials = strtoupper(substr($user['name'] ?? 'U', 0, 1));
             <div class="sidenav-section-label">Communication</div>
 
             <a href="index.php?page=messages" class="sidenav-link <?= $currentPage === 'messages' ? 'active' : '' ?>">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                <span>Messages</span>
+                <div class="d-flex align-items-center flex-grow-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    <span>Messages</span>
+                </div>
+                <?php if (($messageCount ?? 0) > 0): ?>
+                    <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill fw-semibold ms-auto" style="font-size: 0.7rem; padding: 4px 8px;"><?= (int) $messageCount ?></span>
+                <?php endif; ?>
             </a>
 
-            <a href="index.php?page=notifications" class="sidenav-link <?= $currentPage === 'notifications' ? 'active' : '' ?>">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <span>Notifications</span>
+            <a href="#notificationsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="notificationsOffcanvas" class="sidenav-link <?= $currentPage === 'notifications' ? 'active' : '' ?>">
+                <div class="d-flex align-items-center flex-grow-1">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    <span>Notifications</span>
+                </div>
+                <?php if (($notificationCount ?? 0) > 0): ?>
+                    <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill fw-semibold ms-auto" style="font-size: 0.7rem; padding: 4px 8px;"><?= (int) $notificationCount ?></span>
+                <?php endif; ?>
             </a>
         <?php endif; ?>
 

@@ -101,9 +101,17 @@ final class DashboardController
             $courseId = (int) $enrolment['course_id'];
             $materials = $lms->materials($courseId);
             $assignments = $lms->assignments($courseId);
+            $quizzes = $lms->quizzes($courseId);
+            
+            $submissions = $lms->traineeSubmissions($courseId, $userId);
+            foreach ($assignments as &$assignment) {
+                $assignment['submission'] = $submissions[$assignment['id']] ?? null;
+            }
+            unset($assignment);
             
             $enrolment['materials'] = $materials;
             $enrolment['assignments'] = $assignments;
+            $enrolment['quizzes'] = $quizzes;
             $coursesWithMaterials[] = $enrolment;
         }
 
@@ -112,5 +120,16 @@ final class DashboardController
             'pendingEvaluations' => (new Evaluation())->completedCoursesNeedingEvaluation($userId),
             'announcements' => (new Content())->announcements(false, 'trainee', $userId),
         ]);
+    }
+
+    public function apiAnnouncements(): void
+    {
+        Auth::requireRole(['trainee']);
+        $userId = (int) Auth::id();
+        $announcements = (new Content())->announcements(false, 'trainee', $userId);
+        
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'success', 'data' => $announcements]);
+        exit;
     }
 }

@@ -68,6 +68,7 @@ $routes = [
         'admin-system-settings' => [AdminController::class, 'systemSettings'],
         'admin-backup-database' => [AdminController::class, 'backupDatabase'],
         'admin-profile' => [AdminController::class, 'profile'],
+        'api-trainee-updates' => [DashboardController::class, 'apiAnnouncements'],
     ],
     'POST' => [
         'admin-update-profile' => [AdminController::class, 'updateProfile'],
@@ -111,6 +112,7 @@ $routes = [
         'add-material' => [LmsController::class, 'addMaterial'],
         'add-assignment' => [LmsController::class, 'addAssignment'],
         'submit-assignment' => [LmsController::class, 'submitAssignment'],
+        'cancel-submission' => [LmsController::class, 'cancelSubmission'],
         'instructor-enrolment-status' => [AdminController::class, 'setInstructorEnrolmentStatus'],
         'save-website-settings' => [AdminController::class, 'saveWebsiteSettings'],
         'save-success-story' => [AdminController::class, 'saveSuccessStory'],

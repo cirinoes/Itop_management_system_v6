@@ -290,6 +290,7 @@ $verifyUrl = APP_URL . '/index.php?page=verify-certificate&code=' . urlencode((s
 </head>
 <body>
 
+<?php if (empty($hide_actions)): ?>
 <div class="actions-panel">
     <div>
         <span style="font-weight:700;">Certificate Authenticity Status:</span>
@@ -300,6 +301,12 @@ $verifyUrl = APP_URL . '/index.php?page=verify-certificate&code=' . urlencode((s
         <a href="<?= APP_URL ?>/index.php?page=download-certificate&id=<?= Security::e($certificate['id'] ?? '') ?>" class="btn-download">Download Official PDF</a>
     </div>
 </div>
+<?php else: ?>
+<style>
+    body, html { background: transparent !important; }
+    .cert-outer-wrapper { padding: 0 !important; }
+</style>
+<?php endif; ?>
 
 <div class="cert-outer-wrapper">
     <div class="cert-frame">

@@ -58,5 +58,22 @@ final class Lms extends Model
         $stmt->execute([$instructorId]);
         return $stmt->fetchAll();
     }
+
+    public function traineeSubmissions(int $courseId, int $traineeId): array
+    {
+        $stmt = $this->db->prepare('SELECT s.* FROM assignment_submissions s JOIN assignments a ON a.id = s.assignment_id WHERE a.course_id = ? AND s.trainee_id = ?');
+        $stmt->execute([$courseId, $traineeId]);
+        $result = [];
+        foreach ($stmt->fetchAll() as $sub) {
+            $result[$sub['assignment_id']] = $sub;
+        }
+        return $result;
+    }
+
+    public function removeSubmission(int $assignmentId, int $traineeId): void
+    {
+        $stmt = $this->db->prepare('DELETE FROM assignment_submissions WHERE assignment_id = ? AND trainee_id = ?');
+        $stmt->execute([$assignmentId, $traineeId]);
+    }
 }
 

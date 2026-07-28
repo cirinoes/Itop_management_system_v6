@@ -160,7 +160,7 @@ final class ReportController
             exit('Certificate is not available.');
         }
 
-        View::render('public/certificate-template', ['certificate' => $certificate, 'template' => [
+        View::render('public/certificate-template', ['certificate' => $certificate, 'hide_actions' => !empty($_GET['hide_actions']), 'template' => [
             'background_image' => $certificate['background_image'] ?? null,
             'logo' => $certificate['logo'] ?? null,
             'signature' => $certificate['signature'] ?? null,
@@ -168,7 +168,7 @@ final class ReportController
             'font_size' => $certificate['font_size'] ?? 28,
             'text_color' => $certificate['text_color'] ?? '#182230',
             'layout_json' => $certificate['layout_json'] ?? '{}',
-        ]]);
+        ]], '');
     }
 
     public function downloadCertificate(): void

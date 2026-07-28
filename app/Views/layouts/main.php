@@ -6,6 +6,7 @@ use App\Models\Notification;
 
 $messageCount = Auth::check() ? (new Message())->unreadCount((int) Auth::id()) : 0;
 $notificationCount = Auth::check() ? (new Notification())->unreadCount((int) Auth::id()) : 0;
+$recentNotifications = Auth::check() ? (new Notification())->recent((int) Auth::id()) : [];
 
 // Load website settings for footer
 $footerSettings = [];
@@ -40,7 +41,7 @@ $userTheme = Auth::check() ? (Auth::user()['theme_preference'] ?? 'light') : 'li
 
 <?php if (Auth::check()): ?>
     <!-- ══ Authenticated Layout: Sidebar + Pushed Content ══ -->
-    <?php \App\Core\View::partial('partials/sidenav'); ?>
+    <?php \App\Core\View::partial('partials/sidenav', ['notificationCount' => $notificationCount ?? 0, 'messageCount' => $messageCount ?? 0]); ?>
 
     <div class="sidenav-content" id="sidenavContent">
         <!-- Top Bar (Dashboard context) -->
@@ -63,7 +64,7 @@ $userTheme = Auth::check() ? (Auth::user()['theme_preference'] ?? 'light') : 'li
                             <span class="topbar-badge" data-badge="messages"><?= (int) $messageCount ?></span>
                         <?php endif; ?>
                     </a>
-                    <a class="topbar-icon-btn" href="index.php?page=notifications" title="Notifications">
+                    <a class="topbar-icon-btn position-relative" href="#notificationsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="notificationsOffcanvas" title="Notifications">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
                         <?php if ($notificationCount > 0): ?>
                             <span class="topbar-badge" data-badge="notifications"><?= (int) $notificationCount ?></span>
@@ -242,6 +243,10 @@ $userTheme = Auth::check() ? (Auth::user()['theme_preference'] ?? 'light') : 'li
             </div>
         </div>
     </footer>
+<?php endif; ?>
+
+<?php if (Auth::check()): ?>
+    <?php \App\Core\View::partial('partials/notifications-panel', ['notificationCount' => $notificationCount, 'recentNotifications' => $recentNotifications]); ?>
 <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
