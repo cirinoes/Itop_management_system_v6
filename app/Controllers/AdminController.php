@@ -420,7 +420,8 @@ final class AdminController
         Auth::requireRole(['admin', 'instructor']);
         $role = Auth::role();
         $userId = (int) Auth::id();
-        View::render('admin/announcements', ['announcements' => (new Content())->announcements(false, $role, $userId)]);
+        $view = $role === 'instructor' ? 'instructor/announcements' : 'admin/announcements';
+        View::render($view, ['announcements' => (new Content())->announcements(false, $role, $userId)]);
     }
 
     public function saveAnnouncement(): void

@@ -65,6 +65,15 @@ final class DashboardController
         ]);
     }
 
+    public function instructorCourses(): void
+    {
+        Auth::requireRole(['instructor']);
+        $userId = (int) Auth::id();
+        View::render('instructor/courses', [
+            'courses' => (new Course())->assignedTo($userId),
+        ]);
+    }
+
     /** Trainee Overview — distinct from "My Learning" */
     public function traineeOverview(): void
     {

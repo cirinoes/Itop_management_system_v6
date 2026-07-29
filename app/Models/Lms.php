@@ -54,8 +54,15 @@ final class Lms extends Model
 
     public function submissionsForInstructor(int $instructorId): array
     {
-        $stmt = $this->db->prepare('SELECT s.*, a.title AS assignment_title, c.title AS course_title, u.name AS trainee_name FROM assignment_submissions s JOIN assignments a ON a.id = s.assignment_id JOIN courses c ON c.id = a.course_id JOIN users u ON u.id = s.trainee_id WHERE c.instructor_id = ? ORDER BY s.submitted_at DESC');
+        $stmt = $this->db->prepare('SELECT s.*, a.title AS assignment_title, c.title AS course_title, c.id AS course_id, u.name AS trainee_name, u.email AS trainee_email FROM assignment_submissions s JOIN assignments a ON a.id = s.assignment_id JOIN courses c ON c.id = a.course_id JOIN users u ON u.id = s.trainee_id WHERE c.instructor_id = ? ORDER BY s.submitted_at DESC');
         $stmt->execute([$instructorId]);
+        return $stmt->fetchAll();
+    }
+
+    public function submissionsForCourse(int $courseId): array
+    {
+        $stmt = $this->db->prepare('SELECT s.*, a.title AS assignment_title, u.name AS trainee_name, u.email AS trainee_email FROM assignment_submissions s JOIN assignments a ON a.id = s.assignment_id JOIN users u ON u.id = s.trainee_id WHERE a.course_id = ? ORDER BY s.submitted_at DESC');
+        $stmt->execute([$courseId]);
         return $stmt->fetchAll();
     }
 

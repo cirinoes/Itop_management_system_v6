@@ -71,7 +71,7 @@ use App\Core\View; ?>
                 <a href="index.php?page=trainee-dashboard">Assignment Status</a>
                 <a href="index.php?page=trainee-dashboard">Assessment Results</a>
                 <a href="index.php?page=trainee-certificates">Certificate Status</a>
-                <a href="index.php?page=reports">Learning Report</a>
+                <a href="index.php?page=my-learning-report">Learning Report</a>
             </div>
         </div>
     </div>

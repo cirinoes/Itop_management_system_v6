@@ -13,7 +13,7 @@ final class ReportController
 {
     public function reports(): void
     {
-        Auth::requireRole(['admin', 'instructor']);
+        Auth::requireRole(['admin']);
         $db = Database::connection();
         $academy = (int) ($_GET['academy_id'] ?? 0);
         $course = (int) ($_GET['course_id'] ?? 0);
@@ -42,6 +42,113 @@ final class ReportController
             'master_data_stats' => $db->query('SELECT ts.*, a.code AS academy_code, a.name AS academy_name, c.title AS course_title FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id LEFT JOIN courses c ON c.id = ts.course_id ORDER BY a.code, ts.participants DESC')->fetchAll(),
             'academyId' => $academy,
             'courseId' => $course,
+        ]);
+    }
+
+    public function instructorReports(): void
+    {
+        Auth::requireRole(['instructor']);
+        $db = Database::connection();
+        $instructorId = Auth::id();
+
+        $stmtOverview = $db->prepare('
+            SELECT 
+                COUNT(c.id) AS total_courses,
+                COUNT(DISTINCT e.trainee_id) AS total_students
+            FROM courses c
+            LEFT JOIN enrolments e ON e.course_id = c.id
+            WHERE c.instructor_id = ?
+        ');
+        $stmtOverview->execute([$instructorId]);
+        $overview = $stmtOverview->fetch();
+        
+        $stmtBacklog = $db->prepare('
+            SELECT a.title, c.title AS course_title, COUNT(s.id) AS pending_count
+            FROM assignments a
+            JOIN courses c ON c.id = a.course_id
+            JOIN assignment_submissions s ON s.assignment_id = a.id
+            WHERE c.instructor_id = ? AND s.status = "pending"
+            GROUP BY a.id
+            ORDER BY pending_count DESC
+        ');
+        $stmtBacklog->execute([$instructorId]);
+        $gradingBacklog = $stmtBacklog->fetchAll();
+
+        $stmtPerformance = $db->prepare('
+            SELECT 
+                c.title,
+                COUNT(e.id) AS enrollments,
+                ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate,
+                ROUND(AVG(sub.score), 1) AS avg_assignment_score
+            FROM courses c
+            LEFT JOIN enrolments e ON e.course_id = c.id
+            LEFT JOIN attendance att ON att.enrolment_id = e.id
+            LEFT JOIN assignments a ON a.course_id = c.id
+            LEFT JOIN assignment_submissions sub ON sub.assignment_id = a.id AND sub.status = "graded"
+            WHERE c.instructor_id = ?
+            GROUP BY c.id
+            ORDER BY c.title
+        ');
+        $stmtPerformance->execute([$instructorId]);
+        $coursePerformance = $stmtPerformance->fetchAll();
+
+        View::render('reports/instructor', [
+            'overview' => $overview,
+            'grading_backlog' => $gradingBacklog,
+            'course_performance' => $coursePerformance,
+        ]);
+    }
+
+    public function traineeReport(): void
+    {
+        Auth::requireRole(['trainee']);
+        $db = Database::connection();
+        $traineeId = Auth::id();
+
+        $stmtCompleted = $db->prepare('SELECT COUNT(*) FROM enrolments WHERE trainee_id = ? AND status = "completed"');
+        $stmtCompleted->execute([$traineeId]);
+        
+        $stmtHours = $db->prepare('
+            SELECT SUM((DATEDIFF(IFNULL(c.end_date, c.start_date), c.start_date) + 1) * 8) 
+            FROM courses c 
+            JOIN enrolments e ON e.course_id = c.id 
+            WHERE e.trainee_id = ? AND e.status = "completed"
+        ');
+        $stmtHours->execute([$traineeId]);
+
+        $stmtCert = $db->prepare('
+            SELECT COUNT(*) 
+            FROM certificates 
+            WHERE trainee_id = ? AND approval_status = "approved"
+        ');
+        $stmtCert->execute([$traineeId]);
+
+        $stmtProgress = $db->prepare('
+            SELECT c.title, e.progress_percent, e.status
+            FROM enrolments e
+            JOIN courses c ON c.id = e.course_id
+            WHERE e.trainee_id = ?
+            ORDER BY e.created_at DESC
+        ');
+        $stmtProgress->execute([$traineeId]);
+
+        $stmtCertList = $db->prepare('
+            SELECT c.title, cert.issued_at, cert.certificate_no
+            FROM certificates cert
+            JOIN courses c ON c.id = cert.course_id
+            WHERE cert.trainee_id = ? AND cert.approval_status = "approved"
+            ORDER BY cert.issued_at DESC
+        ');
+        $stmtCertList->execute([$traineeId]);
+
+        View::render('reports/trainee', [
+            'metrics' => [
+                'completed_courses' => (int) $stmtCompleted->fetchColumn(),
+                'total_hours' => (int) $stmtHours->fetchColumn(),
+                'certificates' => (int) $stmtCert->fetchColumn(),
+            ],
+            'course_progress' => $stmtProgress->fetchAll(),
+            'certificates_list' => $stmtCertList->fetchAll(),
         ]);
     }
 

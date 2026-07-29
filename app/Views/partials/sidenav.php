@@ -148,7 +148,7 @@ $initials = strtoupper(substr($user['name'] ?? 'U', 0, 1));
                 <span>Dashboard</span>
             </a>
 
-            <a href="index.php?page=instructor-dashboard" class="sidenav-link <?= $currentPage === 'instructor-dashboard' ? 'active' : '' ?>">
+            <a href="index.php?page=instructor-courses" class="sidenav-link <?= $currentPage === 'instructor-courses' ? 'active' : '' ?>">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
                 <span>My Courses</span>
             </a>
@@ -163,7 +163,10 @@ $initials = strtoupper(substr($user['name'] ?? 'U', 0, 1));
                 <span>Announcements</span>
             </a>
 
-            <a href="index.php?page=reports" class="sidenav-link <?= $currentPage === 'reports' ? 'active' : '' ?>">
+            <?php 
+            $reportLink = Auth::role() === 'instructor' ? 'instructor-reports' : 'reports';
+            ?>
+            <a href="index.php?page=<?= $reportLink ?>" class="sidenav-link <?= in_array($currentPage, ['reports', 'instructor-reports']) ? 'active' : '' ?>">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 <span>Reports</span>
             </a>
@@ -222,6 +225,11 @@ $initials = strtoupper(substr($user['name'] ?? 'U', 0, 1));
             <a href="index.php?page=courses" class="sidenav-link <?= $currentPage === 'courses' ? 'active' : '' ?>">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 <span>Browse Courses</span>
+            </a>
+
+            <a href="index.php?page=my-learning-report" class="sidenav-link <?= $currentPage === 'my-learning-report' ? 'active' : '' ?>">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>My Learning Report</span>
             </a>
 
             <div class="sidenav-section-label">Communication</div>

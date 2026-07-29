@@ -17,11 +17,23 @@ final class LmsController
         Auth::requireLogin();
         $courseId = (int) ($_GET['course_id'] ?? 0);
         $lms = new Lms();
-        View::render('courses/room', [
+        $submissions = [];
+        $traineeSubmissions = [];
+        if (in_array(Auth::role(), ['admin', 'instructor'], true)) {
+            $view = 'courses/instructor_room';
+            $submissions = $lms->submissionsForCourse($courseId);
+        } else {
+            $view = 'courses/room';
+            $traineeSubmissions = $lms->traineeSubmissions($courseId, Auth::id());
+        }
+
+        View::render($view, [
             'course' => (new Course())->find($courseId),
             'materials' => $lms->materials($courseId),
             'assignments' => $lms->assignments($courseId),
             'quizzes' => $lms->quizzes($courseId),
+            'submissions' => $submissions,
+            'trainee_submissions' => $traineeSubmissions,
         ]);
     }
 
