@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Core\Auth;
-use App\Core\View;
+use App\Core\Controller;
 use App\Models\Certificate;
 use App\Models\Content;
 use App\Models\Course;
@@ -15,7 +15,7 @@ use App\Models\Notification;
 use App\Models\TraineeProfile;
 use App\Models\User;
 
-final class DashboardController
+final class DashboardController extends Controller
 {
     public function dashboard(): void
     {
@@ -33,7 +33,7 @@ final class DashboardController
         $content = new Content();
         $db = \App\Core\Model::getDb();
         $pendingUsersCount = (int) $db->query("SELECT COUNT(*) FROM users WHERE status = 'pending'")->fetchColumn();
-        View::render('dashboard/admin', [
+        $this->render('dashboard/admin', [
             'stats' => $content->stats(),
             'trends' => $content->trends(),
             'analytics' => $content->dashboardAnalytics(),
@@ -58,7 +58,7 @@ final class DashboardController
             }
         }
 
-        View::render('dashboard/instructor', [
+        $this->render('dashboard/instructor', [
             'courses' => $courseModel->assignedTo($userId),
             'submissions' => (new Lms())->submissionsForInstructor($userId),
             'editing' => $editingCourse,
@@ -69,7 +69,7 @@ final class DashboardController
     {
         Auth::requireRole(['instructor']);
         $userId = (int) Auth::id();
-        View::render('instructor/courses', [
+        $this->render('instructor/courses', [
             'courses' => (new Course())->assignedTo($userId),
         ]);
     }
@@ -86,7 +86,7 @@ final class DashboardController
         $user = (new User())->find($userId);
         $announcements = (new Content())->announcements(false, 'trainee', $userId);
 
-        View::render('dashboard/trainee-overview', [
+        $this->render('dashboard/trainee-overview', [
             'enrolments' => $enrolments,
             'certificates' => $certificates,
             'notificationCount' => $notificationCount,
@@ -124,7 +124,7 @@ final class DashboardController
             $coursesWithMaterials[] = $enrolment;
         }
 
-        View::render('dashboard/trainee', [
+        $this->render('dashboard/trainee', [
             'enrolments' => $coursesWithMaterials,
             'pendingEvaluations' => (new Evaluation())->completedCoursesNeedingEvaluation($userId),
             'announcements' => (new Content())->announcements(false, 'trainee', $userId),

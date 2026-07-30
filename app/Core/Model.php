@@ -19,5 +19,11 @@ abstract class Model
     {
         return Database::connection();
     }
+
+    /** Helper for fluent queries */
+    public function table(string $table): QueryBuilder
+    {
+        return new QueryBuilder($this->db, $table);
+    }
 }
 

@@ -15,13 +15,25 @@ final class Evaluation extends Model
 
     public function reports(): array
     {
-        return $this->db->query('SELECT e.*, u.name AS trainee_name, c.title AS course_title, i.name AS instructor_name FROM evaluations e JOIN users u ON u.id = e.trainee_id JOIN courses c ON c.id = e.course_id LEFT JOIN users i ON i.id = c.instructor_id ORDER BY COALESCE(e.completed_at, e.created_at) DESC')->fetchAll();
+        return $this->table('evaluations e')
+            ->select('e.*', 'u.name AS trainee_name', 'c.title AS course_title', 'i.name AS instructor_name')
+            ->join('users u', 'u.id', '=', 'e.trainee_id')
+            ->join('courses c', 'c.id', '=', 'e.course_id')
+            ->leftJoin('users i', 'i.id', '=', 'c.instructor_id')
+            ->orderBy('COALESCE(e.completed_at, e.created_at)', 'DESC')
+            ->get();
     }
 
     public function completedCoursesNeedingEvaluation(int $traineeId): array
     {
-        $stmt = $this->db->prepare('SELECT e.course_id, c.title FROM enrolments e JOIN courses c ON c.id = e.course_id LEFT JOIN evaluations ev ON ev.course_id = e.course_id AND ev.trainee_id = e.trainee_id WHERE e.trainee_id = ? AND e.status = "completed" AND ev.id IS NULL ORDER BY e.completed_at DESC');
-        $stmt->execute([$traineeId]);
-        return $stmt->fetchAll();
+        return $this->table('enrolments e')
+            ->select('e.course_id', 'c.title')
+            ->join('courses c', 'c.id', '=', 'e.course_id')
+            ->leftJoin('evaluations ev', 'ev.course_id', '=', 'e.course_id AND ev.trainee_id = e.trainee_id')
+            ->where('e.trainee_id', $traineeId)
+            ->where('e.status', 'completed')
+            ->whereNull('ev.id')
+            ->orderBy('e.completed_at', 'DESC')
+            ->get();
     }
 }

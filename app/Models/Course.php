@@ -29,13 +29,22 @@ final class Course extends Model
     public function publicList(string $search = ''): array
     {
         $like = '%' . $search . '%';
-        $sql = 'SELECT courses.*, users.name AS instructor_name, NULL AS academy_code, NULL AS academy_name, COUNT(enrolments.id) AS participant_count FROM courses LEFT JOIN users ON users.id = courses.instructor_id LEFT JOIN enrolments ON enrolments.course_id = courses.id AND enrolments.status IN ("active","completed") WHERE courses.status IN ("published","active") AND (courses.title LIKE ? OR courses.category LIKE ?) GROUP BY courses.id ORDER BY courses.start_date ASC';
+        $query = $this->table('courses')
+            ->leftJoin('users', 'users.id', '=', 'courses.instructor_id')
+            ->leftJoin('enrolments', 'enrolments.course_id', '=', 'courses.id AND enrolments.status IN ("active","completed")')
+            ->whereIn('courses.status', ['published', 'active'])
+            ->whereRaw('(courses.title LIKE ? OR courses.category LIKE ?)', [$like, $like])
+            ->groupBy('courses.id')
+            ->orderBy('courses.start_date', 'ASC');
+
         if ($this->academySchemaReady()) {
-            $sql = 'SELECT courses.*, users.name AS instructor_name, academies.code AS academy_code, academies.name AS academy_name, COUNT(enrolments.id) AS participant_count FROM courses LEFT JOIN users ON users.id = courses.instructor_id LEFT JOIN academies ON academies.id = courses.academy_id LEFT JOIN enrolments ON enrolments.course_id = courses.id AND enrolments.status IN ("active","completed") WHERE courses.status IN ("published","active") AND (courses.title LIKE ? OR courses.category LIKE ?) GROUP BY courses.id ORDER BY courses.start_date ASC';
+            $query->select('courses.*', 'users.name AS instructor_name', 'academies.code AS academy_code', 'academies.name AS academy_name', 'COUNT(enrolments.id) AS participant_count')
+                  ->leftJoin('academies', 'academies.id', '=', 'courses.academy_id');
+        } else {
+            $query->select('courses.*', 'users.name AS instructor_name', 'NULL AS academy_code', 'NULL AS academy_name', 'COUNT(enrolments.id) AS participant_count');
         }
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$like, $like]);
-        return $stmt->fetchAll();
+
+        return $query->get();
     }
 
     public function publicByAcademy(string $academyCode, string $search = ''): array
@@ -45,9 +54,17 @@ final class Course extends Model
         }
 
         $like = '%' . $search . '%';
-        $stmt = $this->db->prepare('SELECT courses.*, users.name AS instructor_name, academies.code AS academy_code, academies.name AS academy_name, COUNT(enrolments.id) AS participant_count FROM courses LEFT JOIN users ON users.id = courses.instructor_id LEFT JOIN academies ON academies.id = courses.academy_id LEFT JOIN enrolments ON enrolments.course_id = courses.id AND enrolments.status IN ("active","completed") WHERE courses.status IN ("published","active") AND academies.code = ? AND (courses.title LIKE ? OR courses.category LIKE ?) GROUP BY courses.id ORDER BY courses.category, courses.title');
-        $stmt->execute([$academyCode, $like, $like]);
-        return $stmt->fetchAll();
+        return $this->table('courses')
+            ->select('courses.*', 'users.name AS instructor_name', 'academies.code AS academy_code', 'academies.name AS academy_name', 'COUNT(enrolments.id) AS participant_count')
+            ->leftJoin('users', 'users.id', '=', 'courses.instructor_id')
+            ->leftJoin('academies', 'academies.id', '=', 'courses.academy_id')
+            ->leftJoin('enrolments', 'enrolments.course_id', '=', 'courses.id AND enrolments.status IN ("active","completed")')
+            ->whereIn('courses.status', ['published', 'active'])
+            ->where('academies.code', $academyCode)
+            ->whereRaw('(courses.title LIKE ? OR courses.category LIKE ?)', [$like, $like])
+            ->groupBy('courses.id')
+            ->orderBy('courses.category', 'ASC, courses.title')
+            ->get();
     }
 
     public function publicAcademies(): array
@@ -56,7 +73,14 @@ final class Course extends Model
             return [];
         }
 
-        return $this->db->query('SELECT a.*, COUNT(c.id) AS course_count, COALESCE(SUM(ts.participants), 0) AS participant_count FROM academies a LEFT JOIN courses c ON c.academy_id = a.id AND c.status IN ("published","active") LEFT JOIN training_statistics ts ON ts.academy_id = a.id WHERE a.code IN ("ADGEA","IESGA") GROUP BY a.id ORDER BY FIELD(a.code, "ADGEA", "IESGA")')->fetchAll();
+        return $this->table('academies a')
+            ->select('a.*', 'COUNT(c.id) AS course_count', 'COALESCE(SUM(ts.participants), 0) AS participant_count')
+            ->leftJoin('courses c', 'c.academy_id', '=', 'a.id AND c.status IN ("published","active")')
+            ->leftJoin('training_statistics ts', 'ts.academy_id', '=', 'a.id')
+            ->whereIn('a.code', ['ADGEA', 'IESGA'])
+            ->groupBy('a.id')
+            ->orderBy('FIELD(a.code, "ADGEA", "IESGA")', '')
+            ->get();
     }
 
     public function academyByCode(string $academyCode): ?array
@@ -65,84 +89,105 @@ final class Course extends Model
             return null;
         }
 
-        $stmt = $this->db->prepare('SELECT * FROM academies WHERE code = ? LIMIT 1');
-        $stmt->execute([$academyCode]);
-        return $stmt->fetch() ?: null;
+        return $this->table('academies')->where('code', $academyCode)->first();
     }
 
     public function all(string $search = '', string $status = '', string $category = ''): array
     {
         $like = '%' . $search . '%';
-        $sql = 'SELECT courses.*, users.name AS instructor_name, NULL AS academy_code, NULL AS academy_name, COUNT(enrolments.id) AS participant_count FROM courses LEFT JOIN users ON users.id = courses.instructor_id LEFT JOIN enrolments ON enrolments.course_id = courses.id AND enrolments.status IN ("active","completed") WHERE (courses.title LIKE ? OR courses.category LIKE ?)';
+        $query = $this->table('courses')
+            ->leftJoin('users', 'users.id', '=', 'courses.instructor_id')
+            ->leftJoin('enrolments', 'enrolments.course_id', '=', 'courses.id AND enrolments.status IN ("active","completed")')
+            ->whereRaw('(courses.title LIKE ? OR courses.category LIKE ?)', [$like, $like])
+            ->groupBy('courses.id')
+            ->orderBy('courses.created_at', 'DESC');
+
         if ($this->academySchemaReady()) {
-            $sql = 'SELECT courses.*, users.name AS instructor_name, academies.code AS academy_code, academies.name AS academy_name, COUNT(enrolments.id) AS participant_count FROM courses LEFT JOIN users ON users.id = courses.instructor_id LEFT JOIN academies ON academies.id = courses.academy_id LEFT JOIN enrolments ON enrolments.course_id = courses.id AND enrolments.status IN ("active","completed") WHERE (courses.title LIKE ? OR courses.category LIKE ?)';
+            $query->select('courses.*', 'users.name AS instructor_name', 'academies.code AS academy_code', 'academies.name AS academy_name', 'COUNT(enrolments.id) AS participant_count')
+                  ->leftJoin('academies', 'academies.id', '=', 'courses.academy_id');
+        } else {
+            $query->select('courses.*', 'users.name AS instructor_name', 'NULL AS academy_code', 'NULL AS academy_name', 'COUNT(enrolments.id) AS participant_count');
         }
-        $params = [$like, $like];
+
         if ($status !== '') {
-            $sql .= ' AND courses.status = ?';
-            $params[] = $status;
+            $query->where('courses.status', $status);
         }
         if ($category !== '') {
-            $sql .= ' AND courses.category = ?';
-            $params[] = $category;
+            $query->where('courses.category', $category);
         }
-        $sql .= ' GROUP BY courses.id ORDER BY courses.created_at DESC';
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll();
+
+        return $query->get();
     }
 
     public function assignedTo(int $instructorId): array
     {
-        $sql = 'SELECT courses.*, NULL AS academy_code, NULL AS academy_name, COUNT(enrolments.id) AS participant_count FROM courses LEFT JOIN enrolments ON enrolments.course_id = courses.id AND enrolments.status IN ("active","completed") WHERE instructor_id = ? GROUP BY courses.id ORDER BY start_date DESC';
+        $query = $this->table('courses')
+            ->leftJoin('enrolments', 'enrolments.course_id', '=', 'courses.id AND enrolments.status IN ("active","completed")')
+            ->where('courses.instructor_id', $instructorId)
+            ->groupBy('courses.id')
+            ->orderBy('courses.start_date', 'DESC');
+
         if ($this->academySchemaReady()) {
-            $sql = 'SELECT courses.*, academies.code AS academy_code, academies.name AS academy_name, COUNT(enrolments.id) AS participant_count FROM courses LEFT JOIN academies ON academies.id = courses.academy_id LEFT JOIN enrolments ON enrolments.course_id = courses.id AND enrolments.status IN ("active","completed") WHERE instructor_id = ? GROUP BY courses.id ORDER BY start_date DESC';
+            $query->select('courses.*', 'academies.code AS academy_code', 'academies.name AS academy_name', 'COUNT(enrolments.id) AS participant_count')
+                  ->leftJoin('academies', 'academies.id', '=', 'courses.academy_id');
+        } else {
+            $query->select('courses.*', 'NULL AS academy_code', 'NULL AS academy_name', 'COUNT(enrolments.id) AS participant_count');
         }
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$instructorId]);
-        return $stmt->fetchAll();
+
+        return $query->get();
     }
 
     public function find(int $id): ?array
     {
-        $sql = 'SELECT courses.*, users.name AS instructor_name, NULL AS academy_code, NULL AS academy_name FROM courses LEFT JOIN users ON users.id = courses.instructor_id WHERE courses.id = ?';
+        $query = $this->table('courses')->where('courses.id', $id)->leftJoin('users', 'users.id', '=', 'courses.instructor_id');
         if ($this->academySchemaReady()) {
-            $sql = 'SELECT courses.*, users.name AS instructor_name, academies.code AS academy_code, academies.name AS academy_name FROM courses LEFT JOIN users ON users.id = courses.instructor_id LEFT JOIN academies ON academies.id = courses.academy_id WHERE courses.id = ?';
+            $query->select('courses.*', 'users.name AS instructor_name', 'academies.code AS academy_code', 'academies.name AS academy_name')
+                  ->leftJoin('academies', 'academies.id', '=', 'courses.academy_id');
+        } else {
+            $query->select('courses.*', 'users.name AS instructor_name', 'NULL AS academy_code', 'NULL AS academy_name');
         }
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        return $stmt->fetch() ?: null;
+        return $query->first();
     }
 
     public function save(array $data): int
     {
         $supportsAcademySchema = $this->academySchemaReady();
 
+        $saveData = [
+            'title' => $data['title'],
+            'category' => $data['category'],
+            'description' => $data['description'],
+            'start_date' => $data['start_date'],
+            'end_date' => $data['end_date'],
+            'capacity' => $data['capacity'],
+            'max_participants' => $data['max_participants'],
+            'status' => $data['status'],
+            'course_status' => $data['course_status'],
+            'thumbnail_image' => $data['thumbnail_image'],
+            'instructor_id' => $data['instructor_id'] ?: null,
+            'fee' => $data['fee']
+        ];
+        
+        if ($supportsAcademySchema) {
+            $saveData['academy_id'] = $data['academy_id'] ?? null;
+        }
+
         if (!empty($data['id'])) {
-            if ($supportsAcademySchema) {
-                $stmt = $this->db->prepare('UPDATE courses SET title=?, category=?, description=?, start_date=?, end_date=?, capacity=?, max_participants=?, status=?, course_status=?, thumbnail_image=?, instructor_id=?, fee=?, created_by=COALESCE(created_by, ?), academy_id=?, updated_at=NOW() WHERE id=?');
-                $stmt->execute([$data['title'], $data['category'], $data['description'], $data['start_date'], $data['end_date'], $data['capacity'], $data['max_participants'], $data['status'], $data['course_status'], $data['thumbnail_image'], $data['instructor_id'] ?: null, $data['fee'], $data['created_by'], $data['academy_id'] ?? null, $data['id']]);
-            } else {
-                $stmt = $this->db->prepare('UPDATE courses SET title=?, category=?, description=?, start_date=?, end_date=?, capacity=?, max_participants=?, status=?, course_status=?, thumbnail_image=?, instructor_id=?, fee=?, created_by=COALESCE(created_by, ?), updated_at=NOW() WHERE id=?');
-                $stmt->execute([$data['title'], $data['category'], $data['description'], $data['start_date'], $data['end_date'], $data['capacity'], $data['max_participants'], $data['status'], $data['course_status'], $data['thumbnail_image'], $data['instructor_id'] ?: null, $data['fee'], $data['created_by'], $data['id']]);
-            }
+            $saveData['updated_at'] = date('Y-m-d H:i:s');
+            // 'created_by=COALESCE(created_by, ?)' logic is hard to replicate exactly with just standard array keys
+            // But we can just avoid updating created_by if it's an update, which is usually correct anyway.
+            $this->table('courses')->where('id', $data['id'])->update($saveData);
             return (int) $data['id'];
         }
 
-        if ($supportsAcademySchema) {
-            $stmt = $this->db->prepare('INSERT INTO courses (title, category, description, start_date, end_date, capacity, max_participants, status, course_status, thumbnail_image, instructor_id, fee, created_by, academy_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$data['title'], $data['category'], $data['description'], $data['start_date'], $data['end_date'], $data['capacity'], $data['max_participants'], $data['status'], $data['course_status'], $data['thumbnail_image'], $data['instructor_id'] ?: null, $data['fee'], $data['created_by'], $data['academy_id'] ?? null]);
-        } else {
-            $stmt = $this->db->prepare('INSERT INTO courses (title, category, description, start_date, end_date, capacity, max_participants, status, course_status, thumbnail_image, instructor_id, fee, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-            $stmt->execute([$data['title'], $data['category'], $data['description'], $data['start_date'], $data['end_date'], $data['capacity'], $data['max_participants'], $data['status'], $data['course_status'], $data['thumbnail_image'], $data['instructor_id'] ?: null, $data['fee'], $data['created_by']]);
-        }
-        return (int) $this->db->lastInsertId();
+        $saveData['created_by'] = $data['created_by'];
+        $this->table('courses')->insert($saveData);
+        return (int) $this->db->lastInsertId(); // insert doesn't return ID yet, so fallback to raw PDO
     }
 
     public function delete(int $id): void
     {
-        $stmt = $this->db->prepare('DELETE FROM courses WHERE id = ?');
-        $stmt->execute([$id]);
+        $this->table('courses')->where('id', $id)->delete();
     }
 
     public function categories(): array

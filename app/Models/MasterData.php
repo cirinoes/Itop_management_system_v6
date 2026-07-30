@@ -24,16 +24,13 @@ final class MasterData extends Model
     public function list(string $table): array
     {
         $this->assertTable($table);
-        return $this->db->query('SELECT * FROM ' . $table . ' ORDER BY ' . self::TABLES[$table]['label'])->fetchAll();
+        return $this->table($table)->orderBy(self::TABLES[$table]['label'])->get();
     }
 
     public function find(string $table, int $id): ?array
     {
         $this->assertTable($table);
-        $pk = self::TABLES[$table]['id'];
-        $stmt = $this->db->prepare('SELECT * FROM ' . $table . ' WHERE ' . $pk . ' = ?');
-        $stmt->execute([$id]);
-        return $stmt->fetch() ?: null;
+        return $this->table($table)->where(self::TABLES[$table]['id'], $id)->first();
     }
 
     public function save(string $table, array $data): int
@@ -47,53 +44,69 @@ final class MasterData extends Model
         }
 
         if (!empty($data[$pk])) {
-            $assignments = implode(', ', array_map(static fn (string $field): string => $field . ' = ?', $fields));
-            $stmt = $this->db->prepare('UPDATE ' . $table . ' SET ' . $assignments . ', updated_at = NOW() WHERE ' . $pk . ' = ?');
-            $stmt->execute([...array_values($values), $data[$pk]]);
+            $values['updated_at'] = date('Y-m-d H:i:s');
+            $this->table($table)->where($pk, $data[$pk])->update($values);
             return (int) $data[$pk];
         }
 
-        $columns = implode(', ', $fields);
-        $placeholders = implode(', ', array_fill(0, count($fields), '?'));
-        $stmt = $this->db->prepare('INSERT INTO ' . $table . ' (' . $columns . ') VALUES (' . $placeholders . ')');
-        $stmt->execute(array_values($values));
+        $this->table($table)->insert($values);
         return (int) $this->db->lastInsertId();
     }
 
     public function delete(string $table, int $id): void
     {
         $this->assertTable($table);
-        $pk = self::TABLES[$table]['id'];
-        $stmt = $this->db->prepare('DELETE FROM ' . $table . ' WHERE ' . $pk . ' = ?');
-        $stmt->execute([$id]);
+        $this->table($table)->where(self::TABLES[$table]['id'], $id)->delete();
     }
 
     public function statistics(): array
     {
         return [
-            'training' => $this->db->query('SELECT ts.*, a.code AS academy_code, a.name AS academy_name, c.title AS course_title FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id LEFT JOIN courses c ON c.id = ts.course_id ORDER BY a.code, ts.participants DESC')->fetchAll(),
-            'participant' => $this->db->query('SELECT ps.*, a.code AS academy_code, tc.name AS category_name, c.title AS course_title, co.name AS company_name, p.name AS profession_name FROM participant_statistics ps LEFT JOIN academies a ON a.id = ps.academy_id LEFT JOIN training_categories tc ON tc.id = ps.category_id LEFT JOIN courses c ON c.id = ps.course_id LEFT JOIN companies co ON co.id = ps.company_id LEFT JOIN professions p ON p.id = ps.profession_id ORDER BY ps.report_year, ps.participant_count DESC')->fetchAll(),
-            'yearly' => $this->db->query('SELECT * FROM yearly_reports ORDER BY report_year')->fetchAll(),
-            'summary' => $this->db->query('SELECT * FROM dashboard_summary ORDER BY metric_label')->fetchAll(),
+            'training' => $this->table('training_statistics ts')
+                ->select('ts.*', 'a.code AS academy_code', 'a.name AS academy_name', 'c.title AS course_title')
+                ->join('academies a', 'a.id', '=', 'ts.academy_id')
+                ->leftJoin('courses c', 'c.id', '=', 'ts.course_id')
+                ->orderBy('a.code', 'ASC, ts.participants DESC')
+                ->get(),
+            'participant' => $this->table('participant_statistics ps')
+                ->select('ps.*', 'a.code AS academy_code', 'tc.name AS category_name', 'c.title AS course_title', 'co.name AS company_name', 'p.name AS profession_name')
+                ->leftJoin('academies a', 'a.id', '=', 'ps.academy_id')
+                ->leftJoin('training_categories tc', 'tc.id', '=', 'ps.category_id')
+                ->leftJoin('courses c', 'c.id', '=', 'ps.course_id')
+                ->leftJoin('companies co', 'co.id', '=', 'ps.company_id')
+                ->leftJoin('professions p', 'p.id', '=', 'ps.profession_id')
+                ->orderBy('ps.report_year', 'ASC, ps.participant_count DESC')
+                ->get(),
+            'yearly' => $this->table('yearly_reports')->orderBy('report_year')->get(),
+            'summary' => $this->table('dashboard_summary')->orderBy('metric_label')->get(),
         ];
     }
 
     public function saveTrainingStatistic(array $data): int
     {
         if (!empty($data['id'])) {
-            $stmt = $this->db->prepare('UPDATE training_statistics SET academy_id=?, course_id=?, course_name=?, participants=?, updated_at=NOW() WHERE id=?');
-            $stmt->execute([$data['academy_id'], $data['course_id'] ?: null, $data['course_name'], $data['participants'], $data['id']]);
+            $this->table('training_statistics')->where('id', $data['id'])->update([
+                'academy_id' => $data['academy_id'],
+                'course_id' => $data['course_id'] ?: null,
+                'course_name' => $data['course_name'],
+                'participants' => $data['participants'],
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
             return (int) $data['id'];
         }
-        $stmt = $this->db->prepare('INSERT INTO training_statistics (academy_id, course_id, course_name, participants) VALUES (?, ?, ?, ?)');
-        $stmt->execute([$data['academy_id'], $data['course_id'] ?: null, $data['course_name'], $data['participants']]);
+        
+        $this->table('training_statistics')->insert([
+            'academy_id' => $data['academy_id'],
+            'course_id' => $data['course_id'] ?: null,
+            'course_name' => $data['course_name'],
+            'participants' => $data['participants'],
+        ]);
         return (int) $this->db->lastInsertId();
     }
 
     public function deleteTrainingStatistic(int $id): void
     {
-        $stmt = $this->db->prepare('DELETE FROM training_statistics WHERE id = ?');
-        $stmt->execute([$id]);
+        $this->table('training_statistics')->where('id', $id)->delete();
     }
 
     private function assertTable(string $table): void

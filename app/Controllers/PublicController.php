@@ -5,12 +5,12 @@ namespace App\Controllers;
 
 use App\Core\Auth;
 use App\Core\Security;
-use App\Core\View;
+use App\Core\Controller;
 use App\Models\Content;
 use App\Models\Course;
 use App\Models\Enrollment;
 
-final class PublicController
+final class PublicController extends Controller
 {
     public function home(): void
     {
@@ -32,7 +32,7 @@ final class PublicController
             $stories = $db->query('SELECT * FROM success_stories WHERE is_active = 1 ORDER BY sort_order, id LIMIT 3')->fetchAll();
         } catch (\Exception $e) {}
 
-        View::render('public/home', [
+        $this->render('public/home', [
             'courses' => (new Course())->publicList(),
             'announcements' => (new Content())->announcements(true),
             'settings' => $settings,
@@ -43,14 +43,14 @@ final class PublicController
 
     public function about(): void
     {
-        View::render('public/about');
+        $this->render('public/about');
     }
 
     public function courses(): void
     {
         $courseModel = new Course();
         $academyCode = strtoupper(Security::cleanString($_GET['academy'] ?? ''));
-        View::render('public/courses', [
+        $this->render('public/courses', [
             'academies' => $courseModel->publicAcademies(),
             'selectedAcademy' => in_array($academyCode, ['ADGEA', 'IESGA'], true) ? $courseModel->academyByCode($academyCode) : null,
             'courses' => in_array($academyCode, ['ADGEA', 'IESGA'], true) ? $courseModel->publicByAcademy($academyCode, Security::cleanString($_GET['q'] ?? '')) : [],
@@ -65,7 +65,7 @@ final class PublicController
             http_response_code(404);
             exit('Course not found.');
         }
-        View::render('public/course-detail', ['course' => $course]);
+        $this->render('public/course-detail', ['course' => $course]);
     }
 
     public function enroll(): void
@@ -73,16 +73,16 @@ final class PublicController
         Auth::requireRole(['trainee']);
         Security::verifyCsrf();
         (new Enrollment())->request((int) $_POST['course_id'], (int) Auth::id());
-        header('Location: index.php?page=trainee-dashboard');
+        $this->redirect('index.php?page=trainee-dashboard');
     }
 
     public function news(): void
     {
-        View::render('public/news', ['announcements' => (new Content())->announcements(true)]);
+        $this->render('public/news', ['announcements' => (new Content())->announcements(true)]);
     }
 
     public function contact(): void
     {
-        View::render('public/contact');
+        $this->render('public/contact');
     }
 }

@@ -6,7 +6,7 @@ namespace App\Controllers;
 use App\Core\Activity;
 use App\Core\Auth;
 use App\Core\Security;
-use App\Core\View;
+use App\Core\Controller;
 use App\Models\Certificate;
 use App\Models\Content;
 use App\Models\Course;
@@ -16,7 +16,7 @@ use App\Models\MasterData;
 use App\Models\TraineeProfile;
 use App\Models\User;
 
-final class AdminController
+final class AdminController extends Controller
 {
     public function users(): void
     {
@@ -31,7 +31,7 @@ final class AdminController
         $totalAdmin = $userModel->countAll($q, 'admin', $status);
         $totalInstructor = $userModel->countAll($q, 'instructor', $status);
         $totalTrainee = $userModel->countAll($q, 'trainee', $status);
-        View::render('admin/users', [
+        $this->render('admin/users', [
             'users' => $userModel->all($q, $perPage, ($page - 1) * $perPage, $role, $status),
             'roles' => $userModel->roles(),
             'q' => $q,
@@ -92,7 +92,7 @@ final class AdminController
             'status' => Security::cleanString($_POST['status'] ?? 'pending'),
         ]);
         Activity::log('Saved user account');
-        header('Location: index.php?page=admin-users');
+        $this->redirect('index.php?page=admin-users');
     }
 
     public function deleteUser(): void
@@ -104,7 +104,7 @@ final class AdminController
             (new User())->delete($id);
             Activity::log('Deleted user account');
         }
-        header('Location: index.php?page=admin-users');
+        $this->redirect('index.php?page=admin-users');
     }
 
     public function setUserStatus(): void
@@ -113,7 +113,7 @@ final class AdminController
         Security::verifyCsrf();
         (new User())->setStatus((int) $_POST['id'], Security::cleanString($_POST['status']));
         Activity::log('Updated user status');
-        header('Location: index.php?page=admin-users');
+        $this->redirect('index.php?page=admin-users');
     }
 
     public function courses(): void
@@ -137,7 +137,7 @@ final class AdminController
             $totalIesga = (int) $db->query('SELECT COUNT(*) FROM courses WHERE academy_id = (SELECT id FROM academies WHERE code = "IESGA")')->fetchColumn();
         } catch (\Exception $e) {}
 
-        View::render('admin/courses', [
+        $this->render('admin/courses', [
             'courses' => $courseModel->all($q, $status, $category),
             'instructors' => $courseModel->instructors(),
             'categories' => $courseModel->categories(),
@@ -210,9 +210,9 @@ final class AdminController
         Activity::log('Saved course');
         
         if (Auth::role() === 'instructor') {
-            header('Location: index.php?page=instructor-dashboard');
+            $this->redirect('index.php?page=instructor-dashboard');
         } else {
-            header('Location: index.php?page=admin-courses');
+            $this->redirect('index.php?page=admin-courses');
         }
     }
 
@@ -222,7 +222,7 @@ final class AdminController
         Security::verifyCsrf();
         (new Course())->delete((int) ($_POST['id'] ?? 0));
         Activity::log('Deleted course');
-        header('Location: index.php?page=admin-courses');
+        $this->redirect('index.php?page=admin-courses');
     }
 
     public function enrolments(): void
@@ -235,7 +235,7 @@ final class AdminController
         $totalCompleted = (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE status = "completed"')->fetchColumn();
         $totalRejected = (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE status = "rejected"')->fetchColumn();
 
-        View::render('admin/enrolments', [
+        $this->render('admin/enrolments', [
             'enrolments' => (new Enrollment())->allEnrolments(),
             'totalAll' => $totalAll,
             'totalPending' => $totalPending,
@@ -277,14 +277,14 @@ final class AdminController
         Security::verifyCsrf();
         (new Enrollment())->setStatus((int) $_POST['id'], Security::cleanString($_POST['status']));
         Activity::log('Updated enrolment status');
-        header('Location: index.php?page=admin-enrolments');
+        $this->redirect('index.php?page=admin-enrolments');
     }
 
     /** Instructor enrollment management */
     public function instructorEnrolments(): void
     {
         Auth::requireRole(['instructor']);
-        View::render('instructor/enrolments', [
+        $this->render('instructor/enrolments', [
             'enrolments' => (new Enrollment())->forInstructor((int) Auth::id()),
         ]);
     }
@@ -300,7 +300,7 @@ final class AdminController
         }
         $enrollment->setStatus($enrolmentId, Security::cleanString($_POST['status']));
         Activity::log('Instructor updated enrolment status');
-        header('Location: index.php?page=instructor-enrolments');
+        $this->redirect('index.php?page=instructor-enrolments');
     }
 
     /** Website settings */
@@ -318,7 +318,7 @@ final class AdminController
         try { $intakes = $db->query('SELECT i.*, a.code AS academy_code FROM upcoming_intakes i LEFT JOIN academies a ON a.id = i.academy_id ORDER BY intake_date')->fetchAll(); } catch (\Exception $e) {}
         $academies = [];
         try { $academies = $db->query('SELECT * FROM academies ORDER BY code')->fetchAll(); } catch (\Exception $e) {}
-        View::render('admin/website-settings', [
+        $this->render('admin/website-settings', [
             'settings' => $settings,
             'successStories' => $successStories,
             'intakes' => $intakes,
@@ -339,7 +339,7 @@ final class AdminController
             }
         }
         Activity::log('Updated website settings');
-        header('Location: index.php?page=admin-website-settings');
+        $this->redirect('index.php?page=admin-website-settings');
     }
 
     public function saveSuccessStory(): void
@@ -356,7 +356,7 @@ final class AdminController
             $stmt->execute([Security::cleanString($_POST['trainee_name']), Security::cleanString($_POST['course_title']), Security::cleanString($_POST['quote'] ?? '', 2000), isset($_POST['is_active']) ? 1 : 0, (int) ($_POST['sort_order'] ?? 0)]);
         }
         Activity::log('Saved success story');
-        header('Location: index.php?page=admin-website-settings');
+        $this->redirect('index.php?page=admin-website-settings');
     }
 
     public function deleteSuccessStory(): void
@@ -367,7 +367,7 @@ final class AdminController
         $stmt = $db->prepare('DELETE FROM success_stories WHERE id = ?');
         $stmt->execute([(int) ($_POST['id'] ?? 0)]);
         Activity::log('Deleted success story');
-        header('Location: index.php?page=admin-website-settings');
+        $this->redirect('index.php?page=admin-website-settings');
     }
 
     public function saveIntake(): void
@@ -384,7 +384,7 @@ final class AdminController
             $stmt->execute([(int) ($_POST['academy_id'] ?? 0) ?: null, Security::cleanString($_POST['intake_title']), $_POST['intake_date'], Security::cleanString($_POST['description'] ?? '', 2000), isset($_POST['is_active']) ? 1 : 0]);
         }
         Activity::log('Saved upcoming intake');
-        header('Location: index.php?page=admin-website-settings');
+        $this->redirect('index.php?page=admin-website-settings');
     }
 
     public function deleteIntake(): void
@@ -395,7 +395,7 @@ final class AdminController
         $stmt = $db->prepare('DELETE FROM upcoming_intakes WHERE id = ?');
         $stmt->execute([(int) ($_POST['id'] ?? 0)]);
         Activity::log('Deleted upcoming intake');
-        header('Location: index.php?page=admin-website-settings');
+        $this->redirect('index.php?page=admin-website-settings');
     }
 
     public function saveProfilePicture(): void
@@ -412,7 +412,7 @@ final class AdminController
                 Activity::log('Updated profile picture');
             }
         }
-        header('Location: index.php?page=profile');
+        $this->redirect('index.php?page=profile');
     }
 
     public function announcements(): void
@@ -421,7 +421,7 @@ final class AdminController
         $role = Auth::role();
         $userId = (int) Auth::id();
         $view = $role === 'instructor' ? 'instructor/announcements' : 'admin/announcements';
-        View::render($view, ['announcements' => (new Content())->announcements(false, $role, $userId)]);
+        $this->render($view, ['announcements' => (new Content())->announcements(false, $role, $userId)]);
     }
 
     public function saveAnnouncement(): void
@@ -436,7 +436,7 @@ final class AdminController
             'created_by' => Auth::id(),
         ]);
         Activity::log('Published announcement');
-        header('Location: index.php?page=announcements-manage');
+        $this->redirect('index.php?page=announcements-manage');
     }
 
     public function certificates(): void
@@ -495,7 +495,7 @@ final class AdminController
             $templates = $certificateModel->templates();
         }
 
-        View::render('admin/certificates', [
+        $this->render('admin/certificates', [
             'certificates' => $certificateModel->records(Security::cleanString($_GET['q'] ?? '')),
             'templates' => $templates,
             'activeTemplates' => $certificateModel->activeTemplates(),
@@ -528,7 +528,7 @@ final class AdminController
             'status' => Security::cleanString($_POST['status'] ?? 'active'),
         ]);
         Activity::log('Saved certificate template');
-        header('Location: index.php?page=admin-certificates');
+        $this->redirect('index.php?page=admin-certificates');
     }
 
     public function deleteCertificateTemplate(): void
@@ -537,7 +537,7 @@ final class AdminController
         Security::verifyCsrf();
         (new Certificate())->deleteTemplate((int) ($_POST['template_id'] ?? 0));
         Activity::log('Deleted certificate template');
-        header('Location: index.php?page=admin-certificates');
+        $this->redirect('index.php?page=admin-certificates');
     }
 
     public function issueCertificate(): void
@@ -556,7 +556,7 @@ final class AdminController
             'status' => Security::cleanString($_POST['status'] ?? 'issued'),
         ]);
         Activity::log('Issued certificate');
-        header('Location: index.php?page=admin-certificates');
+        $this->redirect('index.php?page=admin-certificates');
     }
 
     public function reviewCertificate(): void
@@ -565,12 +565,12 @@ final class AdminController
         Security::verifyCsrf();
         $status = Security::cleanString($_POST['approval_status'] ?? 'pending');
         if (!in_array($status, ['approved', 'rejected'], true)) {
-            header('Location: index.php?page=admin-certificates');
+            $this->redirect('index.php?page=admin-certificates');
             return;
         }
         (new Certificate())->approve((int) ($_POST['id'] ?? 0), (int) Auth::id(), $status, Security::cleanString($_POST['remarks'] ?? '', 1000));
         Activity::log(ucfirst($status) . ' certificate');
-        header('Location: index.php?page=admin-certificates');
+        $this->redirect('index.php?page=admin-certificates');
     }
 
     public function certificateLogs(): void
@@ -616,7 +616,7 @@ final class AdminController
                 $db->rollBack();
             }
         }
-        header('Location: index.php?page=admin-certificates');
+        $this->redirect('index.php?page=admin-certificates');
     }
 
     public function revokeCertificate(): void
@@ -628,7 +628,7 @@ final class AdminController
             (new Certificate())->revoke($id);
             Activity::log('Revoked certificate ID ' . $id);
         }
-        header('Location: index.php?page=admin-certificates');
+        $this->redirect('index.php?page=admin-certificates');
     }
 
     public function documentation(): void
@@ -636,7 +636,7 @@ final class AdminController
         Auth::requireRole(['admin']);
         $profileModel = new TraineeProfile();
         $traineeId = (int) ($_GET['trainee_id'] ?? 0);
-        View::render('admin/documentation', [
+        $this->render('admin/documentation', [
             'trainees' => $profileModel->adminList(Security::cleanString($_GET['q'] ?? '')),
             'selected' => $traineeId ? $profileModel->adminDetail($traineeId) : null,
             'documents' => $traineeId ? $profileModel->documents($traineeId) : [],
@@ -673,7 +673,7 @@ final class AdminController
         $profileStmt->execute([$traineeId]);
 
         Activity::log("Verified trainee document ID #{$docId} and updated Master Data");
-        header("Location: index.php?page=admin-documentation&trainee_id={$traineeId}&success=Document+verified+and+Master+Data+updated");
+        $this->redirect("index.php?page=admin-documentation&trainee_id={$traineeId}&success=Document+verified+and+Master+Data+updated");
     }
 
     public function rejectTraineeDocument(): void
@@ -689,7 +689,7 @@ final class AdminController
         $stmt->execute([$notes, $docId]);
 
         Activity::log("Rejected trainee document ID #{$docId}");
-        header("Location: index.php?page=admin-documentation&trainee_id={$traineeId}&error=Document+verification+rejected");
+        $this->redirect("index.php?page=admin-documentation&trainee_id={$traineeId}&error=Document+verification+rejected");
     }
 
     public function evaluations(): void
@@ -697,7 +697,7 @@ final class AdminController
         Auth::requireRole(['admin']);
         $db = \App\Core\Model::getDb();
         $stats = $db->query('SELECT COUNT(*) AS total_count, AVG(COALESCE(course_rating, rating)) AS avg_course, AVG(instructor_rating) AS avg_instructor FROM evaluations')->fetch();
-        View::render('admin/evaluations', [
+        $this->render('admin/evaluations', [
             'evaluations' => (new Evaluation())->reports(),
             'totalCount' => (int) ($stats['total_count'] ?? 0),
             'avgCourse' => (float) ($stats['avg_course'] ?? 0),
@@ -715,7 +715,7 @@ final class AdminController
             $table = 'academies';
         }
         $editId = (int) ($_GET['edit'] ?? 0);
-        View::render('admin/master-data', [
+        $this->render('admin/master-data', [
             'tables' => $tables,
             'table' => $table,
             'rows' => $masterData->list($table),
@@ -766,7 +766,7 @@ final class AdminController
             'participants' => (int) ($_POST['participants'] ?? 0),
         ]);
         Activity::log('Saved ITOP training statistic');
-        header('Location: index.php?page=admin-master-data&table=training_statistics');
+        $this->redirect('index.php?page=admin-master-data&table=training_statistics');
     }
 
     public function deleteTrainingStatistic(): void
@@ -775,7 +775,7 @@ final class AdminController
         Security::verifyCsrf();
         (new MasterData())->deleteTrainingStatistic((int) ($_POST['id'] ?? 0));
         Activity::log('Deleted ITOP training statistic');
-        header('Location: index.php?page=admin-master-data&table=training_statistics');
+        $this->redirect('index.php?page=admin-master-data&table=training_statistics');
     }
 
     private function storeOptionalUpload(string $field, array $extensions): ?string
@@ -802,7 +802,7 @@ final class AdminController
             $stmt->execute([Auth::id(), $courseId]);
             Activity::log('Instructor claimed course');
         }
-        header('Location: index.php?page=instructor-dashboard');
+        $this->redirect('index.php?page=instructor-dashboard');
     }
 
     public function unassignCourse(): void
@@ -816,7 +816,7 @@ final class AdminController
             $stmt->execute([$courseId, Auth::id()]);
             Activity::log('Instructor unassigned from course');
         }
-        header('Location: index.php?page=instructor-dashboard');
+        $this->redirect('index.php?page=instructor-dashboard');
     }
 
     public function fetchAnalyticsDetails(): void
@@ -1073,7 +1073,7 @@ final class AdminController
         $courses = $db->query('SELECT id, title FROM courses ORDER BY title')->fetchAll();
         $instructors = $db->query('SELECT users.id, users.name FROM users JOIN roles ON roles.id = users.role_id WHERE roles.slug = "instructor" ORDER BY users.name')->fetchAll();
 
-        View::render('admin/analytics', [
+        $this->render('admin/analytics', [
             'analytics' => $analytics,
             'stats' => $stats,
             'filters' => $filters,
@@ -1110,7 +1110,7 @@ final class AdminController
             'categories' => 'Participants by Category',
         ];
 
-        View::render('admin/analytics-detail', [
+        $this->render('admin/analytics-detail', [
             'chartKey' => $chartKey,
             'chartTitle' => $titles[$chartKey] ?? ucwords(str_replace('_', ' ', $chartKey)),
             'chartData' => $chartData,
@@ -1163,7 +1163,7 @@ final class AdminController
         $institutions = $masterModel->list('institutions');
         $professions = $masterModel->list('professions');
 
-        View::render('admin/participants', [
+        $this->render('admin/participants', [
             'users' => $userModel->allTrainees($q, $perPage, ($page - 1) * $perPage, $filters),
             'q' => $q,
             'pageNo' => $page,
@@ -1253,7 +1253,7 @@ final class AdminController
         
         if (!$trainee) {
             $_SESSION['flash_error'] = 'Participant not found.';
-            header('Location: index.php?page=admin-participants');
+            $this->redirect('index.php?page=admin-participants');
             return;
         }
 
@@ -1266,7 +1266,7 @@ final class AdminController
 
         Activity::log('Updated master data links for trainee ID ' . $userId);
         $_SESSION['flash_success'] = 'Trainee profile links updated successfully.';
-        header('Location: index.php?page=admin-participants');
+        $this->redirect('index.php?page=admin-participants');
     }
 
 
@@ -1312,7 +1312,7 @@ final class AdminController
             $maintenanceMode = ($stmt->fetchColumn() === '1');
         } catch (\Exception $e) {}
 
-        View::render('admin/system-settings', [
+        $this->render('admin/system-settings', [
             'logs' => $logs,
             'uploadWritable' => $uploadWritable,
             'submissionWritable' => $submissionWritable,
@@ -1341,7 +1341,7 @@ final class AdminController
         }
 
         Activity::log('Updated system settings: maintenance_mode=' . $maintenanceMode);
-        header('Location: index.php?page=admin-system-settings');
+        $this->redirect('index.php?page=admin-system-settings');
     }
 
     /* ── Database Backup (Download .sql) ──────────────── */
@@ -1400,21 +1400,21 @@ final class AdminController
 
         if (empty($_FILES['sql_file']['tmp_name']) || $_FILES['sql_file']['error'] !== UPLOAD_ERR_OK) {
             $_SESSION['flash_error'] = 'No file uploaded or upload error.';
-            header('Location: index.php?page=admin-system-settings');
+            $this->redirect('index.php?page=admin-system-settings');
             return;
         }
 
         $ext = strtolower(pathinfo($_FILES['sql_file']['name'], PATHINFO_EXTENSION));
         if ($ext !== 'sql') {
             $_SESSION['flash_error'] = 'Only .sql files are accepted.';
-            header('Location: index.php?page=admin-system-settings');
+            $this->redirect('index.php?page=admin-system-settings');
             return;
         }
 
         $sqlContent = file_get_contents($_FILES['sql_file']['tmp_name']);
         if (empty($sqlContent)) {
             $_SESSION['flash_error'] = 'Uploaded file is empty.';
-            header('Location: index.php?page=admin-system-settings');
+            $this->redirect('index.php?page=admin-system-settings');
             return;
         }
 
@@ -1437,7 +1437,7 @@ final class AdminController
             $_SESSION['flash_error'] = 'Restore failed: ' . $e->getMessage();
         }
 
-        header('Location: index.php?page=admin-system-settings');
+        $this->redirect('index.php?page=admin-system-settings');
     }
 
     public function profile(): void
@@ -1501,7 +1501,7 @@ final class AdminController
             $activityLogs = $stmtAct->fetchAll();
         } catch (\Exception $e) {}
 
-        View::render('admin/profile', [
+        $this->render('admin/profile', [
             'user' => $user,
             'stats' => [
                 'total_courses' => $totalCourses,

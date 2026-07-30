@@ -6,25 +6,36 @@ namespace App\Controllers;
 use App\Core\Activity;
 use App\Core\Auth;
 use App\Core\Security;
-use App\Core\View;
+use App\Core\Validator;
+use App\Core\Controller;
 use App\Models\User;
 
-final class AuthController
+final class AuthController extends Controller
 {
     public function loginForm(): void
     {
-        View::render('auth/login');
+        $this->render('auth/login');
     }
 
     public function login(): void
     {
         Security::verifyCsrf();
+        
+        $validator = new Validator($_POST);
+        if (!$validator->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ])) {
+            $this->render('auth/login', ['error' => $validator->firstError()]);
+            return;
+        }
+
         $userModel = new User();
-        $email = Security::cleanString($_POST['email'] ?? '');
+        $email = Security::cleanString($_POST['email']);
         $user = $userModel->findByEmail($email);
         if (!$user || $user['status'] !== 'active' || !password_verify((string) ($_POST['password'] ?? ''), $user['password_hash'])) {
             $userModel->logLogin($user['id'] ?? null, $email, 'failed');
-            View::render('auth/login', ['error' => 'Invalid credentials or inactive account.']);
+            $this->render('auth/login', ['error' => 'Invalid credentials or inactive account.']);
             return;
         }
 
@@ -32,25 +43,31 @@ final class AuthController
         $userModel->touchLastLogin((int) $user['id']);
         $userModel->logLogin((int) $user['id'], $email, 'success');
         Activity::log('Logged in', (int) $user['id']);
-        header('Location: index.php?page=dashboard');
+        $this->redirect('index.php?page=dashboard');
     }
 
     public function registerForm(): void
     {
-        View::render('auth/register');
+        $this->render('auth/register');
     }
 
     public function register(): void
     {
         Security::verifyCsrf();
-        $name = Security::cleanString($_POST['name'] ?? '');
-        $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
-        $password = (string) ($_POST['password'] ?? '');
 
-        if (!$name || !$email || strlen($password) < 8) {
-            View::render('auth/register', ['error' => 'Please provide a valid name, email, and password of at least 8 characters.']);
+        $validator = new Validator($_POST);
+        if (!$validator->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ])) {
+            $this->render('auth/register', ['error' => $validator->firstError()]);
             return;
         }
+
+        $name = Security::cleanString($_POST['name'] ?? '');
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
         (new User())->create([
             'role_slug' => 'trainee',
@@ -60,13 +77,13 @@ final class AuthController
             'phone' => Security::cleanString($_POST['phone'] ?? ''),
             'status' => 'pending',
         ]);
-        View::render('auth/login', ['success' => 'Account registered. An administrator must approve it before login.']);
+        $this->render('auth/login', ['success' => 'Account registered. An administrator must approve it before login.']);
     }
 
     public function logout(): void
     {
         Activity::log('Logged out');
         Auth::logout();
-        header('Location: index.php');
+        $this->redirect('index.php');
     }
 }

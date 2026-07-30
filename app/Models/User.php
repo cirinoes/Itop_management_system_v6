@@ -11,9 +11,11 @@ final class User extends Model
 
     public function findByEmail(string $email): ?array
     {
-        $stmt = $this->db->prepare('SELECT users.*, roles.slug AS role_slug FROM users JOIN roles ON roles.id = users.role_id WHERE users.email = ? LIMIT 1');
-        $stmt->execute([$email]);
-        return $stmt->fetch() ?: null;
+        return $this->table('users')
+            ->select('users.*', 'roles.slug AS role_slug')
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->where('users.email', $email)
+            ->first();
     }
 
     public function create(array $data): int
@@ -34,50 +36,48 @@ final class User extends Model
     public function all(string $search = '', int $limit = 20, int $offset = 0, string $role = '', string $status = ''): array
     {
         $like = '%' . $search . '%';
-        $sql = 'SELECT users.*, roles.name AS role_name, roles.slug AS role_slug FROM users JOIN roles ON roles.id = users.role_id WHERE (users.name LIKE ? OR users.email LIKE ? OR users.phone LIKE ?)';
-        $params = [$like, $like, $like];
+        $query = $this->table('users')
+            ->select('users.*', 'roles.name AS role_name', 'roles.slug AS role_slug')
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->whereRaw('(users.name LIKE ? OR users.email LIKE ? OR users.phone LIKE ?)', [$like, $like, $like]);
+
         if ($role !== '') {
-            $sql .= ' AND roles.slug = ?';
-            $params[] = $role;
+            $query->where('roles.slug', $role);
         }
         if ($status !== '') {
-            $sql .= ' AND users.status = ?';
-            $params[] = $status;
+            $query->where('users.status', $status);
         }
-        $sql .= ' ORDER BY users.created_at DESC LIMIT ? OFFSET ?';
-        $stmt = $this->db->prepare($sql);
-        foreach ($params as $index => $value) {
-            $stmt->bindValue($index + 1, $value);
-        }
-        $stmt->bindValue(count($params) + 1, $limit, \PDO::PARAM_INT);
-        $stmt->bindValue(count($params) + 2, $offset, \PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll();
+
+        return $query->orderBy('users.created_at', 'DESC')
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
     }
 
     public function countAll(string $search = '', string $role = '', string $status = ''): int
     {
         $like = '%' . $search . '%';
-        $sql = 'SELECT COUNT(*) FROM users JOIN roles ON roles.id = users.role_id WHERE (users.name LIKE ? OR users.email LIKE ? OR users.phone LIKE ?)';
-        $params = [$like, $like, $like];
+        $query = $this->table('users')
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->whereRaw('(users.name LIKE ? OR users.email LIKE ? OR users.phone LIKE ?)', [$like, $like, $like]);
+
         if ($role !== '') {
-            $sql .= ' AND roles.slug = ?';
-            $params[] = $role;
+            $query->where('roles.slug', $role);
         }
         if ($status !== '') {
-            $sql .= ' AND users.status = ?';
-            $params[] = $status;
+            $query->where('users.status', $status);
         }
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
-        return (int) $stmt->fetchColumn();
+
+        return $query->count();
     }
 
     public function find(int $id): ?array
     {
-        $stmt = $this->db->prepare('SELECT users.*, roles.name AS role_name, roles.slug AS role_slug FROM users JOIN roles ON roles.id = users.role_id WHERE users.id = ?');
-        $stmt->execute([$id]);
-        return $stmt->fetch() ?: null;
+        return $this->table('users')
+            ->select('users.*', 'roles.name AS role_name', 'roles.slug AS role_slug')
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->where('users.id', $id)
+            ->first();
     }
 
     public function saveFromAdmin(array $data): int
@@ -109,14 +109,17 @@ final class User extends Model
 
     public function delete(int $id): void
     {
-        $stmt = $this->db->prepare('DELETE FROM users WHERE id = ?');
-        $stmt->execute([$id]);
+        $this->table('users')->where('id', $id)->delete();
     }
 
     public function updateProfile(int $id, array $data): void
     {
-        $stmt = $this->db->prepare('UPDATE users SET name = ?, phone = ?, address = ?, updated_at = NOW() WHERE id = ?');
-        $stmt->execute([$data['name'], $data['phone'], $data['address'], $id]);
+        $this->table('users')->where('id', $id)->update([
+            'name' => $data['name'],
+            'phone' => $data['phone'],
+            'address' => $data['address'],
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
     }
 
     public function setStatus(int $id, string $status): void
@@ -124,8 +127,10 @@ final class User extends Model
         if (!in_array($status, self::ACTIVE_STATUSES, true)) {
             return;
         }
-        $stmt = $this->db->prepare('UPDATE users SET status = ?, updated_at = NOW() WHERE id = ?');
-        $stmt->execute([$status, $id]);
+        $this->table('users')->where('id', $id)->update([
+            'status' => $status,
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
     }
 
     public function touchLastLogin(int $id): void
@@ -136,19 +141,18 @@ final class User extends Model
 
     public function logLogin(?int $id, string $email, string $status): void
     {
-        $stmt = $this->db->prepare('INSERT INTO login_activity (user_id, email, status, ip_address, user_agent) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([
-            $id,
-            $email,
-            $status,
-            $_SERVER['REMOTE_ADDR'] ?? null,
-            substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255),
+        $this->table('login_activity')->insert([
+            'user_id' => $id,
+            'email' => $email,
+            'status' => $status,
+            'ip_address' => $_SERVER['REMOTE_ADDR'] ?? null,
+            'user_agent' => substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255)
         ]);
     }
 
     public function roles(): array
     {
-        return $this->db->query('SELECT * FROM roles ORDER BY id')->fetchAll();
+        return $this->table('roles')->orderBy('id', 'ASC')->get();
     }
 
     public function allTrainees(string $search = '', int $limit = 20, int $offset = 0, array $filters = []): array
@@ -284,13 +288,12 @@ final class User extends Model
 
     public function updateTraineeMasterData(int $userId, array $data): void
     {
-        $stmt = $this->db->prepare('UPDATE users SET company_id = ?, institution_id = ?, location_id = ?, profession_id = ?, updated_at = NOW() WHERE id = ?');
-        $stmt->execute([
-            $data['company_id'] ?: null,
-            $data['institution_id'] ?: null,
-            $data['location_id'] ?: null,
-            $data['profession_id'] ?: null,
-            $userId
+        $this->table('users')->where('id', $userId)->update([
+            'company_id' => $data['company_id'] ?: null,
+            'institution_id' => $data['institution_id'] ?: null,
+            'location_id' => $data['location_id'] ?: null,
+            'profession_id' => $data['profession_id'] ?: null,
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
     }
 

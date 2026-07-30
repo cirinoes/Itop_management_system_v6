@@ -17,31 +17,52 @@ final class Message extends Model
 
     public function messages(int $conversationId, int $userId): array
     {
-        $check = $this->db->prepare('SELECT COUNT(*) FROM conversation_participants WHERE conversation_id = ? AND user_id = ? AND deleted_at IS NULL');
-        $check->execute([$conversationId, $userId]);
-        if (!$check->fetchColumn()) {
+        $check = $this->table('conversation_participants')
+            ->where('conversation_id', $conversationId)
+            ->where('user_id', $userId)
+            ->whereNull('deleted_at')
+            ->count();
+            
+        if (!$check) {
             return [];
         }
 
-        $read = $this->db->prepare('UPDATE messages SET read_at = COALESCE(read_at, NOW()) WHERE conversation_id = ? AND sender_id <> ?');
-        $read->execute([$conversationId, $userId]);
-        $stmt = $this->db->prepare('SELECT m.*, u.name AS sender_name, u.profile_picture FROM messages m JOIN users u ON u.id = m.sender_id WHERE m.conversation_id = ? AND m.deleted_at IS NULL ORDER BY m.created_at ASC');
-        $stmt->execute([$conversationId]);
-        return $stmt->fetchAll();
+        $this->table('messages')
+            ->where('conversation_id', $conversationId)
+            ->whereRaw('sender_id <> ?', [$userId])
+            ->whereNull('read_at')
+            ->update(['read_at' => date('Y-m-d H:i:s')]);
+            
+        return $this->table('messages m')
+            ->select('m.*', 'u.name AS sender_name', 'u.profile_picture')
+            ->join('users u', 'u.id', '=', 'm.sender_id')
+            ->where('m.conversation_id', $conversationId)
+            ->whereNull('m.deleted_at')
+            ->orderBy('m.created_at', 'ASC')
+            ->get();
     }
 
     public function contacts(int $userId): array
     {
-        $stmt = $this->db->prepare('SELECT users.id, users.name, users.email, roles.slug AS role_slug FROM users JOIN roles ON roles.id = users.role_id WHERE users.id <> ? AND users.status = "active" ORDER BY roles.id, users.name');
-        $stmt->execute([$userId]);
-        return $stmt->fetchAll();
+        return $this->table('users')
+            ->select('users.id', 'users.name', 'users.email', 'roles.slug AS role_slug')
+            ->join('roles', 'roles.id', '=', 'users.role_id')
+            ->whereRaw('users.id <> ?', [$userId])
+            ->where('users.status', 'active')
+            ->orderBy('roles.id', 'ASC, users.name')
+            ->get();
     }
 
     public function unreadCount(int $userId): int
     {
-        $stmt = $this->db->prepare('SELECT COUNT(*) FROM messages m JOIN conversation_participants cp ON cp.conversation_id = m.conversation_id AND cp.user_id = ? WHERE m.sender_id <> ? AND m.read_at IS NULL AND m.deleted_at IS NULL AND cp.deleted_at IS NULL');
-        $stmt->execute([$userId, $userId]);
-        return (int) $stmt->fetchColumn();
+        return $this->table('messages m')
+            ->join('conversation_participants cp', 'cp.conversation_id', '=', 'm.conversation_id')
+            ->where('cp.user_id', $userId)
+            ->whereRaw('m.sender_id <> ?', [$userId])
+            ->whereNull('m.read_at')
+            ->whereNull('m.deleted_at')
+            ->whereNull('cp.deleted_at')
+            ->count();
     }
 
     public function start(int $senderId, int $receiverId, string $subject, string $body, ?string $attachment = null): int
@@ -67,7 +88,9 @@ final class Message extends Model
 
     public function deleteMessage(int $messageId, int $senderId): void
     {
-        $stmt = $this->db->prepare('UPDATE messages SET deleted_at = NOW() WHERE id = ? AND sender_id = ?');
-        $stmt->execute([$messageId, $senderId]);
+        $this->table('messages')
+            ->where('id', $messageId)
+            ->where('sender_id', $senderId)
+            ->update(['deleted_at' => date('Y-m-d H:i:s')]);
     }
 }

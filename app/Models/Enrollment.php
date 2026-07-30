@@ -22,34 +22,54 @@ final class Enrollment extends Model
 
     public function pending(): array
     {
-        return $this->db->query('SELECT e.*, c.title AS course_title, u.name AS trainee_name, u.email FROM enrolments e JOIN courses c ON c.id = e.course_id JOIN users u ON u.id = e.trainee_id WHERE e.status = "pending" ORDER BY e.created_at DESC')->fetchAll();
+        return $this->table('enrolments e')
+            ->select('e.*', 'c.title AS course_title', 'u.name AS trainee_name', 'u.email')
+            ->join('courses c', 'c.id', '=', 'e.course_id')
+            ->join('users u', 'u.id', '=', 'e.trainee_id')
+            ->where('e.status', 'pending')
+            ->orderBy('e.created_at', 'DESC')
+            ->get();
     }
 
     /** All enrolments for admin view (all statuses) */
     public function allEnrolments(): array
     {
-        return $this->db->query('SELECT e.*, c.title AS course_title, u.name AS trainee_name, u.email, instr.name AS instructor_name FROM enrolments e JOIN courses c ON c.id = e.course_id JOIN users u ON u.id = e.trainee_id LEFT JOIN users instr ON instr.id = c.instructor_id ORDER BY e.created_at DESC')->fetchAll();
+        return $this->table('enrolments e')
+            ->select('e.*', 'c.title AS course_title', 'u.name AS trainee_name', 'u.email', 'instr.name AS instructor_name')
+            ->join('courses c', 'c.id', '=', 'e.course_id')
+            ->join('users u', 'u.id', '=', 'e.trainee_id')
+            ->leftJoin('users instr', 'instr.id', '=', 'c.instructor_id')
+            ->orderBy('e.created_at', 'DESC')
+            ->get();
     }
 
     /** Enrolments for courses assigned to a specific instructor */
     public function forInstructor(int $instructorId): array
     {
-        $stmt = $this->db->prepare('SELECT e.*, c.title AS course_title, u.name AS trainee_name, u.email FROM enrolments e JOIN courses c ON c.id = e.course_id JOIN users u ON u.id = e.trainee_id WHERE c.instructor_id = ? ORDER BY e.created_at DESC');
-        $stmt->execute([$instructorId]);
-        return $stmt->fetchAll();
+        return $this->table('enrolments e')
+            ->select('e.*', 'c.title AS course_title', 'u.name AS trainee_name', 'u.email')
+            ->join('courses c', 'c.id', '=', 'e.course_id')
+            ->join('users u', 'u.id', '=', 'e.trainee_id')
+            ->where('c.instructor_id', $instructorId)
+            ->orderBy('e.created_at', 'DESC')
+            ->get();
     }
 
     public function setStatus(int $id, string $status): void
     {
-        $stmt = $this->db->prepare('UPDATE enrolments SET status = ?, updated_at = NOW() WHERE id = ?');
-        $stmt->execute([$status, $id]);
+        $this->table('enrolments')->where('id', $id)->update([
+            'status' => $status,
+            'updated_at' => date('Y-m-d H:i:s')
+        ]);
     }
 
     /** Verify that an enrolment belongs to a course taught by the given instructor */
     public function belongsToInstructor(int $enrolmentId, int $instructorId): bool
     {
-        $stmt = $this->db->prepare('SELECT COUNT(*) FROM enrolments e JOIN courses c ON c.id = e.course_id WHERE e.id = ? AND c.instructor_id = ?');
-        $stmt->execute([$enrolmentId, $instructorId]);
-        return (int) $stmt->fetchColumn() > 0;
+        return $this->table('enrolments e')
+            ->join('courses c', 'c.id', '=', 'e.course_id')
+            ->where('e.id', $enrolmentId)
+            ->where('c.instructor_id', $instructorId)
+            ->count() > 0;
     }
 }

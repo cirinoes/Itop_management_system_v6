@@ -1,4 +1,6 @@
-<?php use App\Core\Security; ?>
+{% extends 'layouts/main.twig' %}
+
+{% block content %}
 <section class="auth-wrap animate-in">
     <div class="auth-container">
         <!-- Sidebar visible on large screens -->
@@ -19,7 +21,7 @@
                     </div>
                 </div>
                 <div class="auth-sidebar-footer">
-                    &copy; <?= date('Y') ?> Centre for Technology Excellence Sarawak
+                    &copy; {{ current_year }} Centre for Technology Excellence Sarawak
                 </div>
             </div>
         </div>
@@ -34,11 +36,16 @@
                 <p class="auth-form-subtitle">Don't have an account? <a href="index.php?page=register">Register here</a></p>
             </div>
 
-            <?php if (!empty($error)): ?><div class="alert alert-danger p-2 small"><?= Security::e($error) ?></div><?php endif; ?>
-            <?php if (!empty($success)): ?><div class="alert alert-success p-2 small"><?= Security::e($success) ?></div><?php endif; ?>
+            {% if error is not empty %}
+                <div class="alert alert-danger p-2 small">{{ error }}</div>
+            {% endif %}
+            
+            {% if success is not empty %}
+                <div class="alert alert-success p-2 small">{{ success }}</div>
+            {% endif %}
 
             <form method="post" action="index.php?page=login">
-                <input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>">
+                <input type="hidden" name="_csrf" value="{{ csrf_token }}">
                 
                 <div class="form-floating-custom">
                     <input class="form-control" type="email" name="email" id="email" placeholder=" " required autocomplete="email">
@@ -62,5 +69,4 @@
         </div>
     </div>
 </section>
-
-
+{% endblock %}

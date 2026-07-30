@@ -6,10 +6,10 @@ namespace App\Controllers;
 use App\Core\Auth;
 use App\Core\Database;
 use App\Core\Security;
-use App\Core\View;
+use App\Core\Controller;
 use App\Models\Certificate as CertificateModel;
 
-final class ReportController
+final class ReportController extends Controller
 {
     public function reports(): void
     {
@@ -25,7 +25,7 @@ final class ReportController
             $where[] = 'c.id = ' . $course;
         }
         $whereSql = $where ? ' WHERE ' . implode(' AND ', $where) : '';
-        View::render('reports/index', [
+        $this->render('reports/index', [
             'summary' => [
                 'total_trainees' => (int) $db->query('SELECT COUNT(*) FROM users JOIN roles ON roles.id = users.role_id WHERE roles.slug = "trainee"')->fetchColumn(),
                 'active_trainees' => (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE status = "active"')->fetchColumn(),
@@ -92,7 +92,7 @@ final class ReportController
         $stmtPerformance->execute([$instructorId]);
         $coursePerformance = $stmtPerformance->fetchAll();
 
-        View::render('reports/instructor', [
+        $this->render('reports/instructor', [
             'overview' => $overview,
             'grading_backlog' => $gradingBacklog,
             'course_performance' => $coursePerformance,
@@ -141,7 +141,7 @@ final class ReportController
         ');
         $stmtCertList->execute([$traineeId]);
 
-        View::render('reports/trainee', [
+        $this->render('reports/trainee', [
             'metrics' => [
                 'completed_courses' => (int) $stmtCompleted->fetchColumn(),
                 'total_hours' => (int) $stmtHours->fetchColumn(),
@@ -238,7 +238,7 @@ final class ReportController
         $code = Security::cleanString($_GET['code'] ?? '');
         $stmt = Database::connection()->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id WHERE cert.verification_code = ?');
         $stmt->execute([$code]);
-        View::render('public/certificate-verify', ['certificate' => $stmt->fetch() ?: null, 'code' => $code]);
+        $this->render('public/certificate-verify', ['certificate' => $stmt->fetch() ?: null, 'code' => $code]);
     }
 
     public function viewCertificate(): void
@@ -267,7 +267,7 @@ final class ReportController
             exit('Certificate is not available.');
         }
 
-        View::render('public/certificate-template', ['certificate' => $certificate, 'hide_actions' => !empty($_GET['hide_actions']), 'template' => [
+        $this->render('public/certificate-template', ['certificate' => $certificate, 'hide_actions' => !empty($_GET['hide_actions']), 'template' => [
             'background_image' => $certificate['background_image'] ?? null,
             'logo' => $certificate['logo'] ?? null,
             'signature' => $certificate['signature'] ?? null,

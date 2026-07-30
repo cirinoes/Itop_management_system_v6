@@ -6,13 +6,13 @@ namespace App\Controllers;
 use App\Core\Activity;
 use App\Core\Auth;
 use App\Core\Security;
-use App\Core\View;
+use App\Core\Controller;
 use App\Models\Certificate;
 use App\Models\Evaluation;
 use App\Models\TraineeProfile;
 use App\Models\User;
 
-final class TraineeController
+final class TraineeController extends Controller
 {
     public function userProfile(): void
     {
@@ -37,7 +37,7 @@ final class TraineeController
         Auth::requireLogin();
         $userId = (int) Auth::id();
         $profileModel = new TraineeProfile();
-        View::render('profile/trainee', [
+        $this->render('profile/trainee', [
             'user' => (new User())->find($userId),
             'profile' => $profileModel->findByUser($userId),
             'documents' => $profileModel->documents($userId),
@@ -50,7 +50,7 @@ final class TraineeController
     {
         Auth::requireLogin();
         $userId = (int) Auth::id();
-        View::render('profile/instructor', [
+        $this->render('profile/instructor', [
             'user' => (new User())->find($userId),
             'stats' => $this->instructorStats($userId),
         ]);
@@ -157,13 +157,13 @@ final class TraineeController
         }
 
         Activity::log('Updated profile');
-        header('Location: index.php?page=profile');
+        $this->redirect('index.php?page=profile');
     }
 
     public function evaluations(): void
     {
         Auth::requireRole(['trainee']);
-        View::render('trainee/evaluations', [
+        $this->render('trainee/evaluations', [
             'courses' => (new Evaluation())->completedCoursesNeedingEvaluation((int) Auth::id()),
         ]);
     }
@@ -197,13 +197,13 @@ final class TraineeController
             'comments' => json_encode($likertData),
         ]);
         Activity::log('Submitted course evaluation');
-        header('Location: index.php?page=trainee-evaluations');
+        $this->redirect('index.php?page=trainee-evaluations');
     }
 
     public function certificates(): void
     {
         Auth::requireRole(['trainee']);
-        View::render('trainee/certificates', [
+        $this->render('trainee/certificates', [
             'certificates' => (new Certificate())->forTrainee((int) Auth::id(), Security::cleanString($_GET['q'] ?? '')),
             'q' => Security::cleanString($_GET['q'] ?? ''),
         ]);

@@ -9,9 +9,7 @@ final class TraineeProfile extends Model
 {
     public function findByUser(int $userId): ?array
     {
-        $stmt = $this->db->prepare('SELECT * FROM trainee_profiles WHERE user_id = ?');
-        $stmt->execute([$userId]);
-        return $stmt->fetch() ?: null;
+        return $this->table('trainee_profiles')->where('user_id', $userId)->first();
     }
 
     public function save(int $userId, array $data): void
@@ -25,29 +23,39 @@ final class TraineeProfile extends Model
 
     public function documents(int $userId): array
     {
-        $stmt = $this->db->prepare('SELECT * FROM trainee_documents WHERE user_id = ? ORDER BY uploaded_at DESC');
-        $stmt->execute([$userId]);
-        return $stmt->fetchAll();
+        return $this->table('trainee_documents')->where('user_id', $userId)->orderBy('uploaded_at', 'DESC')->get();
     }
 
     public function addDocument(int $userId, string $type, string $fileName, string $filePath): void
     {
-        $stmt = $this->db->prepare('INSERT INTO trainee_documents (user_id, document_type, file_name, file_path) VALUES (?, ?, ?, ?)');
-        $stmt->execute([$userId, $type, $fileName, $filePath]);
+        $this->table('trainee_documents')->insert([
+            'user_id' => $userId,
+            'document_type' => $type,
+            'file_name' => $fileName,
+            'file_path' => $filePath
+        ]);
     }
 
     public function adminList(string $search = ''): array
     {
         $like = '%' . $search . '%';
-        $stmt = $this->db->prepare('SELECT u.id, u.name, u.email, u.phone, u.status, p.identity_number, p.education, p.employment, p.emergency_contact, p.updated_at, COUNT(d.document_id) AS document_count FROM users u JOIN roles r ON r.id = u.role_id AND r.slug = "trainee" LEFT JOIN trainee_profiles p ON p.user_id = u.id LEFT JOIN trainee_documents d ON d.user_id = u.id WHERE u.name LIKE ? OR u.email LIKE ? OR p.identity_number LIKE ? OR p.education LIKE ? GROUP BY u.id ORDER BY u.name');
-        $stmt->execute([$like, $like, $like, $like]);
-        return $stmt->fetchAll();
+        return $this->table('users u')
+            ->select('u.id', 'u.name', 'u.email', 'u.phone', 'u.status', 'p.identity_number', 'p.education', 'p.employment', 'p.emergency_contact', 'p.updated_at', 'COUNT(d.document_id) AS document_count')
+            ->join('roles r', 'r.id', '=', 'u.role_id AND r.slug = "trainee"')
+            ->leftJoin('trainee_profiles p', 'p.user_id', '=', 'u.id')
+            ->leftJoin('trainee_documents d', 'd.user_id', '=', 'u.id')
+            ->whereRaw('u.name LIKE ? OR u.email LIKE ? OR p.identity_number LIKE ? OR p.education LIKE ?', [$like, $like, $like, $like])
+            ->groupBy('u.id')
+            ->orderBy('u.name', 'ASC')
+            ->get();
     }
 
     public function adminDetail(int $userId): ?array
     {
-        $stmt = $this->db->prepare('SELECT u.*, p.* FROM users u LEFT JOIN trainee_profiles p ON p.user_id = u.id WHERE u.id = ?');
-        $stmt->execute([$userId]);
-        return $stmt->fetch() ?: null;
+        return $this->table('users u')
+            ->select('u.*', 'p.*')
+            ->leftJoin('trainee_profiles p', 'p.user_id', '=', 'u.id')
+            ->where('u.id', $userId)
+            ->first();
     }
 }

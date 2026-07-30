@@ -6,11 +6,11 @@ namespace App\Controllers;
 use App\Core\Activity;
 use App\Core\Auth;
 use App\Core\Security;
-use App\Core\View;
+use App\Core\Controller;
 use App\Models\Course;
 use App\Models\Lms;
 
-final class LmsController
+final class LmsController extends Controller
 {
     public function courseRoom(): void
     {
@@ -27,7 +27,7 @@ final class LmsController
             $traineeSubmissions = $lms->traineeSubmissions($courseId, Auth::id());
         }
 
-        View::render($view, [
+        $this->render($view, [
             'course' => (new Course())->find($courseId),
             'materials' => $lms->materials($courseId),
             'assignments' => $lms->assignments($courseId),
@@ -91,7 +91,7 @@ final class LmsController
             'notes' => Security::cleanString($_POST['notes'] ?? '', 1000),
         ]);
         Activity::log('Submitted assignment');
-        header('Location: index.php?page=trainee-dashboard');
+        $this->redirect('index.php?page=trainee-dashboard');
     }
 
     public function cancelSubmission(): void
@@ -128,7 +128,7 @@ final class LmsController
 
         $lms->removeSubmission($assignmentId, $traineeId);
         Activity::log('Cancelled assignment submission');
-        header('Location: index.php?page=trainee-dashboard');
+        $this->redirect('index.php?page=trainee-dashboard');
     }
 }
 

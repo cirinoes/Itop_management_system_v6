@@ -9,35 +9,41 @@ final class Lms extends Model
 {
     public function materials(int $courseId): array
     {
-        $stmt = $this->db->prepare('SELECT * FROM learning_materials WHERE course_id = ? ORDER BY created_at DESC');
-        $stmt->execute([$courseId]);
-        return $stmt->fetchAll();
+        return $this->table('learning_materials')->where('course_id', $courseId)->orderBy('created_at', 'DESC')->get();
     }
 
     public function assignments(int $courseId): array
     {
-        $stmt = $this->db->prepare('SELECT * FROM assignments WHERE course_id = ? ORDER BY due_date ASC');
-        $stmt->execute([$courseId]);
-        return $stmt->fetchAll();
+        return $this->table('assignments')->where('course_id', $courseId)->orderBy('due_date', 'ASC')->get();
     }
 
     public function quizzes(int $courseId): array
     {
-        $stmt = $this->db->prepare('SELECT * FROM quizzes WHERE course_id = ? ORDER BY created_at DESC');
-        $stmt->execute([$courseId]);
-        return $stmt->fetchAll();
+        return $this->table('quizzes')->where('course_id', $courseId)->orderBy('created_at', 'DESC')->get();
     }
 
     public function addMaterial(array $data): void
     {
-        $stmt = $this->db->prepare('INSERT INTO learning_materials (course_id, title, type, file_path, external_url, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$data['course_id'], $data['title'], $data['type'], $data['file_path'], $data['external_url'], $data['uploaded_by']]);
+        $this->table('learning_materials')->insert([
+            'course_id' => $data['course_id'],
+            'title' => $data['title'],
+            'type' => $data['type'],
+            'file_path' => $data['file_path'],
+            'external_url' => $data['external_url'],
+            'uploaded_by' => $data['uploaded_by']
+        ]);
     }
 
     public function addAssignment(array $data): void
     {
-        $stmt = $this->db->prepare('INSERT INTO assignments (course_id, title, instructions, due_date, max_score, created_by) VALUES (?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$data['course_id'], $data['title'], $data['instructions'], $data['due_date'], $data['max_score'], $data['created_by']]);
+        $this->table('assignments')->insert([
+            'course_id' => $data['course_id'],
+            'title' => $data['title'],
+            'instructions' => $data['instructions'],
+            'due_date' => $data['due_date'],
+            'max_score' => $data['max_score'],
+            'created_by' => $data['created_by']
+        ]);
     }
 
     public function submitAssignment(array $data): void
@@ -48,30 +54,48 @@ final class Lms extends Model
 
     public function gradeSubmission(int $submissionId, float $score, string $feedback): void
     {
-        $stmt = $this->db->prepare('UPDATE assignment_submissions SET score = ?, feedback = ?, status = "graded", graded_at = NOW() WHERE id = ?');
-        $stmt->execute([$score, $feedback, $submissionId]);
+        $this->table('assignment_submissions')->where('id', $submissionId)->update([
+            'score' => $score,
+            'feedback' => $feedback,
+            'status' => 'graded',
+            'graded_at' => date('Y-m-d H:i:s')
+        ]);
     }
 
     public function submissionsForInstructor(int $instructorId): array
     {
-        $stmt = $this->db->prepare('SELECT s.*, a.title AS assignment_title, c.title AS course_title, c.id AS course_id, u.name AS trainee_name, u.email AS trainee_email FROM assignment_submissions s JOIN assignments a ON a.id = s.assignment_id JOIN courses c ON c.id = a.course_id JOIN users u ON u.id = s.trainee_id WHERE c.instructor_id = ? ORDER BY s.submitted_at DESC');
-        $stmt->execute([$instructorId]);
-        return $stmt->fetchAll();
+        return $this->table('assignment_submissions s')
+            ->select('s.*', 'a.title AS assignment_title', 'c.title AS course_title', 'c.id AS course_id', 'u.name AS trainee_name', 'u.email AS trainee_email')
+            ->join('assignments a', 'a.id', '=', 's.assignment_id')
+            ->join('courses c', 'c.id', '=', 'a.course_id')
+            ->join('users u', 'u.id', '=', 's.trainee_id')
+            ->where('c.instructor_id', $instructorId)
+            ->orderBy('s.submitted_at', 'DESC')
+            ->get();
     }
 
     public function submissionsForCourse(int $courseId): array
     {
-        $stmt = $this->db->prepare('SELECT s.*, a.title AS assignment_title, u.name AS trainee_name, u.email AS trainee_email FROM assignment_submissions s JOIN assignments a ON a.id = s.assignment_id JOIN users u ON u.id = s.trainee_id WHERE a.course_id = ? ORDER BY s.submitted_at DESC');
-        $stmt->execute([$courseId]);
-        return $stmt->fetchAll();
+        return $this->table('assignment_submissions s')
+            ->select('s.*', 'a.title AS assignment_title', 'u.name AS trainee_name', 'u.email AS trainee_email')
+            ->join('assignments a', 'a.id', '=', 's.assignment_id')
+            ->join('users u', 'u.id', '=', 's.trainee_id')
+            ->where('a.course_id', $courseId)
+            ->orderBy('s.submitted_at', 'DESC')
+            ->get();
     }
 
     public function traineeSubmissions(int $courseId, int $traineeId): array
     {
-        $stmt = $this->db->prepare('SELECT s.* FROM assignment_submissions s JOIN assignments a ON a.id = s.assignment_id WHERE a.course_id = ? AND s.trainee_id = ?');
-        $stmt->execute([$courseId, $traineeId]);
+        $submissions = $this->table('assignment_submissions s')
+            ->select('s.*')
+            ->join('assignments a', 'a.id', '=', 's.assignment_id')
+            ->where('a.course_id', $courseId)
+            ->where('s.trainee_id', $traineeId)
+            ->get();
+            
         $result = [];
-        foreach ($stmt->fetchAll() as $sub) {
+        foreach ($submissions as $sub) {
             $result[$sub['assignment_id']] = $sub;
         }
         return $result;
@@ -79,8 +103,10 @@ final class Lms extends Model
 
     public function removeSubmission(int $assignmentId, int $traineeId): void
     {
-        $stmt = $this->db->prepare('DELETE FROM assignment_submissions WHERE assignment_id = ? AND trainee_id = ?');
-        $stmt->execute([$assignmentId, $traineeId]);
+        $this->table('assignment_submissions')
+            ->where('assignment_id', $assignmentId)
+            ->where('trainee_id', $traineeId)
+            ->delete();
     }
 }
 

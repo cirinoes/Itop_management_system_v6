@@ -9,34 +9,35 @@ final class Content extends Model
 {
     public function announcements(bool $publicOnly = false, ?string $role = null, ?int $userId = null): array
     {
-        $sql = 'SELECT a.*, u.name AS author_name FROM announcements a LEFT JOIN users u ON u.id = a.created_by';
-        $params = [];
+        $query = $this->table('announcements a')
+            ->select('a.*', 'u.name AS author_name')
+            ->leftJoin('users u', 'u.id', '=', 'a.created_by');
 
         if ($publicOnly) {
-            $sql .= ' WHERE a.is_public = 1';
+            $query->where('a.is_public', 1);
         } elseif ($role === 'trainee' && $userId !== null) {
-            $sql .= ' WHERE a.is_public = 1 OR a.created_by IN (
+            $query->whereRaw('a.is_public = 1 OR a.created_by IN (
                 SELECT DISTINCT c.instructor_id 
                 FROM enrolments e 
                 JOIN courses c ON c.id = e.course_id 
                 WHERE e.trainee_id = ? AND c.instructor_id IS NOT NULL
-            )';
-            $params[] = $userId;
+            )', [$userId]);
         } elseif ($role === 'instructor' && $userId !== null) {
-            $sql .= ' WHERE a.is_public = 1 OR a.created_by = ?';
-            $params[] = $userId;
+            $query->whereRaw('a.is_public = 1 OR a.created_by = ?', [$userId]);
         }
 
-        $sql .= ' ORDER BY a.published_at DESC, a.created_at DESC LIMIT 10';
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetchAll();
+        return $query->orderBy('a.published_at', 'DESC, a.created_at DESC')->limit(10)->get();
     }
 
     public function addAnnouncement(array $data): void
     {
-        $stmt = $this->db->prepare('INSERT INTO announcements (title, body, is_public, created_by, published_at) VALUES (?, ?, ?, ?, NOW())');
-        $stmt->execute([$data['title'], $data['body'], $data['is_public'], $data['created_by']]);
+        $this->table('announcements')->insert([
+            'title' => $data['title'],
+            'body' => $data['body'],
+            'is_public' => $data['is_public'],
+            'created_by' => $data['created_by'],
+            'published_at' => date('Y-m-d H:i:s'),
+        ]);
     }
 
     public function stats(): array

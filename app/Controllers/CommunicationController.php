@@ -5,18 +5,18 @@ namespace App\Controllers;
 
 use App\Core\Auth;
 use App\Core\Security;
-use App\Core\View;
+use App\Core\Controller;
 use App\Models\Message;
 use App\Models\Notification;
 
-final class CommunicationController
+final class CommunicationController extends Controller
 {
     public function messages(): void
     {
         Auth::requireLogin();
         $model = new Message();
         $conversationId = (int) ($_GET['conversation_id'] ?? 0);
-        View::render('communication/messages', [
+        $this->render('communication/messages', [
             'conversations' => $model->conversations((int) Auth::id(), Security::cleanString($_GET['q'] ?? '')),
             'messages' => $conversationId ? $model->messages($conversationId, (int) Auth::id()) : [],
             'contacts' => $model->contacts((int) Auth::id()),
@@ -61,7 +61,7 @@ final class CommunicationController
     {
         Auth::requireLogin();
         $model = new Notification();
-        View::render('communication/notifications', [
+        $this->render('communication/notifications', [
             'notifications' => $model->recent((int) Auth::id(), Security::cleanString($_GET['q'] ?? ''), Security::cleanString($_GET['type'] ?? '')),
             'types' => $model->types(),
             'q' => Security::cleanString($_GET['q'] ?? ''),
@@ -120,6 +120,6 @@ final class CommunicationController
             echo json_encode($payload);
             return;
         }
-        header('Location: ' . $redirect);
+        $this->redirect($redirect);
     }
 }
