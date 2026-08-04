@@ -34,7 +34,7 @@
         foreach ($kpiData as $kpi): 
         ?>
             <div class="col-12 col-md-4">
-                <div class="stat-card p-4 hover-lift">
+                <div class="stat-card p-3 hover-lift">
                     <div class="icon-circle bg-<?= $kpi['color'] ?> bg-opacity-10 text-<?= $kpi['color'] ?>">
                         <i class="bi <?= $kpi['icon'] ?>"></i>
                     </div>
@@ -135,19 +135,26 @@
                             <p class="text-muted small">Complete courses to earn certificates.</p>
                         </div>
                     <?php else: ?>
-                        <div class="timeline position-relative border-start border-2 border-info ms-3 ps-4 py-2">
-                            <?php foreach ($certificates as $cert): ?>
-                                <div class="timeline-item position-relative mb-4">
-                                    <div class="timeline-marker position-absolute bg-white border border-2 border-info rounded-circle" style="width: 16px; height: 16px; left: -1.8rem; top: 0.2rem;"></div>
-                                    <div class="text-muted small fw-semibold mb-1"><?= date('F j, Y', strtotime($cert['issued_at'])) ?></div>
-                                    <h6 class="fw-bold text-dark mb-1"><?= Security::e($cert['course_title']) ?></h6>
-                                    <p class="text-muted small mb-2">Certificate #<?= Security::e($cert['certificate_no']) ?></p>
-                                    <a href="index.php?page=view-certificate&id=<?= (int)$cert['id'] ?>" class="btn btn-sm btn-outline-info rounded-pill hover-lift px-3">
-                                        <i class="bi bi-eye me-1"></i> View Certificate
-                                    </a>
+                        <?php foreach ($certificates as $index => $cert): ?>
+                            <div class="d-flex align-items-start mb-3">
+                                <div class="me-3 text-center" style="min-width: 48px;">
+                                    <div class="bg-info bg-opacity-10 text-info rounded-circle d-flex align-items-center justify-content-center mx-auto" style="width: 36px; height: 36px;">
+                                        <i class="bi bi-award"></i>
+                                    </div>
                                 </div>
-                            <?php endforeach; ?>
-                        </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="fw-bold text-dark mb-1" style="font-size: 0.9rem;"><?= Security::e($cert['course_title']) ?></h6>
+                                    <p class="text-muted small mb-1"><i class="bi bi-calendar-check me-1"></i><?= date('M j, Y', strtotime($cert['issued_at'])) ?></p>
+                                    <span class="text-muted small"><i class="bi bi-upc-scan me-1"></i><?= Security::e($cert['certificate_no']) ?></span>
+                                </div>
+                                <a href="index.php?page=view-certificate&id=<?= (int)$cert['id'] ?>" class="btn btn-sm btn-outline-info rounded-pill px-3 ms-2 flex-shrink-0 align-self-center">
+                                    <i class="bi bi-eye me-1"></i>View
+                                </a>
+                            </div>
+                            <?php if ($index < count($certificates) - 1): ?>
+                                <hr class="my-2 opacity-10">
+                            <?php endif; ?>
+                        <?php endforeach; ?>
                     <?php endif; ?>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 ﻿<!doctype html>
 <html lang="en" data-theme="light">
-<head><style>*{animation:none!important;animation-delay:0s!important;animation-duration:0s!important;transition:none!important;}body,main,.main-content,.main-content-inner,.reveal-on-scroll,.sidenav-content,.overview-stat-card,.animate-in,.hero-band,.hero-content,section,div,article,aside,header,footer,nav,h1,h2,h3,h4,h5,h6,p,span,a,ul,li,table,tr,td,th,form,input,button,select,textarea,img,svg,canvas,.card,.btn,.table,.chart-container,.stat-card,.overview-stats{opacity:1!important;transform:none!important;visibility:visible!important;}</style>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="70d41ba0cbfae3cc84c1269d8e9023079b5c400ba8953459388a3706fac562a8">
+    <meta name="csrf-token" content="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
     <meta name="description" content="CENTEXS ITOP Management System — Manage programme registration, learning materials, assessments, and certification.">
     <title>CENTEXS ITOP Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8368,7 +8368,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
     <!-- Brand Header -->
     <div class="sidenav-header">
         <a href="index.php" class="sidenav-brand">
-            <img src="http://localhost:8080/public/assets/img/centexs-logo-with-outline-1.png" alt="CENTEXS" class="sidenav-logo-img">
+            <img src="http://localhost:8000/public/assets/img/centexs-logo-with-outline-1.png" alt="CENTEXS" class="sidenav-logo-img">
             <span class="sidenav-brand-text">CENTEXS IMS</span>
         </a>
         <button class="sidenav-close-btn" id="sidenavCloseBtn" aria-label="Close menu">
@@ -8379,8 +8379,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
     <!-- User Card -->
     <div class="sidenav-user">
         <div class="sidenav-avatar">
-                                        <img src="http://localhost:8080/storage/uploads/747c3cc49e33b8d1c971a0184d1da742.jpeg" alt="Profile">
-                    </div>
+                                        D                    </div>
         <div class="sidenav-user-info">
             <span class="sidenav-user-name">Demo Admin</span>
             <span class="sidenav-user-role">Admin</span>
@@ -8800,7 +8799,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
             </div>
             <h3 class="overview-panel-title" style="font-size:1rem">Latest Participants</h3>
                             <div class="completion-item">
-                    <div class="completion-item-title">calvin</div>
+                    <div class="completion-item-title">Trainee Daniel Ling</div>
                     <div class="completion-item-meta">trainee@centexs.local · Jul 21</div>
                 </div>
                                 </div>
@@ -8813,7 +8812,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
             </div>
             <h3 class="overview-panel-title" style="font-size:1rem">Recent Enrolments</h3>
                             <div class="completion-item">
-                    <div class="completion-item-title">calvin</div>
+                    <div class="completion-item-title">Trainee Daniel Ling</div>
                     <div class="completion-item-meta">Industrial IoT Operations <span class="completion-item-badge in-progress">completed</span></div>
                 </div>
                                 </div>
@@ -8826,12 +8825,12 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
             </div>
             <h3 class="overview-panel-title" style="font-size:1rem">Recently Issued</h3>
                             <div class="completion-item">
-                    <div class="completion-item-title">calvin</div>
-                    <div class="completion-item-meta">ITOP-2026-296672</div>
+                    <div class="completion-item-title">Trainee Daniel Ling</div>
+                    <div class="completion-item-meta">ITOP-2026-0001</div>
                 </div>
                             <div class="completion-item">
-                    <div class="completion-item-title">calvin</div>
-                    <div class="completion-item-meta">ITOP-2026-0001</div>
+                    <div class="completion-item-title">Trainee Daniel Ling</div>
+                    <div class="completion-item-meta">ITOP-2026-764689</div>
                 </div>
                                 </div>
     </div>
@@ -9237,7 +9236,7 @@ function saveAnalyticsChanges() {
         return;
     }
 
-    const csrf = '70d41ba0cbfae3cc84c1269d8e9023079b5c400ba8953459388a3706fac562a8';
+    const csrf = '5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b';
     fetch('index.php?page=admin-save-analytics-details', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
@@ -9280,7 +9279,7 @@ function submitCustomChartForm(e) {
     const title = document.getElementById('customChartTitle').value;
     const chartType = document.getElementById('customChartType').value;
     const dataSource = document.getElementById('customChartSource').value;
-    const csrf = '70d41ba0cbfae3cc84c1269d8e9023079b5c400ba8953459388a3706fac562a8';
+    const csrf = '5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b';
 
     fetch('index.php?page=admin-create-custom-chart', {
         method: 'POST',
@@ -9304,7 +9303,7 @@ function submitCustomChartForm(e) {
 
 function deleteCustomChart(id) {
     if (!confirm('Are you sure you want to delete this custom chart? This action cannot be undone.')) return;
-    const csrf = '70d41ba0cbfae3cc84c1269d8e9023079b5c400ba8953459388a3706fac562a8';
+    const csrf = '5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b';
 
     fetch('index.php?page=admin-delete-custom-chart', {
         method: 'POST',
@@ -9457,8 +9456,7 @@ function deleteCustomChart(id) {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="http://localhost:8080/public/assets/js/app.js?v=2.8"></script>
+<script src="http://localhost:8000/public/assets/js/app.js?v=2.8"></script>
 </body>
 </html>
-
 

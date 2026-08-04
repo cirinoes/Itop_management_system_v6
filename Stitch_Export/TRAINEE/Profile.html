@@ -1,9 +1,9 @@
 ﻿<!doctype html>
 <html lang="en" data-theme="light">
-<head><style>*{animation:none!important;animation-delay:0s!important;animation-duration:0s!important;transition:none!important;}body,main,.main-content,.main-content-inner,.reveal-on-scroll,.sidenav-content,.overview-stat-card,.animate-in,.hero-band,.hero-content,section,div,article,aside,header,footer,nav,h1,h2,h3,h4,h5,h6,p,span,a,ul,li,table,tr,td,th,form,input,button,select,textarea,img,svg,canvas,.card,.btn,.table,.chart-container,.stat-card,.overview-stats{opacity:1!important;transform:none!important;visibility:visible!important;}</style>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="c70296d07360ea0276cb39933862de0f848d97ea216f1115553b4f0dded7d178">
+    <meta name="csrf-token" content="1fe737cb2db49db99b140bc8e3ab46e31d081d8d7164ef2305ba9c21d97db0a0">
     <meta name="description" content="CENTEXS ITOP Management System — Manage programme registration, learning materials, assessments, and certification.">
     <title>CENTEXS ITOP Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8368,7 +8368,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
     <!-- Brand Header -->
     <div class="sidenav-header">
         <a href="index.php" class="sidenav-brand">
-            <img src="http://localhost:8080/public/assets/img/centexs-logo-with-outline-1.png" alt="CENTEXS" class="sidenav-logo-img">
+            <img src="http://localhost:8000/public/assets/img/centexs-logo-with-outline-1.png" alt="CENTEXS" class="sidenav-logo-img">
             <span class="sidenav-brand-text">CENTEXS IMS</span>
         </a>
         <button class="sidenav-close-btn" id="sidenavCloseBtn" aria-label="Close menu">
@@ -8379,8 +8379,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
     <!-- User Card -->
     <div class="sidenav-user">
         <div class="sidenav-avatar">
-                                        <img src="http://localhost:8080/storage/uploads/747c3cc49e33b8d1c971a0184d1da742.jpeg" alt="Profile">
-                    </div>
+                                        D                    </div>
         <div class="sidenav-user-info">
             <span class="sidenav-user-name">Demo Trainee</span>
             <span class="sidenav-user-role">Trainee</span>
@@ -8500,7 +8499,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         
         <!-- Left: Framed Avatar Window -->
         <div class="admin-profile-avatar-wrapper flex-shrink-0" onclick="document.getElementById('traineeAvatarFileInput').click()" title="Click to change profile picture" style="width: 120px; height: 120px; min-width: 120px; min-height: 120px; max-width: 120px; max-height: 120px; border-radius: 20px; border: 4px solid #ffffff; outline: 2px solid #cbd5e1; box-shadow: 0 8px 20px rgba(0,0,0,0.12); position: relative; overflow: hidden; cursor: pointer; margin: 0; background: #ffffff;">
-                            <img src="storage/uploads/747c3cc49e33b8d1c971a0184d1da742.jpeg" alt="Profile Picture" class="admin-avatar-img" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; border-radius: 14px;">
+                            <div class="admin-avatar-initials" style="width: 100%; height: 100%; display: grid; place-items: center; color: #ffffff; font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, #054d9e 0%, #18a999 100%); border-radius: 14px;">C</div>
                         <div class="admin-avatar-overlay">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                 <span>Change</span>
@@ -8508,7 +8507,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         </div>
 
         <form id="traineeAvatarForm" action="index.php?page=save-profile-picture" method="post" enctype="multipart/form-data" class="d-none">
-            <input type="hidden" name="_csrf" value="c70296d07360ea0276cb39933862de0f848d97ea216f1115553b4f0dded7d178">
+            <input type="hidden" name="_csrf" value="1fe737cb2db49db99b140bc8e3ab46e31d081d8d7164ef2305ba9c21d97db0a0">
             <input type="file" name="profile_picture" id="traineeAvatarFileInput" accept="image/*" onchange="document.getElementById('traineeAvatarForm').submit()">
         </form>
 
@@ -8881,7 +8880,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                     <div class="panel h-100">
                         <h2 class="h5 mb-3 border-bottom pb-3">Change Account Password</h2>
                         <form action="index.php?page=admin-change-password" method="post">
-                            <input type="hidden" name="_csrf" value="c70296d07360ea0276cb39933862de0f848d97ea216f1115553b4f0dded7d178">
+                            <input type="hidden" name="_csrf" value="1fe737cb2db49db99b140bc8e3ab46e31d081d8d7164ef2305ba9c21d97db0a0">
                             
                             <div class="mb-3">
                                 <label class="form-label font-weight-bold">Current Password</label>
@@ -8921,7 +8920,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                             </div>
                             <div class="p-3 border rounded-3 bg-surface">
                                 <span class="text-uppercase text-muted fw-bold d-block mb-1" style="font-size: 0.725rem;">Account Created Date</span>
-                                <span class="fw-semibold text-dark fs-6">2026-07-21 14:03:53</span>
+                                <span class="fw-semibold text-dark fs-6">2026-07-21 17:32:28</span>
                             </div>
                         </div>
                     </div>
@@ -8934,7 +8933,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
             <div class="panel">
                 <h2 class="h5 mb-3 border-bottom pb-3">System Preferences</h2>
                 <form action="index.php?page=admin-save-preferences" method="post">
-                    <input type="hidden" name="_csrf" value="c70296d07360ea0276cb39933862de0f848d97ea216f1115553b4f0dded7d178">
+                    <input type="hidden" name="_csrf" value="1fe737cb2db49db99b140bc8e3ab46e31d081d8d7164ef2305ba9c21d97db0a0">
 
                     <div class="row g-4">
                         <div class="col-md-6">
@@ -8987,7 +8986,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="index.php?page=save-trainee-profile" method="post">
-                <input type="hidden" name="_csrf" value="c70296d07360ea0276cb39933862de0f848d97ea216f1115553b4f0dded7d178">
+                <input type="hidden" name="_csrf" value="1fe737cb2db49db99b140bc8e3ab46e31d081d8d7164ef2305ba9c21d97db0a0">
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -9050,7 +9049,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="index.php?page=save-trainee-profile" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="_csrf" value="c70296d07360ea0276cb39933862de0f848d97ea216f1115553b4f0dded7d178">
+                <input type="hidden" name="_csrf" value="1fe737cb2db49db99b140bc8e3ab46e31d081d8d7164ef2305ba9c21d97db0a0">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label font-weight-bold">Document Category / Type</label>
@@ -9221,8 +9220,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="http://localhost:8080/public/assets/js/app.js?v=2.8"></script>
+<script src="http://localhost:8000/public/assets/js/app.js?v=2.8"></script>
 </body>
 </html>
-
 

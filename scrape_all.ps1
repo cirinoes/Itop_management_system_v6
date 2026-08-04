@@ -1,5 +1,5 @@
-﻿$baseUrl = "http://localhost:8080"
-$cssPath = "c:\xampp\htdocs\Itop_management_system\public\assets\css\app.css"
+$baseUrl = "http://localhost:8000"
+$cssPath = "c:\xampp\htdocs\Itop_management_system_v6\public\assets\css\app.css"
 $cssContent = Get-Content $cssPath -Raw
 
 $roles = @{
@@ -7,10 +7,15 @@ $roles = @{
         "role" = "public"
         "pages" = @{
             "Homepage" = "home"
+            "About" = "about"
             "Courses" = "courses"
+            "Course Detail" = "course"
+            "News" = "news"
+            "Contact" = "contact"
             "Login" = "login"
             "Register" = "register"
-            "About" = "about"
+            "Verify Certificate" = "verify-certificate"
+            "View Certificate" = "view-certificate"
         }
     }
     "TRAINEE" = @{
@@ -18,8 +23,12 @@ $roles = @{
         "pages" = @{
             "Dashboard" = "trainee-dashboard"
             "Profile" = "trainee-profile"
+            "Evaluations" = "trainee-evaluations"
             "Certificates" = "trainee-certificates"
             "Messages" = "messages"
+            "Notifications" = "notifications"
+            "Course Room" = "course-room"
+            "My Learning Report" = "my-learning-report"
         }
     }
     "INSTRUCTOR" = @{
@@ -28,6 +37,7 @@ $roles = @{
             "Dashboard" = "instructor-dashboard"
             "Courses" = "instructor-courses"
             "Reports" = "instructor-reports"
+            "Enrolments" = "instructor-enrolments"
         }
     }
     "ADMINISTRATOR" = @{
@@ -35,19 +45,34 @@ $roles = @{
         "pages" = @{
             "Dashboard" = "admin-dashboard"
             "Users" = "admin-users"
+            "User Detail" = "admin-user-detail"
             "Courses" = "admin-courses"
-            "Settings" = "admin-system-settings"
+            "Course Detail" = "admin-course-detail"
+            "Enrolments" = "admin-enrolments"
+            "Enrolment Detail" = "admin-enrolment-detail"
+            "Certificates" = "admin-certificates"
+            "Certificate Logs" = "admin-certificate-logs"
+            "Documentation" = "admin-documentation"
+            "Evaluations" = "admin-evaluations"
+            "Master Data" = "admin-master-data"
+            "Website Settings" = "admin-website-settings"
+            "Analytics" = "admin-analytics"
+            "Analytics Detail" = "admin-analytics-detail"
+            "Participants" = "admin-participants"
+            "Participant Detail" = "admin-participant-detail"
+            "System Settings" = "admin-system-settings"
+            "Profile" = "admin-profile"
         }
     }
 }
 
-$outDir = "c:\xampp\htdocs\Itop_management_system\Stitch_Export"
+$outDir = "c:\xampp\htdocs\Itop_management_system_v6\Stitch_Export"
 if (Test-Path $outDir) { Remove-Item $outDir -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
-$uploadScript = "c:\xampp\htdocs\Itop_management_system\upload_to_stitch.ps1"
+$uploadScript = "c:\xampp\htdocs\Itop_management_system_v6\upload_to_stitch.ps1"
 $header = @"
-`$configPath = `"C:\Users\User\.gemini\config\mcp_config.json`"
+`$configPath = `"C:\Users\ckuli\.gemini\config\mcp_config.json`"
 `$config = Get-Content `$configPath | ConvertFrom-Json
 `$env:STITCH_API_KEY = `$config.mcpServers.stitch.env.STITCH_API_KEY
 Write-Host 'Starting bulk upload to Stitch...'
@@ -108,4 +133,3 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
 }
 
 Write-Host "Scraping complete! Run upload_to_stitch.ps1 to push to Stitch."
-

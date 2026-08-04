@@ -106,6 +106,9 @@ final class ReportController extends Controller
         $db = Database::connection();
         $traineeId = Auth::id();
 
+        $stmtEnrolled = $db->prepare('SELECT COUNT(*) FROM enrolments WHERE trainee_id = ?');
+        $stmtEnrolled->execute([$traineeId]);
+
         $stmtCompleted = $db->prepare('SELECT COUNT(*) FROM enrolments WHERE trainee_id = ? AND status = "completed"');
         $stmtCompleted->execute([$traineeId]);
         
@@ -138,7 +141,7 @@ final class ReportController extends Controller
         $stmtProgress->execute([$traineeId]);
 
         $stmtCertList = $db->prepare('
-            SELECT c.title, cert.issued_at, cert.certificate_no
+            SELECT c.title AS course_title, cert.issued_at, cert.certificate_no, cert.id
             FROM certificates cert
             JOIN courses c ON c.id = cert.course_id
             WHERE cert.trainee_id = ? AND cert.approval_status = "approved"
@@ -147,13 +150,14 @@ final class ReportController extends Controller
         $stmtCertList->execute([$traineeId]);
 
         $this->render('reports/trainee', [
-            'metrics' => [
+            'overview' => [
+                'enrolled_courses' => (int) $stmtEnrolled->fetchColumn(),
                 'completed_courses' => (int) $stmtCompleted->fetchColumn(),
                 'total_hours' => (int) $stmtHours->fetchColumn(),
-                'certificates' => (int) $stmtCert->fetchColumn(),
             ],
-            'course_progress' => $stmtProgress->fetchAll(),
-            'certificates_list' => $stmtCertList->fetchAll(),
+            'cert_count' => (int) $stmtCert->fetchColumn(),
+            'progress' => $stmtProgress->fetchAll(),
+            'certificates' => $stmtCertList->fetchAll(),
         ]);
     }
 

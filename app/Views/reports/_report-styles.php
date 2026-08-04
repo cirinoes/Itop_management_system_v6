@@ -42,17 +42,17 @@
     overflow: hidden;
 }
 .stat-card .icon-circle {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
 }
 .stat-card .value {
-    font-size: 2.25rem;
+    font-size: 1.75rem;
     font-weight: 800;
     color: var(--ims-ink, #182230);
     line-height: 1.2;

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
+    <meta name="csrf-token" content="1fe737cb2db49db99b140bc8e3ab46e31d081d8d7164ef2305ba9c21d97db0a0">
     <meta name="description" content="CENTEXS ITOP Management System — Manage programme registration, learning materials, assessments, and certification.">
     <title>CENTEXS ITOP Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8381,15 +8381,15 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         <div class="sidenav-avatar">
                                         D                    </div>
         <div class="sidenav-user-info">
-            <span class="sidenav-user-name">Demo Instructor</span>
-            <span class="sidenav-user-role">Instructor</span>
+            <span class="sidenav-user-name">Demo Trainee</span>
+            <span class="sidenav-user-role">Trainee</span>
         </div>
     </div>
 
     <!-- Navigation Menu -->
     <nav class="sidenav-menu">
 
-                    <!-- ═══ Instructor Navigation ═══ -->
+                    <!-- ═══ Trainee Navigation ═══ -->
             <div class="sidenav-section-label">Main</div>
 
             <a href="index.php?page=profile" class="sidenav-link ">
@@ -8402,24 +8402,29 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                 <span>Dashboard</span>
             </a>
 
-            <a href="index.php?page=instructor-courses" class="sidenav-link active">
+            <a href="index.php?page=trainee-dashboard" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                <span>My Courses</span>
+                <span>My Learning</span>
             </a>
 
-            <a href="index.php?page=instructor-enrolments" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
-                <span>Enrolments</span>
+            <a href="index.php?page=trainee-evaluations" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                <span>Evaluations</span>
             </a>
 
-            <a href="index.php?page=announcements-manage" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <span>Announcements</span>
+            <a href="index.php?page=trainee-certificates" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                <span>Certificates</span>
             </a>
 
-                        <a href="index.php?page=instructor-reports" class="sidenav-link ">
+            <a href="index.php?page=courses" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span>Browse Courses</span>
+            </a>
+
+            <a href="index.php?page=my-learning-report" class="sidenav-link active">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                <span>Reports</span>
+                <span>My Learning Report</span>
             </a>
 
             <div class="sidenav-section-label">Communication</div>
@@ -8437,7 +8442,6 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                     <span>Notifications</span>
                 </div>
                             </a>
-
         
         <!-- ═══ Common Bottom Links ═══ -->
         <div class="sidenav-section-label">Account</div>
@@ -8474,7 +8478,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
                                             </a>
                     <div class="topbar-user-pill d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill bg-light border">
-                        <span class="topbar-user-name fw-semibold small text-dark">Demo Instructor</span>
+                        <span class="topbar-user-name fw-semibold small text-dark">Demo Trainee</span>
                     </div>
                 </div>
             </div>
@@ -8483,91 +8487,316 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         <!-- Main Content Area -->
         <main class="main-content">
             <div class="main-content-inner">
-                
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <span class="section-label">Instructor Hub</span>
-        <h1 class="section-title mb-0">My Courses</h1>
-    </div>
-    <div class="d-flex gap-2">
-        <!-- Optional: A button to create a new course if they have permissions -->
-    </div>
-</div>
+                <section class="container-fluid py-4 report-page">
+        <style>
+/* Report Shared Styles */
+.tracking-wider { letter-spacing: 0.05em; }
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <!-- Filters -->
-    <div class="status-tabs mb-0">
-        <a class="status-tab active" href="#">Active Courses</a>
-        <a class="status-tab" href="#">Past Courses</a>
-        <a class="status-tab" href="#">Drafts</a>
+.hover-lift { 
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+.hover-lift:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1) !important; 
+}
+
+/* Unified Table */
+.custom-table {
+    margin-bottom: 0;
+}
+.custom-table th { 
+    background-color: var(--ims-soft, #f8f9fa); 
+    border-bottom: 2px solid var(--ims-border, #e9ecef); 
+    color: var(--ims-muted, #6c757d);
+    font-size: 0.75rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.custom-table td { 
+    border-bottom: 1px solid var(--ims-border-light, #f1f3f5); 
+    color: var(--ims-ink, #495057); 
+    vertical-align: middle;
+}
+.custom-table tbody tr:hover td {
+    background-color: rgba(0,0,0,0.015);
+}
+
+/* Stat Cards */
+.stat-card {
+    border-radius: var(--ims-radius-lg, 16px);
+    border: 0;
+    box-shadow: var(--ims-shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
+    background: white;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.stat-card .icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+.stat-card .value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--ims-ink, #182230);
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+.stat-card .label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ims-muted, #64748b);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.stat-card .trend-indicator {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
+/* Chart Cards */
+.chart-card {
+    border: 0;
+    border-radius: var(--ims-radius-lg, 16px);
+    box-shadow: var(--ims-shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
+    height: 100%;
+}
+.chart-card-header {
+    background: transparent;
+    border-bottom: 0;
+    padding: 1.5rem 1.5rem 0 1.5rem;
+}
+.chart-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ims-ink, #182230);
+    margin: 0;
+}
+.chart-card-body {
+    padding: 1.5rem;
+    position: relative;
+}
+
+/* KPI Rings (Trainee View) */
+.kpi-ring {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 1rem auto;
+    position: relative;
+}
+.kpi-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(currentColor var(--progress, 0%), transparent 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.3;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+    }
+    .sidenav, .topbar, .site-footer, .filter-bar, .btn {
+        display: none !important;
+    }
+    .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+    canvas {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+</style>
+
+    <!-- Report Header -->
+    <div class="report-header d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+        <div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3 py-1 fw-semibold">Trainee</span>
+                <h1 class="h3 mb-0 fw-bold">My Learning Report</h1>
+            </div>
+            <p class="text-muted mb-0">Track your progress, achievements, and certificate timeline.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-primary shadow-sm hover-lift rounded-pill px-4" onclick="window.print()">
+                <i class="bi bi-file-earmark-pdf me-2"></i> Download PDF
+            </button>
+        </div>
     </div>
 
-    <div class="input-group input-group-sm" style="width: 250px;">
-        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-        <input type="text" class="form-control border-start-0 ps-0" placeholder="Search courses...">
-    </div>
-</div>
+    <!-- KPI Strip -->
+    <div class="row g-4 mb-4">
+                    <div class="col-12 col-md-4">
+                <div class="stat-card p-3 hover-lift">
+                    <div class="icon-circle bg-primary bg-opacity-10 text-primary">
+                        <i class="bi bi-journal-bookmark"></i>
+                    </div>
+                    <div class="value counter" data-target="0">0</div>
+                    <div class="label">Courses Enrolled</div>
+                    <div class="trend-indicator text-muted"><i class="bi bi-graph-up text-primary me-1"></i> Active & Completed</div>
+                    <div class="position-absolute bottom-0 start-0 w-100" style="height: 4px; background: var(--bs-primary);"></div>
+                </div>
+            </div>
+                    <div class="col-12 col-md-4">
+                <div class="stat-card p-3 hover-lift">
+                    <div class="icon-circle bg-success bg-opacity-10 text-success">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <div class="value counter" data-target="0">0</div>
+                    <div class="label">Courses Completed</div>
+                    <div class="trend-indicator text-muted"><i class="bi bi-graph-up text-success me-1"></i> 0% of total</div>
+                    <div class="position-absolute bottom-0 start-0 w-100" style="height: 4px; background: var(--bs-success);"></div>
+                </div>
+            </div>
+                    <div class="col-12 col-md-4">
+                <div class="stat-card p-3 hover-lift">
+                    <div class="icon-circle bg-warning bg-opacity-10 text-warning">
+                        <i class="bi bi-award"></i>
+                    </div>
+                    <div class="value counter" data-target="0">0</div>
+                    <div class="label">Certificates Earned</div>
+                    <div class="trend-indicator text-muted"><i class="bi bi-graph-up text-warning me-1"></i> Ready to download</div>
+                    <div class="position-absolute bottom-0 start-0 w-100" style="height: 4px; background: var(--bs-warning);"></div>
+                </div>
+            </div>
+            </div>
 
-<!-- Courses Grid -->
-<div class="row g-4">
-                <div class="col-12">
-            <div class="empty-state bg-white border rounded shadow-sm py-5">
-                <div class="empty-state-icon fs-1 mb-3">📚</div>
-                <div class="empty-state-title fw-bold">No assigned courses</div>
-                <p class="text-muted small">You are not assigned to any courses yet.</p>
+    <!-- Progress Overview Chart -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="chart-card d-flex flex-column bg-white">
+                <div class="chart-card-header">
+                    <h5 class="chart-card-title">Course Progression Overview</h5>
+                </div>
+                <div class="chart-card-body">
+                    <div style="height: 250px;">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-<!-- Claim/Teach Course Panel -->
-    <div class="mt-5 p-4 border rounded bg-white shadow-sm">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h5 class="fw-bold mb-1">Available to Teach</h5>
-                <p class="text-muted small mb-0">Select a course to claim it and become the instructor.</p>
+    <!-- Two-Column Bottom -->
+    <div class="row g-4">
+        <!-- Course Progression Details -->
+        <div class="col-lg-7">
+            <div class="card border-0 rounded-4 shadow-sm bg-white h-100">
+                <div class="card-header bg-white border-bottom p-4">
+                    <h5 class="fw-bold mb-0">Detailed Course Progression</h5>
+                </div>
+                <div class="card-body p-0">
+                                            <div class="empty-state text-center py-5">
+                            <i class="bi bi-journal-x text-muted opacity-25" style="font-size: 3rem;"></i>
+                            <h6 class="fw-bold mt-3">No Courses Found</h6>
+                            <p class="text-muted small">You haven't enrolled in any courses yet.</p>
+                            <a href="index.php?page=courses" class="btn btn-outline-primary rounded-pill mt-3 px-4">Browse Courses</a>
+                        </div>
+                                    </div>
             </div>
-            <form method="post" action="index.php?page=instructor-claim-course" class="d-flex gap-2 align-items-center">
-                <input type="hidden" name="_csrf" value="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
-                <select class="form-select form-select-sm" name="course_id" required style="min-width: 250px;">
-                    <option value="">Choose available course...</option>
-                                            <option value="12">5G Training (Telecommunication)</option>
-                                            <option value="34">Asas Simen Ferro (Manufacturing)</option>
-                                            <option value="23">Canva dalam Pendidikan (AI &amp; Education)</option>
-                                            <option value="22">Celik AI Memacu Pendidikan (AI &amp; Education)</option>
-                                            <option value="29">Chargeman H2 (O/H) (Electrical)</option>
-                                            <option value="27">Chargeman L1 (Electrical)</option>
-                                            <option value="28">Chargeman L2 (O/H) (Electrical)</option>
-                                            <option value="3">Cybersecurity Awareness for Operations (Cybersecurity)</option>
-                                            <option value="35">Data Security Course for Resident Office Samarahan (Security)</option>
-                                            <option value="13">Datacom (Digital Technology)</option>
-                                            <option value="16">Digital Byte Size (Digital Technology)</option>
-                                            <option value="15">Digital Marketing (Digital Technology)</option>
-                                            <option value="6">Fiber Optic Splicing (Telecommunication)</option>
-                                            <option value="33">Fiberglass Boat Training Programme (Manufacturing)</option>
-                                            <option value="32">Fiberglass Composite Boat Building (Manufacturing)</option>
-                                            <option value="7">FTTX OSP Hardware Installation (Telecommunication)</option>
-                                            <option value="8">FTTX OSP Training (TelBru, Brunei) (Telecommunication)</option>
-                                            <option value="25">Green Energy (Green Energy)</option>
-                                            <option value="26">Greenhouse Gas (GHG) Accounting &amp; Reporting (ESG)</option>
-                                            <option value="31">Healthy Menu Preparation (Penyediaan Menu Sihat) (Hospitality)</option>
-                                            <option value="30">Hospitality &amp; Service Quality Training (Hospitality)</option>
-                                            <option value="24">Immersive Technologies (EON-XR, Photogrammetry &amp; 360) (Digital Technology)</option>
-                                            <option value="17">Industry 4.0 (Industry 4.0)</option>
-                                            <option value="14">Internet of Things (IoT) Foundation &amp; Application (Internet of Things (IoT))</option>
-                                            <option value="4">Introduction to Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="18">IR4.0 (Industry 4.0)</option>
-                                            <option value="20">IR4.0 Applications to Enhance Teaching and Learning Through Cloud Services (Industry 4.0)</option>
-                                            <option value="21">Online Applications for Content Development (AI &amp; Education)</option>
-                                            <option value="19">Smart Manufacturing (Industry 4.0)</option>
-                                            <option value="5">Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="11">Wireless and Microwave Hardware Installation (Telecommunication)</option>
-                                            <option value="9">Wireless Base Station and Antenna Subsystem Training (Telecommunication)</option>
-                                            <option value="10">Wireless Cellular Hardware Installation (Telecommunication)</option>
-                                    </select>
-                <button class="btn btn-primary btn-sm flex-shrink-0 px-3">Claim Course</button>
-            </form>
+        </div>
+
+        <!-- Achievement Timeline -->
+        <div class="col-lg-5">
+            <div class="card border-0 rounded-4 shadow-sm bg-white h-100">
+                <div class="card-header bg-white border-bottom p-4">
+                    <h5 class="fw-bold mb-0">Achievement Timeline</h5>
+                </div>
+                <div class="card-body p-4">
+                                            <div class="empty-state text-center py-4">
+                            <i class="bi bi-award text-muted opacity-25" style="font-size: 3rem;"></i>
+                            <h6 class="fw-bold mt-3">No Certificates Yet</h6>
+                            <p class="text-muted small">Complete courses to earn certificates.</p>
+                        </div>
+                                    </div>
+            </div>
         </div>
     </div>
+</section>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Number counter animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 1500;
+        const step = target / (duration / 16);
+        let current = 0;
+        const update = () => {
+            current += step;
+            if (current < target) {
+                counter.innerText = Math.ceil(current).toLocaleString();
+                requestAnimationFrame(update);
+            } else {
+                counter.innerText = target.toLocaleString();
+            }
+        };
+        update();
+    });
+
+    Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
+    Chart.defaults.color = '#64748b';
+
+    const progCtx = document.getElementById('progressChart');
+    if (progCtx) {
+        const labels = [];
+        const data = [];
+        
+        // Color coding: green for 100%, blue otherwise
+        const bgColors = data.map(val => val >= 100 ? 'rgba(16, 185, 129, 0.8)' : 'rgba(59, 130, 246, 0.8)');
+
+        new Chart(progCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Progress (%)',
+                    data: data,
+                    backgroundColor: bgColors,
+                    borderRadius: 4,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { beginAtZero: true, max: 100, grid: { borderDash: [4, 4] } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+    }
+});
+</script>
             </div>
         </main>
 

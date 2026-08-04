@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
+    <meta name="csrf-token" content="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
     <meta name="description" content="CENTEXS ITOP Management System — Manage programme registration, learning materials, assessments, and certification.">
     <title>CENTEXS ITOP Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8381,43 +8381,57 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         <div class="sidenav-avatar">
                                         D                    </div>
         <div class="sidenav-user-info">
-            <span class="sidenav-user-name">Demo Instructor</span>
-            <span class="sidenav-user-role">Instructor</span>
+            <span class="sidenav-user-name">Demo Admin</span>
+            <span class="sidenav-user-role">Admin</span>
         </div>
     </div>
 
     <!-- Navigation Menu -->
     <nav class="sidenav-menu">
 
-                    <!-- ═══ Instructor Navigation ═══ -->
-            <div class="sidenav-section-label">Main</div>
+                    <!-- ═══ Admin Navigation ═══ -->
+            <div class="sidenav-section-label">CENTEXS Admin</div>
 
             <a href="index.php?page=profile" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 <span>Profile</span>
             </a>
 
+            <div class="sidenav-section-label">Main</div>
+
             <a href="index.php?page=dashboard" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
                 <span>Dashboard</span>
             </a>
 
-            <a href="index.php?page=instructor-courses" class="sidenav-link active">
+            <div class="sidenav-section-label">Management</div>
+
+            <a href="index.php?page=admin-users" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Users</span>
+            </a>
+
+            <a href="index.php?page=admin-courses" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                <span>My Courses</span>
+                <span>Courses</span>
             </a>
 
-            <a href="index.php?page=instructor-enrolments" class="sidenav-link ">
+            <a href="index.php?page=admin-enrolments" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
-                <span>Enrolments</span>
+                <span>Registration</span>
             </a>
 
-            <a href="index.php?page=announcements-manage" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <span>Announcements</span>
+            <a href="index.php?page=admin-participants" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>Participants</span>
             </a>
 
-                        <a href="index.php?page=instructor-reports" class="sidenav-link ">
+            <a href="index.php?page=admin-certificates" class="sidenav-link active">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                <span>Certificates</span>
+            </a>
+
+            <a href="index.php?page=reports" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 <span>Reports</span>
             </a>
@@ -8437,6 +8451,23 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                     <span>Notifications</span>
                 </div>
                             </a>
+
+            <div class="sidenav-section-label">System</div>
+
+            <a href="index.php?page=admin-master-data" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>Master Data</span>
+            </a>
+
+            <a href="index.php?page=admin-system-settings" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                <span>System Settings</span>
+            </a>
+
+            <a href="index.php?page=admin-website-settings" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Website Settings</span>
+            </a>
 
         
         <!-- ═══ Common Bottom Links ═══ -->
@@ -8474,7 +8505,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
                                             </a>
                     <div class="topbar-user-pill d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill bg-light border">
-                        <span class="topbar-user-name fw-semibold small text-dark">Demo Instructor</span>
+                        <span class="topbar-user-name fw-semibold small text-dark">Demo Admin</span>
                     </div>
                 </div>
             </div>
@@ -8484,90 +8515,1090 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         <main class="main-content">
             <div class="main-content-inner">
                 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <span class="section-label">Instructor Hub</span>
-        <h1 class="section-title mb-0">My Courses</h1>
-    </div>
-    <div class="d-flex gap-2">
-        <!-- Optional: A button to create a new course if they have permissions -->
-    </div>
-</div>
+<!-- Include Google Script Font for Cursive Preview -->
+<link href="https://fonts.googleapis.com/css2?family=Playball&family=Dancing+Script&family=Great+Vibes&display=swap" rel="stylesheet">
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <!-- Filters -->
-    <div class="status-tabs mb-0">
-        <a class="status-tab active" href="#">Active Courses</a>
-        <a class="status-tab" href="#">Past Courses</a>
-        <a class="status-tab" href="#">Drafts</a>
+<style>
+/* Local Styles for Template Designer Workspace */
+.designer-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    align-items: start;
+    margin-top: 1rem;
+}
+@media (max-width: 992px) {
+    .designer-workspace {
+        grid-template-columns: 1fr;
+    }
+}
+.designer-form-card {
+    background: var(--ims-surface);
+    border: 1px solid var(--ims-border);
+    border-radius: var(--ims-radius);
+    padding: 1.5rem;
+    box-shadow: var(--ims-shadow-sm);
+}
+.designer-preview-card {
+    background: var(--ims-surface);
+    border: 1px solid var(--ims-border);
+    border-radius: var(--ims-radius);
+    padding: 1.5rem;
+    box-shadow: var(--ims-shadow-sm);
+    position: sticky;
+    top: 20px;
+}
+
+/* Certificate HTML Mockup Preview */
+.cert-mock-container {
+    width: 100%;
+    aspect-ratio: 1 / 1.414; /* A4 Portrait Ratio */
+    background: #fff;
+    box-shadow: var(--ims-shadow-lg);
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.cert-mock-watermark {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0.08;
+    z-index: 1;
+}
+.cert-mock-watermark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.cert-mock-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 10%;
+    text-align: center;
+}
+.cert-mock-logo-wrapper {
+    height: 50px;
+    margin-bottom: 10px;
+}
+.cert-mock-logo {
+    max-height: 50px;
+    object-fit: contain;
+}
+.cert-mock-title {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--cert-title-color, #000);
+    margin: 0;
+}
+.cert-mock-subtitle {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    color: var(--cert-title-color, #000);
+}
+.cert-mock-intro {
+    font-size: 10px;
+    font-weight: bold;
+    color: var(--ims-muted);
+    margin: 0 0 15px 0;
+}
+.cert-mock-recipient {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #111;
+    margin: 0 0 15px 0;
+}
+.cert-mock-intro-script {
+    font-size: 14px;
+    font-family: 'Playball', cursive;
+    color: var(--ims-muted);
+    margin: 0 0 10px 0;
+}
+.cert-mock-course {
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #111;
+    margin: 0 0 3px 0;
+}
+.cert-mock-course-date {
+    font-size: 10px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+}
+.cert-mock-description {
+    font-size: 8px;
+    line-height: 1.3;
+    color: var(--ims-muted);
+    max-width: 85%;
+    margin: 0 auto;
+}
+.cert-mock-footer {
+    position: absolute;
+    bottom: 8%;
+    left: 8%;
+    right: 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    z-index: 2;
+}
+.cert-mock-footer-left {
+    width: 30%;
+    text-align: left;
+}
+.cert-mock-footer-center {
+    width: 40%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cert-mock-footer-right {
+    width: 30%;
+}
+.cert-mock-qr-img {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 2px;
+    object-fit: contain;
+}
+.cert-mock-qr-label {
+    font-size: 6px;
+    color: var(--cert-accent, #aa3338);
+    font-weight: bold;
+}
+.cert-mock-qr-no {
+    font-size: 7px;
+    font-weight: bold;
+}
+.cert-mock-signature-img {
+    height: 35px;
+    margin-bottom: 2px;
+    object-fit: contain;
+}
+.cert-mock-signature-placeholder {
+    height: 20px;
+}
+.cert-mock-sign-line {
+    width: 140px;
+    border-top: 1px solid #000;
+    padding-top: 3px;
+    margin-top: 3px;
+    line-height: 1.2;
+}
+.cert-mock-sign-name {
+    font-size: 8px;
+    font-weight: bold;
+    display: block;
+}
+.cert-mock-sign-title {
+    font-size: 7px;
+    display: block;
+    color: #333;
+}
+.cert-mock-sign-org {
+    font-size: 6px;
+    display: block;
+    color: #555;
+}
+</style>
+
+<div class="pm-container">
+
+    <!-- ── Breadcrumb ── -->
+    <nav class="pm-breadcrumb" aria-label="breadcrumb">
+        <a href="index.php?page=admin-dashboard">Dashboard</a>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        <span>Certificate Management</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="pm-header">
+        <div>
+            <h1 class="pm-title">Certificate Center</h1>
+            <p class="pm-subtitle">Manage, customize templates, and bulk-issue certified achievements.</p>
+        </div>
     </div>
 
-    <div class="input-group input-group-sm" style="width: 250px;">
-        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-        <input type="text" class="form-control border-start-0 ps-0" placeholder="Search courses...">
-    </div>
-</div>
-
-<!-- Courses Grid -->
-<div class="row g-4">
-                <div class="col-12">
-            <div class="empty-state bg-white border rounded shadow-sm py-5">
-                <div class="empty-state-icon fs-1 mb-3">📚</div>
-                <div class="empty-state-title fw-bold">No assigned courses</div>
-                <p class="text-muted small">You are not assigned to any courses yet.</p>
+    <!-- Stats summary widgets -->
+    <div class="pm-stats">
+        <div class="pm-stat-card">
+            <div class="pm-stat-icon pm-stat-icon-all" style="background: var(--ims-primary-light); color: var(--ims-primary);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+            <div class="pm-stat-info">
+                <span class="pm-stat-value">2</span>
+                <span class="pm-stat-label">Total Issued</span>
+            </div>
+        </div>
+        <div class="pm-stat-card">
+            <div class="pm-stat-icon pm-stat-icon-active" style="background: var(--ims-warning-light); color: var(--ims-warning);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="pm-stat-info">
+                <span class="pm-stat-value">0</span>
+                <span class="pm-stat-label">Pending Approval</span>
+            </div>
+        </div>
+        <div class="pm-stat-card">
+            <div class="pm-stat-icon pm-stat-icon-completed" style="background: var(--ims-success-light); color: var(--ims-success);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="pm-stat-info">
+                <span class="pm-stat-value">2</span>
+                <span class="pm-stat-label">Approved & Active</span>
+            </div>
+        </div>
+        <div class="pm-stat-card">
+            <div class="pm-stat-icon pm-stat-icon-all" style="background: var(--ims-danger-light); color: var(--ims-danger);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </div>
+            <div class="pm-stat-info">
+                <span class="pm-stat-value">0</span>
+                <span class="pm-stat-label">Revoked</span>
             </div>
         </div>
     </div>
 
-<!-- Claim/Teach Course Panel -->
-    <div class="mt-5 p-4 border rounded bg-white shadow-sm">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h5 class="fw-bold mb-1">Available to Teach</h5>
-                <p class="text-muted small mb-0">Select a course to claim it and become the instructor.</p>
+    <!-- Navigation Tabs -->
+    <div class="pm-toolbar">
+        <div class="pm-toolbar-row">
+            <div class="pm-tabs" role="tablist" style="margin-bottom:0;">
+                <button class="pm-tab pm-tab-active" id="tabIssued" onclick="switchSection('issued')">
+                    Issued Certificates
+                    <span class="pm-tab-badge">2</span>
+                </button>
+                <button class="pm-tab" id="tabTemplates" onclick="switchSection('templates')">
+                    Templates Designer
+                    <span class="pm-tab-badge">3</span>
+                </button>
+                <button class="pm-tab" id="tabIssue" onclick="switchSection('issue')">
+                    Issuance Center
+                </button>
             </div>
-            <form method="post" action="index.php?page=instructor-claim-course" class="d-flex gap-2 align-items-center">
-                <input type="hidden" name="_csrf" value="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
-                <select class="form-select form-select-sm" name="course_id" required style="min-width: 250px;">
-                    <option value="">Choose available course...</option>
-                                            <option value="12">5G Training (Telecommunication)</option>
-                                            <option value="34">Asas Simen Ferro (Manufacturing)</option>
-                                            <option value="23">Canva dalam Pendidikan (AI &amp; Education)</option>
-                                            <option value="22">Celik AI Memacu Pendidikan (AI &amp; Education)</option>
-                                            <option value="29">Chargeman H2 (O/H) (Electrical)</option>
-                                            <option value="27">Chargeman L1 (Electrical)</option>
-                                            <option value="28">Chargeman L2 (O/H) (Electrical)</option>
-                                            <option value="3">Cybersecurity Awareness for Operations (Cybersecurity)</option>
-                                            <option value="35">Data Security Course for Resident Office Samarahan (Security)</option>
-                                            <option value="13">Datacom (Digital Technology)</option>
-                                            <option value="16">Digital Byte Size (Digital Technology)</option>
-                                            <option value="15">Digital Marketing (Digital Technology)</option>
-                                            <option value="6">Fiber Optic Splicing (Telecommunication)</option>
-                                            <option value="33">Fiberglass Boat Training Programme (Manufacturing)</option>
-                                            <option value="32">Fiberglass Composite Boat Building (Manufacturing)</option>
-                                            <option value="7">FTTX OSP Hardware Installation (Telecommunication)</option>
-                                            <option value="8">FTTX OSP Training (TelBru, Brunei) (Telecommunication)</option>
-                                            <option value="25">Green Energy (Green Energy)</option>
-                                            <option value="26">Greenhouse Gas (GHG) Accounting &amp; Reporting (ESG)</option>
-                                            <option value="31">Healthy Menu Preparation (Penyediaan Menu Sihat) (Hospitality)</option>
-                                            <option value="30">Hospitality &amp; Service Quality Training (Hospitality)</option>
-                                            <option value="24">Immersive Technologies (EON-XR, Photogrammetry &amp; 360) (Digital Technology)</option>
-                                            <option value="17">Industry 4.0 (Industry 4.0)</option>
-                                            <option value="14">Internet of Things (IoT) Foundation &amp; Application (Internet of Things (IoT))</option>
-                                            <option value="4">Introduction to Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="18">IR4.0 (Industry 4.0)</option>
-                                            <option value="20">IR4.0 Applications to Enhance Teaching and Learning Through Cloud Services (Industry 4.0)</option>
-                                            <option value="21">Online Applications for Content Development (AI &amp; Education)</option>
-                                            <option value="19">Smart Manufacturing (Industry 4.0)</option>
-                                            <option value="5">Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="11">Wireless and Microwave Hardware Installation (Telecommunication)</option>
-                                            <option value="9">Wireless Base Station and Antenna Subsystem Training (Telecommunication)</option>
-                                            <option value="10">Wireless Cellular Hardware Installation (Telecommunication)</option>
-                                    </select>
-                <button class="btn btn-primary btn-sm flex-shrink-0 px-3">Claim Course</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════ SECTION 1: ISSUED CERTIFICATES ═══════════════ -->
+    <div class="pm-view-section pm-view-section-active" id="sectionIssued">
+        <!-- Search bar -->
+        <div class="pm-toolbar mb-3">
+            <form class="pm-filters w-100" method="get">
+                <input type="hidden" name="page" value="admin-certificates">
+                <div class="pm-search-box flex-grow-1">
+                    <svg class="pm-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input class="pm-search-input" name="q" value="" placeholder="Search certificates by number, trainee or course title…">
+                </div>
+                <button class="pm-btn pm-btn-secondary" type="submit">Search</button>
+                            </form>
+        </div>
+
+        <div class="pm-table-container">
+            <table class="pm-table">
+                <thead>
+                    <tr>
+                        <th>Certificate Details</th>
+                        <th>Recipient Details</th>
+                        <th>Course</th>
+                        <th>Approval Status</th>
+                        <th>Issuance Status</th>
+                        <th>Issued Date</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                                                                        <tr class="align-middle" style="cursor: pointer;" onclick="openCertDrawer(1, 'ITOP-2026-0001', 'Trainee Daniel Ling', 'Industrial IoT Operations', 'CENTEXS-VERIFY-0001', 'approved')">
+                                <td>
+                                    <strong style="display:block;">ITOP-2026-0001</strong>
+                                    <span class="text-muted small">Template: Classic</span>
+                                </td>
+                                <td>
+                                    <div class="pm-table-avatar-cell">
+                                                                                <div class="pm-avatar-small">T</div>
+                                        <div>
+                                            <strong style="display:block;">Trainee Daniel Ling</strong>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="small font-weight-bold">Industrial IoT Operations</span></td>
+                                <td>
+                                                                        <span class="badge bg-success">
+                                        Approved                                    </span>
+                                </td>
+                                <td>
+                                                                        <span class="badge bg-info">
+                                        Issued                                    </span>
+                                </td>
+                                <td class="text-muted small">2026-07-21</td>
+                                <td>
+                                    <div class="d-flex justify-content-end gap-2" onclick="event.stopPropagation()">
+                                        <a class="pm-btn pm-btn-secondary py-1 px-2 small" style="font-size: .75rem;" href="index.php?page=view-certificate&id=1" target="_blank">Preview</a>
+                                        
+                                        
+                                                                                    <form method="post" action="index.php?page=admin-revoke-certificate" style="display:inline;" onsubmit="return confirm('Are you sure you want to revoke this certificate?');">
+                                                <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                                                <input type="hidden" name="id" value="1">
+                                                <button class="pm-btn pm-btn-secondary py-1 px-2 small" style="font-size: .75rem; border-color: #ffd8d8; color: var(--ims-danger);">Revoke</button>
+                                            </form>
+                                                                            </div>
+                                </td>
+                            </tr>
+                                                    <tr class="align-middle" style="cursor: pointer;" onclick="openCertDrawer(2, 'ITOP-2026-764689', 'Trainee Daniel Ling', 'Industrial IoT Operations', 'CENTEXS-8944bd5483', 'approved')">
+                                <td>
+                                    <strong style="display:block;">ITOP-2026-764689</strong>
+                                    <span class="text-muted small">Template: Classic</span>
+                                </td>
+                                <td>
+                                    <div class="pm-table-avatar-cell">
+                                                                                <div class="pm-avatar-small">T</div>
+                                        <div>
+                                            <strong style="display:block;">Trainee Daniel Ling</strong>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><span class="small font-weight-bold">Industrial IoT Operations</span></td>
+                                <td>
+                                                                        <span class="badge bg-success">
+                                        Approved                                    </span>
+                                </td>
+                                <td>
+                                                                        <span class="badge bg-info">
+                                        Issued                                    </span>
+                                </td>
+                                <td class="text-muted small">2026-07-21</td>
+                                <td>
+                                    <div class="d-flex justify-content-end gap-2" onclick="event.stopPropagation()">
+                                        <a class="pm-btn pm-btn-secondary py-1 px-2 small" style="font-size: .75rem;" href="index.php?page=view-certificate&id=2" target="_blank">Preview</a>
+                                        
+                                        
+                                                                                    <form method="post" action="index.php?page=admin-revoke-certificate" style="display:inline;" onsubmit="return confirm('Are you sure you want to revoke this certificate?');">
+                                                <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                                                <input type="hidden" name="id" value="2">
+                                                <button class="pm-btn pm-btn-secondary py-1 px-2 small" style="font-size: .75rem; border-color: #ffd8d8; color: var(--ims-danger);">Revoke</button>
+                                            </form>
+                                                                            </div>
+                                </td>
+                            </tr>
+                                                            </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ═══════════════ SECTION 2: TEMPLATES DESIGNER ═══════════════ -->
+    <div class="pm-view-section" id="sectionTemplates">
+        
+                    <!-- Templates Card Grid View -->
+            <div class="row g-4 mt-2">
+                <!-- Add new template card -->
+                <div class="col-md-4">
+                    <div class="card h-100 border-dashed" style="border: 2px dashed var(--ims-border); cursor: pointer;" onclick="createNewTemplatePreset()">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center py-5">
+                            <div class="pm-stat-icon pm-stat-icon-all mb-3" style="background: var(--ims-primary-light); color: var(--ims-primary);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            </div>
+                            <h3 class="h6 font-weight-bold">Create New Template</h3>
+                            <p class="text-muted small text-center px-3 m-0">Setup layout colors, text placeholders, and signatory branding</p>
+                        </div>
+                    </div>
+                </div>
+                
+                                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h3 class="h6 font-weight-bold text-truncate mb-2">New Certificate Template Preset</h3>
+                                    <span class="badge bg-success mb-3">
+                                        Active                                    </span>
+                                    
+                                    <!-- Render mini mock block -->
+                                    <div class="bg-light border rounded p-2 text-center text-muted small mb-3" style="font-size: .7rem; height: 110px; display:flex; flex-direction:column; justify-content:center;">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto mb-2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                                        <span>Font Family: Inter, sans-serif</span>
+                                        <span>Text Color: #182230</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <a class="pm-btn pm-btn-secondary py-1 px-3 small flex-grow-1 text-center justify-content-center" href="index.php?page=admin-certificates&template=6&tab=templates">Edit Design</a>
+                                    <form method="post" action="index.php?page=delete-certificate-template" onsubmit="return confirm('Are you sure you want to delete this template?');">
+                                        <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                                        <input type="hidden" name="template_id" value="6">
+                                        <button class="pm-btn pm-btn-ghost py-1 px-2 text-danger" title="Delete Template" style="border:none;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h3 class="h6 font-weight-bold text-truncate mb-2">New Certificate Template Preset 1</h3>
+                                    <span class="badge bg-success mb-3">
+                                        Active                                    </span>
+                                    
+                                    <!-- Render mini mock block -->
+                                    <div class="bg-light border rounded p-2 text-center text-muted small mb-3" style="font-size: .7rem; height: 110px; display:flex; flex-direction:column; justify-content:center;">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto mb-2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                                        <span>Font Family: Arial, sans-serif</span>
+                                        <span>Text Color: #182230</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <a class="pm-btn pm-btn-secondary py-1 px-3 small flex-grow-1 text-center justify-content-center" href="index.php?page=admin-certificates&template=5&tab=templates">Edit Design</a>
+                                    <form method="post" action="index.php?page=delete-certificate-template" onsubmit="return confirm('Are you sure you want to delete this template?');">
+                                        <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                                        <input type="hidden" name="template_id" value="5">
+                                        <button class="pm-btn pm-btn-ghost py-1 px-2 text-danger" title="Delete Template" style="border:none;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h3 class="h6 font-weight-bold text-truncate mb-2">New Certificate Template Preset</h3>
+                                    <span class="badge bg-success mb-3">
+                                        Active                                    </span>
+                                    
+                                    <!-- Render mini mock block -->
+                                    <div class="bg-light border rounded p-2 text-center text-muted small mb-3" style="font-size: .7rem; height: 110px; display:flex; flex-direction:column; justify-content:center;">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto mb-2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                                        <span>Font Family: Inter, sans-serif</span>
+                                        <span>Text Color: #182230</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <a class="pm-btn pm-btn-secondary py-1 px-3 small flex-grow-1 text-center justify-content-center" href="index.php?page=admin-certificates&template=4&tab=templates">Edit Design</a>
+                                    <form method="post" action="index.php?page=delete-certificate-template" onsubmit="return confirm('Are you sure you want to delete this template?');">
+                                        <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                                        <input type="hidden" name="template_id" value="4">
+                                        <button class="pm-btn pm-btn-ghost py-1 px-2 text-danger" title="Delete Template" style="border:none;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
+            
+            <!-- Hidden form to trigger template creation -->
+            <form method="post" action="index.php?page=save-certificate-template" id="createTemplatePresetForm" style="display:none;">
+                <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                <input type="hidden" name="template_name" value="New Certificate Template Preset">
+                <input type="hidden" name="font_family" value="Inter, sans-serif">
+                <input type="hidden" name="font_size" value="28">
+                <input type="hidden" name="text_color" value="#182230">
+                <input type="hidden" name="layout_json" value="{
+    &quot;style&quot;: {
+        &quot;template&quot;: &quot;centexs_sarawak&quot;,
+        &quot;title_color&quot;: &quot;#000000&quot;,
+        &quot;accent_color&quot;: &quot;#aa3338&quot;,
+        &quot;border_color&quot;: &quot;#aa3338&quot;,
+        &quot;seal_color&quot;: &quot;#b53638&quot;,
+        &quot;pattern_opacity&quot;: 0.05
+    },
+    &quot;show_seal&quot;: false,
+    &quot;show_verification&quot;: true,
+    &quot;show_watermark&quot;: true,
+    &quot;show_qr&quot;: true,
+    &quot;title&quot;: &quot;CERTIFICATE OF COMPLETION&quot;,
+    &quot;intro&quot;: &quot;This is to certify that&quot;,
+    &quot;intro_script&quot;: &quot;has successfully completed the training programme for :&quot;,
+    &quot;description&quot;: &quot;Congratulations on your active participation in this program which have equipped you with valuable knowledge and skills on Artificial Intelligence (AI), Ethical Use of AI, Instructional Design Planning, Educational Data Analytics, AI for Visuals and Audio, and AI-Based Tasks.&quot;,
+    &quot;signatory_name&quot;: &quot;Dato Haji Syeed Mohd Hussien Bin Wan Abd Rahman&quot;,
+    &quot;signatory_title&quot;: &quot;Chief Executive Officer&quot;,
+    &quot;organization&quot;: &quot;Centre for Technology Excellence Sarawak&quot;,
+    &quot;script_font&quot;: &quot;Playball&quot;
+}">
+                <input type="hidden" name="status" value="active">
             </form>
+            </div>
+
+    <!-- ═══════════════ SECTION 3: ISSUANCE CENTER ═══════════════ -->
+    <div class="pm-view-section" id="sectionIssue">
+        <div class="row g-4 mt-2">
+            
+            <!-- Column 1: Individual Issuance -->
+            <div class="col-md-5">
+                <div class="panel h-100">
+                    <h2 class="h5 mb-3">Issue Individual Certificate</h2>
+                    <form method="post" action="index.php?page=issue-certificate">
+                        <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                        
+                        <div class="mb-3">
+                            <label class="form-label small font-weight-bold">Trainee</label>
+                            <select class="form-select" name="trainee_id" required>
+                                <option value="">Select Trainee</option>
+                                                                    <option value="3">Trainee Daniel Ling (trainee@centexs.local)</option>
+                                                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small font-weight-bold">Course / Programme</label>
+                            <select class="form-select" name="course_id" required>
+                                <option value="">Select Course</option>
+                                                                    <option value="4">Introduction to Telecommunication Infrastructure</option>
+                                                                    <option value="5">Telecommunication Infrastructure</option>
+                                                                    <option value="6">Fiber Optic Splicing</option>
+                                                                    <option value="7">FTTX OSP Hardware Installation</option>
+                                                                    <option value="8">FTTX OSP Training (TelBru, Brunei)</option>
+                                                                    <option value="9">Wireless Base Station and Antenna Subsystem Training</option>
+                                                                    <option value="10">Wireless Cellular Hardware Installation</option>
+                                                                    <option value="11">Wireless and Microwave Hardware Installation</option>
+                                                                    <option value="12">5G Training</option>
+                                                                    <option value="13">Datacom</option>
+                                                                    <option value="14">Internet of Things (IoT) Foundation &amp; Application</option>
+                                                                    <option value="15">Digital Marketing</option>
+                                                                    <option value="16">Digital Byte Size</option>
+                                                                    <option value="17">Industry 4.0</option>
+                                                                    <option value="18">IR4.0</option>
+                                                                    <option value="19">Smart Manufacturing</option>
+                                                                    <option value="20">IR4.0 Applications to Enhance Teaching and Learning Through Cloud Services</option>
+                                                                    <option value="21">Online Applications for Content Development</option>
+                                                                    <option value="22">Celik AI Memacu Pendidikan</option>
+                                                                    <option value="23">Canva dalam Pendidikan</option>
+                                                                    <option value="24">Immersive Technologies (EON-XR, Photogrammetry &amp; 360)</option>
+                                                                    <option value="25">Green Energy</option>
+                                                                    <option value="26">Greenhouse Gas (GHG) Accounting &amp; Reporting</option>
+                                                                    <option value="27">Chargeman L1</option>
+                                                                    <option value="28">Chargeman L2 (O/H)</option>
+                                                                    <option value="29">Chargeman H2 (O/H)</option>
+                                                                    <option value="30">Hospitality &amp; Service Quality Training</option>
+                                                                    <option value="31">Healthy Menu Preparation (Penyediaan Menu Sihat)</option>
+                                                                    <option value="32">Fiberglass Composite Boat Building</option>
+                                                                    <option value="33">Fiberglass Boat Training Programme</option>
+                                                                    <option value="34">Asas Simen Ferro</option>
+                                                                    <option value="35">Data Security Course for Resident Office Samarahan</option>
+                                                                    <option value="1">Industrial IoT Operations</option>
+                                                                    <option value="2">Cloud Support Fundamentals</option>
+                                                                    <option value="3">Cybersecurity Awareness for Operations</option>
+                                                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label small font-weight-bold">Branding Template</label>
+                            <select class="form-select" name="template_id" required>
+                                <option value="">Select Template</option>
+                                                                    <option value="4">New Certificate Template Preset</option>
+                                                                    <option value="6">New Certificate Template Preset</option>
+                                                                    <option value="5">New Certificate Template Preset 1</option>
+                                                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small font-weight-bold">Certificate Number (Optional)</label>
+                            <input class="form-control" name="certificate_number" placeholder="ITOP-YYYY-XXXX (Auto if blank)">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small font-weight-bold">Verification Code (Optional)</label>
+                            <input class="form-control" name="verification_code" placeholder="Auto-generated if blank">
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small font-weight-bold">Issue Date</label>
+                                <input class="form-control" type="date" name="issue_date" value="2026-08-05">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small font-weight-bold">Status</label>
+                                <select class="form-select" name="status">
+                                    <option value="issued">Issued</option>
+                                    <option value="reissued">Reissued</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="pm-btn pm-btn-primary w-100 justify-content-center" type="submit">Issue Certificate</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Column 2: Bulk Issuance Utility -->
+            <div class="col-md-7">
+                <div class="panel h-100">
+                    <h2 class="h5 m-0">Bulk Certificates Issuance</h2>
+                    <p class="text-muted small mb-3">Select a course to view all trainees who have met completion requirements but haven't received certificates.</p>
+                    
+                    <form method="post" action="index.php?page=admin-bulk-issue-certificates">
+                        <input type="hidden" name="_csrf" value="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
+                        
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label small font-weight-bold">Course / Intake</label>
+                                <select class="form-select" name="course_id" id="bulkCourseSelect" onchange="fetchEligibleTrainees()" required>
+                                    <option value="">Choose Course</option>
+                                                                            <option value="4">Introduction to Telecommunication Infrastructure</option>
+                                                                            <option value="5">Telecommunication Infrastructure</option>
+                                                                            <option value="6">Fiber Optic Splicing</option>
+                                                                            <option value="7">FTTX OSP Hardware Installation</option>
+                                                                            <option value="8">FTTX OSP Training (TelBru, Brunei)</option>
+                                                                            <option value="9">Wireless Base Station and Antenna Subsystem Training</option>
+                                                                            <option value="10">Wireless Cellular Hardware Installation</option>
+                                                                            <option value="11">Wireless and Microwave Hardware Installation</option>
+                                                                            <option value="12">5G Training</option>
+                                                                            <option value="13">Datacom</option>
+                                                                            <option value="14">Internet of Things (IoT) Foundation &amp; Application</option>
+                                                                            <option value="15">Digital Marketing</option>
+                                                                            <option value="16">Digital Byte Size</option>
+                                                                            <option value="17">Industry 4.0</option>
+                                                                            <option value="18">IR4.0</option>
+                                                                            <option value="19">Smart Manufacturing</option>
+                                                                            <option value="20">IR4.0 Applications to Enhance Teaching and Learning Through Cloud Services</option>
+                                                                            <option value="21">Online Applications for Content Development</option>
+                                                                            <option value="22">Celik AI Memacu Pendidikan</option>
+                                                                            <option value="23">Canva dalam Pendidikan</option>
+                                                                            <option value="24">Immersive Technologies (EON-XR, Photogrammetry &amp; 360)</option>
+                                                                            <option value="25">Green Energy</option>
+                                                                            <option value="26">Greenhouse Gas (GHG) Accounting &amp; Reporting</option>
+                                                                            <option value="27">Chargeman L1</option>
+                                                                            <option value="28">Chargeman L2 (O/H)</option>
+                                                                            <option value="29">Chargeman H2 (O/H)</option>
+                                                                            <option value="30">Hospitality &amp; Service Quality Training</option>
+                                                                            <option value="31">Healthy Menu Preparation (Penyediaan Menu Sihat)</option>
+                                                                            <option value="32">Fiberglass Composite Boat Building</option>
+                                                                            <option value="33">Fiberglass Boat Training Programme</option>
+                                                                            <option value="34">Asas Simen Ferro</option>
+                                                                            <option value="35">Data Security Course for Resident Office Samarahan</option>
+                                                                            <option value="1">Industrial IoT Operations</option>
+                                                                            <option value="2">Cloud Support Fundamentals</option>
+                                                                            <option value="3">Cybersecurity Awareness for Operations</option>
+                                                                    </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small font-weight-bold">Select Template</label>
+                                <select class="form-select" name="template_id" required>
+                                    <option value="">Choose Template</option>
+                                                                            <option value="4">New Certificate Template Preset</option>
+                                                                            <option value="6">New Certificate Template Preset</option>
+                                                                            <option value="5">New Certificate Template Preset 1</option>
+                                                                    </select>
+                            </div>
+                        </div>
+
+                        <!-- Eligible Trainees List Container -->
+                        <div class="mb-4">
+                            <label class="form-label small font-weight-bold d-flex justify-content-between">
+                                <span>Eligible Trainees Checklist</span>
+                                <span id="eligibleCountLabel" class="text-muted font-weight-normal">(0 eligible)</span>
+                            </label>
+                            
+                            <div class="border rounded p-3 bg-light" style="max-height: 250px; overflow-y: auto;" id="traineesListWrapper">
+                                <p class="text-muted small italic text-center m-0 py-3">Please choose a course above to pull records.</p>
+                            </div>
+                        </div>
+
+                        <button class="pm-btn pm-btn-primary w-100 justify-content-center" type="submit" id="bulkIssueSubmitBtn" disabled>
+                            Bulk Issue Certificates
+                        </button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
+
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     CERTIFICATE AUDIT DRAWER — Slide-in Drawer Modal
+     ════════════════════════════════════════════════════ -->
+<div class="pm-panel-overlay" id="certPanelOverlay"></div>
+<div class="pm-detail-panel" id="certDetailPanel">
+    <div class="pm-panel-header">
+        <h3 class="pm-panel-title">Certificate Audit Ledger</h3>
+        <button class="pm-panel-close" id="certPanelClose" type="button" aria-label="Close">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="pm-panel-body" id="certPanelBody">
+        <!-- Loading spinner -->
+        <div class="pm-panel-loading" id="certPanelLoading" style="display:none;">
+            <div class="pm-spinner"></div>
+            <span>Fetching verification history ledger…</span>
+        </div>
+        
+        <!-- Enriched Content Drawer -->
+        <div class="pm-panel-content" id="certPanelContent">
+            <!-- Header Identity Card -->
+            <div class="pm-drawer-profile-card">
+                <div class="pm-avatar-large" style="background: var(--ims-primary-light); color: var(--ims-primary); font-weight:800; display:flex; align-items:center; justify-content:center;" id="drCertIcon">C</div>
+                <div>
+                    <h4 class="pm-drawer-name" id="drCertNo">ITOP-YYYY-0000</h4>
+                    <p class="pm-drawer-email" id="drTraineeName">Recipient Trainee</p>
+                </div>
+            </div>
+
+            <!-- Meta details lists -->
+            <div class="cm-detail-section">
+                <h4 class="pm-drawer-section-title">Certificate Records</h4>
+                <div class="cm-detail-row">
+                    <span class="cm-detail-key">Course Title:</span>
+                    <span class="cm-detail-value font-weight-bold" id="drCourseTitle">—</span>
+                </div>
+                <div class="cm-detail-row">
+                    <span class="cm-detail-key">Verification Code:</span>
+                    <span class="cm-detail-value" style="font-family: monospace; font-size: .8rem;" id="drVerificationCode">—</span>
+                </div>
+                <div class="cm-detail-row">
+                    <span class="cm-detail-key">Public Verify URL:</span>
+                    <span class="cm-detail-value">
+                        <a href="" target="_blank" class="small text-decoration-none" id="drVerifyLink">Open Link ↗</a>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Download Audit Log logs list -->
+            <div class="cm-detail-section">
+                <h4 class="pm-drawer-section-title">Download & Access Audit Trail</h4>
+                <div class="pm-drawer-list" id="drLogsList" style="max-height: 300px; overflow-y: auto;">
+                    <!-- Dynamic rows populate here -->
+                </div>
+            </div>
+            
+            <div class="mt-auto pt-3 d-flex gap-2">
+                <a href="" target="_blank" class="pm-btn pm-btn-secondary w-50 justify-content-center" id="drDownloadWordBtn">
+                    Download Word (.doc)
+                </a>
+                <a href="" target="_blank" class="pm-btn pm-btn-primary w-50 justify-content-center" id="drDownloadBtn">
+                    Download Official PDF
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Switch Tabs Section view
+function switchSection(sectionName) {
+    document.querySelectorAll('.pm-view-section').forEach(s => {
+        s.classList.remove('pm-view-section-active');
+    });
+    document.querySelectorAll('.pm-tabs .pm-tab').forEach(t => {
+        t.classList.remove('pm-tab-active');
+    });
+    
+    if (sectionName === 'issued') {
+        document.getElementById('sectionIssued').classList.add('pm-view-section-active');
+        document.getElementById('tabIssued').classList.add('pm-tab-active');
+    } else if (sectionName === 'templates') {
+        document.getElementById('sectionTemplates').classList.add('pm-view-section-active');
+        document.getElementById('tabTemplates').classList.add('pm-tab-active');
+    } else if (sectionName === 'issue') {
+        document.getElementById('sectionIssue').classList.add('pm-view-section-active');
+        document.getElementById('tabIssue').classList.add('pm-tab-active');
+    }
+}
+
+// Ensure active tab matches query param if present
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTab = urlParams.get('tab');
+    if (activeTab) {
+        switchSection(activeTab);
+    }
+});
+
+// Trigger Template Preset Creation
+function createNewTemplatePreset() {
+    document.getElementById('createTemplatePresetForm').submit();
+}
+
+// Fetch Trainees Completed Course without certificate
+function fetchEligibleTrainees() {
+    const courseId = document.getElementById('bulkCourseSelect').value;
+    const wrapper = document.getElementById('traineesListWrapper');
+    const submitBtn = document.getElementById('bulkIssueSubmitBtn');
+    const labelCount = document.getElementById('eligibleCountLabel');
+    
+    if (!courseId) {
+        wrapper.innerHTML = '<p class="text-muted small italic text-center m-0 py-3">Please choose a course above to pull records.</p>';
+        submitBtn.disabled = true;
+        labelCount.textContent = '(0 eligible)';
+        return;
+    }
+    
+    wrapper.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary" role="status"></div><span class="small text-muted ms-2">Retrieving completion ledger…</span></div>';
+    
+    fetch('index.php?page=admin-certificates&get_completed_course_id=' + courseId)
+        .then(res => res.json())
+        .then(data => {
+            wrapper.innerHTML = '';
+            if (data.length === 0) {
+                wrapper.innerHTML = '<p class="text-center text-muted small py-3 m-0">No eligible trainees found (everyone is certified or requirements not met).</p>';
+                submitBtn.disabled = true;
+                labelCount.textContent = '(0 eligible)';
+                return;
+            }
+            
+            // Add Toggle All
+            const selectAllDiv = document.createElement('div');
+            selectAllDiv.className = 'form-check mb-2 pb-2 border-bottom';
+            selectAllDiv.innerHTML = `<input class="form-check-input" type="checkbox" id="selectAllTrainees" checked onchange="toggleSelectAllTrainees(this)"><label class="form-check-label small font-weight-bold" for="selectAllTrainees">Select All Trainees</label>`;
+            wrapper.appendChild(selectAllDiv);
+            
+            data.forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'form-check mb-2';
+                item.innerHTML = `
+                    <input class="form-check-input trainee-bulk-check" type="checkbox" name="trainee_ids[]" value="${t.id}" id="bulk_t_${t.id}" checked>
+                    <label class="form-check-label small" for="bulk_t_${t.id}">
+                        <strong>${escapeHtml(t.name)}</strong> <span class="text-muted">(${escapeHtml(t.email)})</span>
+                    </label>
+                `;
+                wrapper.appendChild(item);
+            });
+            
+            submitBtn.disabled = false;
+            labelCount.textContent = `(${data.length} eligible)`;
+        })
+        .catch(err => {
+            wrapper.innerHTML = '<p class="text-danger small py-3 m-0">Error fetching eligible trainees checklist.</p>';
+        });
+}
+
+function toggleSelectAllTrainees(master) {
+    document.querySelectorAll('.trainee-bulk-check').forEach(chk => {
+        chk.checked = master.checked;
+    });
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
+
+// Assembly layout JSON before saving template
+function assembleLayoutJson() {
+    const layout = {
+        style: {
+            template: 'centexs_sarawak',
+            title_color: document.getElementById('fieldTextColor').value,
+            accent_color: document.getElementById('fieldAccentColor').value,
+            border_color: document.getElementById('fieldBorderColor').value,
+            seal_color: '#b53638',
+            pattern_opacity: 0.05
+        },
+        show_seal: false,
+        show_verification: true,
+        show_watermark: document.getElementById('fieldShowWatermark').checked,
+        show_qr: document.getElementById('fieldShowQr').checked,
+        title: document.getElementById('fieldTitle').value,
+        intro: document.getElementById('fieldIntro').value,
+        intro_script: document.getElementById('fieldIntroScript').value,
+        description: document.getElementById('fieldDescription').value,
+        signatory_name: document.getElementById('fieldSignatoryName').value,
+        signatory_title: document.getElementById('fieldSignatoryTitle').value,
+        organization: document.getElementById('fieldOrganization').value,
+        script_font: 'Playball'
+    };
+    document.getElementById('realLayoutJson').value = JSON.stringify(layout, null, 4);
+}
+
+// Drawer audit overlay trigger
+const certOverlay = document.getElementById('certPanelOverlay');
+const certPanel = document.getElementById('certDetailPanel');
+const certLoading = document.getElementById('certPanelLoading');
+const certContent = document.getElementById('certPanelContent');
+const certClose = document.getElementById('certPanelClose');
+
+if (certOverlay) document.body.appendChild(certOverlay);
+if (certPanel) document.body.appendChild(certPanel);
+
+function closeCertDrawer() {
+    certPanel.classList.remove('pm-panel-open');
+    certOverlay.classList.remove('pm-panel-overlay-active');
+}
+if (certClose) certClose.addEventListener('click', closeCertDrawer);
+if (certOverlay) certOverlay.addEventListener('click', closeCertDrawer);
+
+function openCertDrawer(id, number, trainee, course, code, status) {
+    certOverlay.classList.add('pm-panel-overlay-active');
+    certPanel.classList.add('pm-panel-open');
+    certLoading.style.display = 'block';
+    certContent.style.display = 'none';
+
+    document.getElementById('drCertNo').textContent = number;
+    document.getElementById('drTraineeName').textContent = trainee;
+    document.getElementById('drCourseTitle').textContent = course;
+    document.getElementById('drVerificationCode').textContent = code;
+    document.getElementById('drVerifyLink').href = 'index.php?page=verify-certificate&code=' + encodeURIComponent(code);
+    document.getElementById('drDownloadBtn').href = 'index.php?page=download-certificate&id=' + id;
+    document.getElementById('drDownloadWordBtn').href = 'index.php?page=download-certificate-word&id=' + id;
+    
+    // Fetch logs
+    fetch('index.php?page=admin-certificate-logs&id=' + id)
+        .then(res => res.json())
+        .then(data => {
+            const list = document.getElementById('drLogsList');
+            list.innerHTML = '';
+            
+            if (data.status === 'success' && data.logs && data.logs.length > 0) {
+                data.logs.forEach(log => {
+                    const row = document.createElement('div');
+                    row.className = 'pm-drawer-item';
+                    row.innerHTML = `
+                        <div>
+                            <strong style="display:block; font-size: .8rem;">${escapeHtml(log.user_name)}</strong>
+                            <span class="text-muted small">${escapeHtml(log.user_email)} | IP: ${escapeHtml(log.ip_address || '—')}</span>
+                        </div>
+                        <span class="small text-muted">${escapeHtml(log.downloaded_at)}</span>
+                    `;
+                    list.appendChild(row);
+                });
+            } else {
+                list.innerHTML = '<p class="text-muted small italic text-center m-0 py-3">No downloads or access records found yet.</p>';
+            }
+            
+            certLoading.style.display = 'none';
+            certContent.style.display = 'block';
+        })
+        .catch(err => {
+            certLoading.style.display = 'none';
+            certContent.style.display = 'block';
+            document.getElementById('drLogsList').innerHTML = '<p class="text-danger small text-center m-0 py-3">Error fetching download logs.</p>';
+        });
+}
+
+// Live interactive Preview binding
+if (document.getElementById('templateDesignForm')) {
+    const bindLivePreview = () => {
+        // Text Fields
+        const fTitle = document.getElementById('fieldTitle');
+        const fIntro = document.getElementById('fieldIntro');
+        const fIntroScript = document.getElementById('fieldIntroScript');
+        const fDesc = document.getElementById('fieldDescription');
+        const fSignName = document.getElementById('fieldSignatoryName');
+        const fSignTitle = document.getElementById('fieldSignatoryTitle');
+        
+        const mTitle = document.getElementById('mockTitle');
+        const mIntro = document.getElementById('mockIntro');
+        const mIntroScript = document.getElementById('mockIntroScript');
+        const mDesc = document.getElementById('mockDescription');
+        const mSignName = document.getElementById('mockSignatoryName');
+        const mSignTitle = document.getElementById('mockSignatoryTitle');
+        
+        // Colors
+        const fTextCol = document.getElementById('fieldTextColor');
+        const fAccentCol = document.getElementById('fieldAccentColor');
+        const fBorderCol = document.getElementById('fieldBorderColor');
+        
+        const mBorder = document.getElementById('mockBorder');
+        const mInnerBorder = document.getElementById('mockInnerBorder');
+        const mMockContainer = document.getElementById('certMockContainer');
+        
+        // Listeners for values
+        if (fTitle) fTitle.addEventListener('input', () => mTitle.textContent = fTitle.value);
+        if (fIntro) fIntro.addEventListener('input', () => mIntro.textContent = fIntro.value);
+        if (fIntroScript) fIntroScript.addEventListener('input', () => mIntroScript.textContent = fIntroScript.value);
+        if (fDesc) fDesc.addEventListener('input', () => mDesc.textContent = fDesc.value);
+        if (fSignName) fSignName.addEventListener('input', () => mSignName.textContent = fSignName.value);
+        if (fSignTitle) fSignTitle.addEventListener('input', () => mSignTitle.textContent = fSignTitle.value);
+        
+        // Listeners for colors
+        const updateColors = () => {
+            if (fTextCol) mMockContainer.style.color = fTextCol.value;
+            if (fTextCol) mTitle.style.color = fTextCol.value;
+            if (fAccentCol) {
+                mInnerBorder.style.borderColor = fAccentCol.value;
+                mIntroScript.style.color = fAccentCol.value;
+            }
+            if (fBorderCol) mBorder.style.borderColor = fBorderCol.value;
+        };
+        
+        if (fTextCol) fTextCol.addEventListener('input', updateColors);
+        if (fAccentCol) fAccentCol.addEventListener('input', updateColors);
+        if (fBorderCol) fBorderCol.addEventListener('input', updateColors);
+        
+        // Toggles
+        const fShowWatermark = document.getElementById('fieldShowWatermark');
+        const fShowQr = document.getElementById('fieldShowQr');
+        const mWatermark = document.getElementById('mockWatermark');
+        const mQr = document.getElementById('mockQrBox');
+        
+        if (fShowWatermark) fShowWatermark.addEventListener('change', () => mWatermark.style.display = fShowWatermark.checked ? 'flex' : 'none');
+        if (fShowQr) fShowQr.addEventListener('change', () => mQr.style.display = fShowQr.checked ? 'flex' : 'none');
+        
+        // Font Family selector
+        const fFontFam = document.getElementById('fieldFontFamily');
+        if (fFontFam) {
+            fFontFam.addEventListener('change', () => {
+                mMockContainer.style.fontFamily = fFontFam.value;
+            });
+        }
+        
+        // Local File Previews
+        const logoInput = document.getElementById('fileLogo');
+        const mLogo = document.getElementById('mockLogo');
+        if (logoInput) {
+            logoInput.addEventListener('change', () => {
+                if (logoInput.files && logoInput.files[0]) {
+                    mLogo.src = URL.createObjectURL(logoInput.files[0]);
+                }
+            });
+        }
+        
+        const sigInput = document.getElementById('fileSignature');
+        const mSig = document.getElementById('mockSignature');
+        if (sigInput) {
+            sigInput.addEventListener('change', () => {
+                if (sigInput.files && sigInput.files[0]) {
+                    if (mSig) {
+                        mSig.src = URL.createObjectURL(sigInput.files[0]);
+                        mSig.style.display = 'block';
+                    } else {
+                        // Create image element on the fly
+                        const placeholder = document.getElementById('mockSignaturePlaceholder');
+                        if (placeholder) {
+                            const img = document.createElement('img');
+                            img.src = URL.createObjectURL(sigInput.files[0]);
+                            img.className = 'cert-mock-signature-img';
+                            img.id = 'mockSignature';
+                            placeholder.replaceWith(img);
+                        }
+                    }
+                }
+            });
+        }
+
+        const bgInput = document.getElementById('fileBackground');
+        const mBgImg = document.getElementById('mockWatermarkImg');
+        if (bgInput) {
+            bgInput.addEventListener('change', () => {
+                if (bgInput.files && bgInput.files[0]) {
+                    mBgImg.src = URL.createObjectURL(bgInput.files[0]);
+                }
+            });
+        }
+        
+        // Initial color/preview alignment
+        updateColors();
+        if (fFontFam) mMockContainer.style.fontFamily = fFontFam.value;
+    };
+    bindLivePreview();
+}
+</script>
             </div>
         </main>
 

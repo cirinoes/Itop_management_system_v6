@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
+    <meta name="csrf-token" content="5d859c6d2cb5f1755ad257fb1d6051b630e62091dc38d10181ec7db83fd0de1b">
     <meta name="description" content="CENTEXS ITOP Management System — Manage programme registration, learning materials, assessments, and certification.">
     <title>CENTEXS ITOP Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8381,43 +8381,57 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         <div class="sidenav-avatar">
                                         D                    </div>
         <div class="sidenav-user-info">
-            <span class="sidenav-user-name">Demo Instructor</span>
-            <span class="sidenav-user-role">Instructor</span>
+            <span class="sidenav-user-name">Demo Admin</span>
+            <span class="sidenav-user-role">Admin</span>
         </div>
     </div>
 
     <!-- Navigation Menu -->
     <nav class="sidenav-menu">
 
-                    <!-- ═══ Instructor Navigation ═══ -->
-            <div class="sidenav-section-label">Main</div>
+                    <!-- ═══ Admin Navigation ═══ -->
+            <div class="sidenav-section-label">CENTEXS Admin</div>
 
             <a href="index.php?page=profile" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 <span>Profile</span>
             </a>
 
+            <div class="sidenav-section-label">Main</div>
+
             <a href="index.php?page=dashboard" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
                 <span>Dashboard</span>
             </a>
 
-            <a href="index.php?page=instructor-courses" class="sidenav-link active">
+            <div class="sidenav-section-label">Management</div>
+
+            <a href="index.php?page=admin-users" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>Users</span>
+            </a>
+
+            <a href="index.php?page=admin-courses" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                <span>My Courses</span>
+                <span>Courses</span>
             </a>
 
-            <a href="index.php?page=instructor-enrolments" class="sidenav-link ">
+            <a href="index.php?page=admin-enrolments" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
-                <span>Enrolments</span>
+                <span>Registration</span>
             </a>
 
-            <a href="index.php?page=announcements-manage" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <span>Announcements</span>
+            <a href="index.php?page=admin-participants" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>Participants</span>
             </a>
 
-                        <a href="index.php?page=instructor-reports" class="sidenav-link ">
+            <a href="index.php?page=admin-certificates" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                <span>Certificates</span>
+            </a>
+
+            <a href="index.php?page=reports" class="sidenav-link ">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 <span>Reports</span>
             </a>
@@ -8437,6 +8451,23 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                     <span>Notifications</span>
                 </div>
                             </a>
+
+            <div class="sidenav-section-label">System</div>
+
+            <a href="index.php?page=admin-master-data" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>Master Data</span>
+            </a>
+
+            <a href="index.php?page=admin-system-settings" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                <span>System Settings</span>
+            </a>
+
+            <a href="index.php?page=admin-website-settings" class="sidenav-link ">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                <span>Website Settings</span>
+            </a>
 
         
         <!-- ═══ Common Bottom Links ═══ -->
@@ -8474,7 +8505,7 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
                                             </a>
                     <div class="topbar-user-pill d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill bg-light border">
-                        <span class="topbar-user-name fw-semibold small text-dark">Demo Instructor</span>
+                        <span class="topbar-user-name fw-semibold small text-dark">Demo Admin</span>
                     </div>
                 </div>
             </div>
@@ -8483,91 +8514,55 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
         <!-- Main Content Area -->
         <main class="main-content">
             <div class="main-content-inner">
-                
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <span class="section-label">Instructor Hub</span>
-        <h1 class="section-title mb-0">My Courses</h1>
-    </div>
-    <div class="d-flex gap-2">
-        <!-- Optional: A button to create a new course if they have permissions -->
-    </div>
-</div>
-
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <!-- Filters -->
-    <div class="status-tabs mb-0">
-        <a class="status-tab active" href="#">Active Courses</a>
-        <a class="status-tab" href="#">Past Courses</a>
-        <a class="status-tab" href="#">Drafts</a>
-    </div>
-
-    <div class="input-group input-group-sm" style="width: 250px;">
-        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-        <input type="text" class="form-control border-start-0 ps-0" placeholder="Search courses...">
-    </div>
-</div>
-
-<!-- Courses Grid -->
-<div class="row g-4">
-                <div class="col-12">
-            <div class="empty-state bg-white border rounded shadow-sm py-5">
-                <div class="empty-state-icon fs-1 mb-3">📚</div>
-                <div class="empty-state-title fw-bold">No assigned courses</div>
-                <p class="text-muted small">You are not assigned to any courses yet.</p>
+                <section class="container py-4">
+        <h1 class="h3 mb-3">Evaluation Reports</h1>
+    
+    <!-- Summary Metrics Card -->
+    <div class="row g-3 mb-4 animate-in">
+        <div class="col-md-4">
+            <div class="overview-panel d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(5, 77, 158, 0.1); color: #054d9e;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                </div>
+                <div>
+                    <span class="text-muted small d-block">Total Feedbacks</span>
+                    <h4 class="mb-0 fw-bold text-dark">1</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="overview-panel d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(234, 88, 12, 0.1); color: #ea580c;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div>
+                    <span class="text-muted small d-block">Average Course Rating</span>
+                    <h4 class="mb-0 fw-bold text-dark">5.0 <span class="text-muted" style="font-size: 0.8rem;">/ 5.0</span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="overview-panel d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(22, 163, 74, 0.1); color: #16a34a;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div>
+                    <span class="text-muted small d-block">Average Instructor Rating</span>
+                    <h4 class="mb-0 fw-bold text-dark">5.0 <span class="text-muted" style="font-size: 0.8rem;">/ 5.0</span></h4>
+                </div>
             </div>
         </div>
     </div>
 
-<!-- Claim/Teach Course Panel -->
-    <div class="mt-5 p-4 border rounded bg-white shadow-sm">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h5 class="fw-bold mb-1">Available to Teach</h5>
-                <p class="text-muted small mb-0">Select a course to claim it and become the instructor.</p>
-            </div>
-            <form method="post" action="index.php?page=instructor-claim-course" class="d-flex gap-2 align-items-center">
-                <input type="hidden" name="_csrf" value="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
-                <select class="form-select form-select-sm" name="course_id" required style="min-width: 250px;">
-                    <option value="">Choose available course...</option>
-                                            <option value="12">5G Training (Telecommunication)</option>
-                                            <option value="34">Asas Simen Ferro (Manufacturing)</option>
-                                            <option value="23">Canva dalam Pendidikan (AI &amp; Education)</option>
-                                            <option value="22">Celik AI Memacu Pendidikan (AI &amp; Education)</option>
-                                            <option value="29">Chargeman H2 (O/H) (Electrical)</option>
-                                            <option value="27">Chargeman L1 (Electrical)</option>
-                                            <option value="28">Chargeman L2 (O/H) (Electrical)</option>
-                                            <option value="3">Cybersecurity Awareness for Operations (Cybersecurity)</option>
-                                            <option value="35">Data Security Course for Resident Office Samarahan (Security)</option>
-                                            <option value="13">Datacom (Digital Technology)</option>
-                                            <option value="16">Digital Byte Size (Digital Technology)</option>
-                                            <option value="15">Digital Marketing (Digital Technology)</option>
-                                            <option value="6">Fiber Optic Splicing (Telecommunication)</option>
-                                            <option value="33">Fiberglass Boat Training Programme (Manufacturing)</option>
-                                            <option value="32">Fiberglass Composite Boat Building (Manufacturing)</option>
-                                            <option value="7">FTTX OSP Hardware Installation (Telecommunication)</option>
-                                            <option value="8">FTTX OSP Training (TelBru, Brunei) (Telecommunication)</option>
-                                            <option value="25">Green Energy (Green Energy)</option>
-                                            <option value="26">Greenhouse Gas (GHG) Accounting &amp; Reporting (ESG)</option>
-                                            <option value="31">Healthy Menu Preparation (Penyediaan Menu Sihat) (Hospitality)</option>
-                                            <option value="30">Hospitality &amp; Service Quality Training (Hospitality)</option>
-                                            <option value="24">Immersive Technologies (EON-XR, Photogrammetry &amp; 360) (Digital Technology)</option>
-                                            <option value="17">Industry 4.0 (Industry 4.0)</option>
-                                            <option value="14">Internet of Things (IoT) Foundation &amp; Application (Internet of Things (IoT))</option>
-                                            <option value="4">Introduction to Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="18">IR4.0 (Industry 4.0)</option>
-                                            <option value="20">IR4.0 Applications to Enhance Teaching and Learning Through Cloud Services (Industry 4.0)</option>
-                                            <option value="21">Online Applications for Content Development (AI &amp; Education)</option>
-                                            <option value="19">Smart Manufacturing (Industry 4.0)</option>
-                                            <option value="5">Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="11">Wireless and Microwave Hardware Installation (Telecommunication)</option>
-                                            <option value="9">Wireless Base Station and Antenna Subsystem Training (Telecommunication)</option>
-                                            <option value="10">Wireless Cellular Hardware Installation (Telecommunication)</option>
-                                    </select>
-                <button class="btn btn-primary btn-sm flex-shrink-0 px-3">Claim Course</button>
-            </form>
-        </div>
+    <div class="panel table-responsive">
+        <table class="table align-middle">
+            <thead><tr><th>Course</th><th>Trainee</th><th>Course Rating</th><th>Instructor Rating</th><th>Feedback</th><th>Submitted</th></tr></thead>
+            <tbody>
+                                    <tr><td>Industrial IoT Operations<br><span class="small text-muted">Instructor Aida Rahman</span></td><td>Trainee Daniel Ling</td><td>5/5</td><td>5/5</td><td>Clear training flow and useful practical activities.</td><td>2026-07-21 17:32:28</td></tr>
+                            </tbody>
+        </table>
     </div>
+</section>
             </div>
         </main>
 

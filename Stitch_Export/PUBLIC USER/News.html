@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
+    <meta name="csrf-token" content="140dcb8a790fe11808d4a7d3715910a73b4c49d73b4abef3fed8abcd61e876b3">
     <meta name="description" content="CENTEXS ITOP Management System — Manage programme registration, learning materials, assessments, and certification.">
     <title>CENTEXS ITOP Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8362,342 +8362,102 @@ body.motion-ready main, body.motion-ready .main-content, .reveal-on-scroll {
 </head>
 <body>
 
-    <!-- ══ Authenticated Layout: Sidebar + Pushed Content ══ -->
-    
-<aside class="sidenav" id="sidenav">
-    <!-- Brand Header -->
-    <div class="sidenav-header">
-        <a href="index.php" class="sidenav-brand">
-            <img src="http://localhost:8000/public/assets/img/centexs-logo-with-outline-1.png" alt="CENTEXS" class="sidenav-logo-img">
-            <span class="sidenav-brand-text">CENTEXS IMS</span>
-        </a>
-        <button class="sidenav-close-btn" id="sidenavCloseBtn" aria-label="Close menu">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-    </div>
-
-    <!-- User Card -->
-    <div class="sidenav-user">
-        <div class="sidenav-avatar">
-                                        D                    </div>
-        <div class="sidenav-user-info">
-            <span class="sidenav-user-name">Demo Instructor</span>
-            <span class="sidenav-user-role">Instructor</span>
+    <!-- ══ Public Layout: Classic Navbar ══ -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.php">
+                <img src="public/assets/img/centexs-logo-with-outline-1.png" alt="CENTEXS Logo" height="30" class="d-inline-block align-text-top me-2">
+                CENTEXS IMS
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.php?page=about">About ITOP</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php?page=courses">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php?page=news">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php?page=contact">Contact</a></li>
+                </ul>
+                <form class="d-none d-lg-flex me-3" method="get" action="index.php">
+                    <input type="hidden" name="page" value="courses">
+                    <input class="form-control form-control-sm top-search" name="q" placeholder="Search courses">
+                </form>
+                <div class="d-flex gap-2 align-items-center">
+                    <a class="btn btn-outline-light btn-sm" href="index.php?page=login">Login</a>
+                    <a class="btn btn-light btn-sm" href="index.php?page=register">Register</a>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Navigation Menu -->
-    <nav class="sidenav-menu">
-
-                    <!-- ═══ Instructor Navigation ═══ -->
-            <div class="sidenav-section-label">Main</div>
-
-            <a href="index.php?page=profile" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span>Profile</span>
-            </a>
-
-            <a href="index.php?page=dashboard" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="index.php?page=instructor-courses" class="sidenav-link active">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-                <span>My Courses</span>
-            </a>
-
-            <a href="index.php?page=instructor-enrolments" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
-                <span>Enrolments</span>
-            </a>
-
-            <a href="index.php?page=announcements-manage" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                <span>Announcements</span>
-            </a>
-
-                        <a href="index.php?page=instructor-reports" class="sidenav-link ">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                <span>Reports</span>
-            </a>
-
-            <div class="sidenav-section-label">Communication</div>
-
-            <a href="index.php?page=messages" class="sidenav-link ">
-                <div class="d-flex align-items-center flex-grow-1">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                    <span>Messages</span>
-                </div>
-                            </a>
-
-            <a href="#notificationsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="notificationsOffcanvas" class="sidenav-link ">
-                <div class="d-flex align-items-center flex-grow-1">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                    <span>Notifications</span>
-                </div>
-                            </a>
-
-        
-        <!-- ═══ Common Bottom Links ═══ -->
-        <div class="sidenav-section-label">Account</div>
-
-        <a href="index.php?page=logout" class="sidenav-link sidenav-link-danger">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            <span>Logout</span>
-        </a>
     </nav>
-</aside>
 
-<!-- Overlay for mobile -->
-<div class="sidenav-overlay" id="sidenavOverlay"></div>
+    <main>
+        <section class="container py-5">
+    <h1 class="h2">News & Announcements</h1>
+    <div class="list-group mt-3">
+                    <article class="list-group-item">
+                <h2 class="h5">ITOP Registration Now Open</h2>
+                <p>Applications are open for the latest CENTEXS ITOP technical training intakes.</p>
+                <small class="text-muted">2026-07-21 17:32:28</small>
+            </article>
+            </div>
+</section>
 
-    <div class="sidenav-content" id="sidenavContent">
-        <!-- Top Bar (Dashboard context) -->
-        <header class="topbar" id="topbar">
-            <div class="topbar-inner">
-                <div class="topbar-left">
-                    <button class="topbar-toggle" id="sidenavToggle" aria-label="Toggle sidebar">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-                    </button>
-                    <form class="topbar-search" method="get" action="index.php">
-                        <input type="hidden" name="page" value="courses">
-                        <svg class="topbar-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                        <input class="topbar-search-input" name="q" placeholder="Search courses..." autocomplete="off">
-                    </form>
+    </main>
+
+    <!-- ══ CENTEXS-Style Footer ══ -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <h3>CENTEXS IMS</h3>
+                    <p>Centre for Technology Excellence Sarawak (CENTEXS) is a premier training institution in Sarawak, delivering industry-driven technical and vocational programmes.</p>
                 </div>
-                <div class="topbar-right">
-                    <a class="topbar-icon-btn" href="index.php?page=messages" title="Messages">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                                            </a>
-                    <a class="topbar-icon-btn position-relative" href="#notificationsOffcanvas" data-bs-toggle="offcanvas" role="button" aria-controls="notificationsOffcanvas" title="Notifications">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                                            </a>
-                    <div class="topbar-user-pill d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill bg-light border">
-                        <span class="topbar-user-name fw-semibold small text-dark">Demo Instructor</span>
+                <div>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="index.php?page=about">About ITOP</a></li>
+                        <li><a href="index.php?page=courses">Browse Courses</a></li>
+                        <li><a href="index.php?page=news">News & Updates</a></li>
+                        <li><a href="index.php?page=contact">Contact Us</a></li>
+                        <li><a href="index.php?page=verify-certificate">Verify Certificate</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Academies</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.php?page=courses&academy=ADGEA">ADGEA</a></li>
+                        <li><a href="index.php?page=courses&academy=IESGA">IESGA</a></li>
+                        <li><a href="index.php?page=register">Register Now</a></li>
+                        <li><a href="index.php?page=login">Trainee Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Contact Us</h4>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-icon">📍</span>
+                        <span>CENTEXS Kuching, Jalan Canna, Off Jalan Wan Alwi, 93350 Kuching, Sarawak, Malaysia</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-icon">📧</span>
+                        <span>info@centexs.my</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-icon">📞</span>
+                        <span>+60 82-363 200</span>
                     </div>
                 </div>
             </div>
-        </header>
-
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <div class="main-content-inner">
-                
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <span class="section-label">Instructor Hub</span>
-        <h1 class="section-title mb-0">My Courses</h1>
-    </div>
-    <div class="d-flex gap-2">
-        <!-- Optional: A button to create a new course if they have permissions -->
-    </div>
-</div>
-
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <!-- Filters -->
-    <div class="status-tabs mb-0">
-        <a class="status-tab active" href="#">Active Courses</a>
-        <a class="status-tab" href="#">Past Courses</a>
-        <a class="status-tab" href="#">Drafts</a>
-    </div>
-
-    <div class="input-group input-group-sm" style="width: 250px;">
-        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-        <input type="text" class="form-control border-start-0 ps-0" placeholder="Search courses...">
-    </div>
-</div>
-
-<!-- Courses Grid -->
-<div class="row g-4">
-                <div class="col-12">
-            <div class="empty-state bg-white border rounded shadow-sm py-5">
-                <div class="empty-state-icon fs-1 mb-3">📚</div>
-                <div class="empty-state-title fw-bold">No assigned courses</div>
-                <p class="text-muted small">You are not assigned to any courses yet.</p>
+            <div class="footer-bottom">
+                <span>&copy; 2026 Centre for Technology Excellence Sarawak. All rights reserved.</span>
+                <div class="footer-social">
+                                            <a href="https://www.facebook.com/centexs.sarawak" target="_blank" rel="noopener" title="Facebook">f</a>
+                                                                <a href="https://www.linkedin.com/company/centexs" target="_blank" rel="noopener" title="LinkedIn">in</a>
+                                        <a href="mailto:info@centexs.my" title="Email">@</a>
+                </div>
             </div>
         </div>
-    </div>
+    </footer>
 
-<!-- Claim/Teach Course Panel -->
-    <div class="mt-5 p-4 border rounded bg-white shadow-sm">
-        <div class="d-flex justify-content-between align-items-center">
-            <div>
-                <h5 class="fw-bold mb-1">Available to Teach</h5>
-                <p class="text-muted small mb-0">Select a course to claim it and become the instructor.</p>
-            </div>
-            <form method="post" action="index.php?page=instructor-claim-course" class="d-flex gap-2 align-items-center">
-                <input type="hidden" name="_csrf" value="79b04525e44d1a2dcfa5839810dd290cae66db4008c764b90e195f6d6d6e5e32">
-                <select class="form-select form-select-sm" name="course_id" required style="min-width: 250px;">
-                    <option value="">Choose available course...</option>
-                                            <option value="12">5G Training (Telecommunication)</option>
-                                            <option value="34">Asas Simen Ferro (Manufacturing)</option>
-                                            <option value="23">Canva dalam Pendidikan (AI &amp; Education)</option>
-                                            <option value="22">Celik AI Memacu Pendidikan (AI &amp; Education)</option>
-                                            <option value="29">Chargeman H2 (O/H) (Electrical)</option>
-                                            <option value="27">Chargeman L1 (Electrical)</option>
-                                            <option value="28">Chargeman L2 (O/H) (Electrical)</option>
-                                            <option value="3">Cybersecurity Awareness for Operations (Cybersecurity)</option>
-                                            <option value="35">Data Security Course for Resident Office Samarahan (Security)</option>
-                                            <option value="13">Datacom (Digital Technology)</option>
-                                            <option value="16">Digital Byte Size (Digital Technology)</option>
-                                            <option value="15">Digital Marketing (Digital Technology)</option>
-                                            <option value="6">Fiber Optic Splicing (Telecommunication)</option>
-                                            <option value="33">Fiberglass Boat Training Programme (Manufacturing)</option>
-                                            <option value="32">Fiberglass Composite Boat Building (Manufacturing)</option>
-                                            <option value="7">FTTX OSP Hardware Installation (Telecommunication)</option>
-                                            <option value="8">FTTX OSP Training (TelBru, Brunei) (Telecommunication)</option>
-                                            <option value="25">Green Energy (Green Energy)</option>
-                                            <option value="26">Greenhouse Gas (GHG) Accounting &amp; Reporting (ESG)</option>
-                                            <option value="31">Healthy Menu Preparation (Penyediaan Menu Sihat) (Hospitality)</option>
-                                            <option value="30">Hospitality &amp; Service Quality Training (Hospitality)</option>
-                                            <option value="24">Immersive Technologies (EON-XR, Photogrammetry &amp; 360) (Digital Technology)</option>
-                                            <option value="17">Industry 4.0 (Industry 4.0)</option>
-                                            <option value="14">Internet of Things (IoT) Foundation &amp; Application (Internet of Things (IoT))</option>
-                                            <option value="4">Introduction to Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="18">IR4.0 (Industry 4.0)</option>
-                                            <option value="20">IR4.0 Applications to Enhance Teaching and Learning Through Cloud Services (Industry 4.0)</option>
-                                            <option value="21">Online Applications for Content Development (AI &amp; Education)</option>
-                                            <option value="19">Smart Manufacturing (Industry 4.0)</option>
-                                            <option value="5">Telecommunication Infrastructure (Telecommunication)</option>
-                                            <option value="11">Wireless and Microwave Hardware Installation (Telecommunication)</option>
-                                            <option value="9">Wireless Base Station and Antenna Subsystem Training (Telecommunication)</option>
-                                            <option value="10">Wireless Cellular Hardware Installation (Telecommunication)</option>
-                                    </select>
-                <button class="btn btn-primary btn-sm flex-shrink-0 px-3">Claim Course</button>
-            </form>
-        </div>
-    </div>
-            </div>
-        </main>
-
-        <!-- Footer (inside pushed content) -->
-        <footer class="site-footer">
-            <div class="container">
-                <div class="footer-main">
-                    <!-- Brand Column -->
-                    <div class="footer-brand">
-                        <h3>CENTEXS IMS</h3>
-                        <p>Centre for Technology Excellence Sarawak (CENTEXS) is a premier training institution in Sarawak, delivering industry-driven technical and vocational programmes.</p>
-                    </div>
-
-                    <!-- Quick Links -->
-                    <div>
-                        <h4 class="footer-heading">Quick Links</h4>
-                        <ul class="footer-links">
-                            <li><a href="index.php">Home</a></li>
-                            <li><a href="index.php?page=about">About ITOP</a></li>
-                            <li><a href="index.php?page=courses">Browse Courses</a></li>
-                            <li><a href="index.php?page=news">News & Updates</a></li>
-                            <li><a href="index.php?page=contact">Contact Us</a></li>
-                            <li><a href="index.php?page=verify-certificate">Verify Certificate</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Academies -->
-                    <div>
-                        <h4 class="footer-heading">Academies</h4>
-                        <ul class="footer-links">
-                            <li><a href="index.php?page=courses&academy=ADGEA">ADGEA</a></li>
-                            <li><a href="index.php?page=courses&academy=IESGA">IESGA</a></li>
-                            <li><a href="index.php?page=register">Register Now</a></li>
-                            <li><a href="index.php?page=login">Trainee Login</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Contact Info -->
-                    <div>
-                        <h4 class="footer-heading">Contact Us</h4>
-                        <div class="footer-contact-item">
-                            <span class="footer-contact-icon">📍</span>
-                            <span>CENTEXS Kuching, Jalan Canna, Off Jalan Wan Alwi, 93350 Kuching, Sarawak, Malaysia</span>
-                        </div>
-                        <div class="footer-contact-item">
-                            <span class="footer-contact-icon">📧</span>
-                            <span>info@centexs.my</span>
-                        </div>
-                        <div class="footer-contact-item">
-                            <span class="footer-contact-icon">📞</span>
-                            <span>+60 82-363 200</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bottom Bar -->
-                <div class="footer-bottom">
-                    <span>&copy; 2026 Centre for Technology Excellence Sarawak. All rights reserved.</span>
-                    <div class="footer-social">
-                                                    <a href="https://www.facebook.com/centexs.sarawak" target="_blank" rel="noopener" title="Facebook">f</a>
-                                                                            <a href="https://www.linkedin.com/company/centexs" target="_blank" rel="noopener" title="LinkedIn">in</a>
-                                                <a href="mailto:info@centexs.my" title="Email">@</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-
-    <style>
-    #notificationsOffcanvas {
-        width: 400px;
-        border-radius: 0 16px 16px 0;
-        box-shadow: 10px 0 30px rgba(0,0,0,0.05);
-    }
-    
-    @media (min-width: 992px) {
-        #notificationsOffcanvas {
-            left: var(--sidenav-width); /* Appear beside sidebar */
-        }
-    }
-    
-    .notification-item {
-        transition: all 0.2s;
-        border-bottom: 1px solid #f1f5f9;
-    }
-    .notification-item:hover {
-        background-color: #f8fafc;
-    }
-    .notification-item.unread {
-        background-color: #f0f9ff;
-    }
-    .notification-avatar {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        flex-shrink: 0;
-    }
-</style>
-
-<div class="offcanvas offcanvas-start border-0" tabindex="-1" id="notificationsOffcanvas" aria-labelledby="notificationsOffcanvasLabel" data-bs-backdrop="true">
-    <div class="offcanvas-header border-bottom py-3">
-        <h5 class="offcanvas-title fw-bold" id="notificationsOffcanvasLabel">Notification</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    
-    <div class="offcanvas-body p-0 d-flex flex-column">
-        <div class="d-flex align-items-center justify-content-between px-4 py-2 border-bottom bg-light">
-            <div class="d-flex gap-3 fw-semibold small text-muted">
-                <span class="text-dark border-bottom border-2 border-dark pb-1 cursor-pointer">All notification <span class="badge bg-danger rounded-pill ms-1">0</span></span>
-            </div>
-            
-                    </div>
-        
-        <div class="notification-list flex-grow-1 overflow-y-auto">
-                            <div class="text-center p-5 text-muted">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mb-3 opacity-50"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-                    <p class="small mb-0">No notifications yet.</p>
-                </div>
-            
-                    </div>
-        
-        <div class="p-3 bg-white text-center border-top">
-            <a href="index.php?page=notifications" class="text-decoration-none fw-semibold small text-primary">See all notifications in Dashboard</a>
-        </div>
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="http://localhost:8000/public/assets/js/app.js?v=2.8"></script>
