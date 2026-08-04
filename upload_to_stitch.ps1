@@ -1,0 +1,20 @@
+﻿$configPath = "C:\Users\User\.gemini\config\mcp_config.json"
+$config = Get-Content $configPath | ConvertFrom-Json
+$env:STITCH_API_KEY = $config.mcpServers.stitch.env.STITCH_API_KEY
+Write-Host 'Starting bulk upload to Stitch...'
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\INSTRUCTOR\Reports.html" --title "[INSTRUCTOR] Reports"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\INSTRUCTOR\Dashboard.html" --title "[INSTRUCTOR] Dashboard"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\INSTRUCTOR\Courses.html" --title "[INSTRUCTOR] Courses"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\ADMINISTRATOR\Dashboard.html" --title "[ADMINISTRATOR] Dashboard"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\ADMINISTRATOR\Users.html" --title "[ADMINISTRATOR] Users"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\ADMINISTRATOR\Settings.html" --title "[ADMINISTRATOR] Settings"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\ADMINISTRATOR\Courses.html" --title "[ADMINISTRATOR] Courses"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\TRAINEE\Profile.html" --title "[TRAINEE] Profile"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\TRAINEE\Dashboard.html" --title "[TRAINEE] Dashboard"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\TRAINEE\Messages.html" --title "[TRAINEE] Messages"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\TRAINEE\Certificates.html" --title "[TRAINEE] Certificates"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\PUBLIC USER\Homepage.html" --title "[PUBLIC USER] Homepage"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\PUBLIC USER\Register.html" --title "[PUBLIC USER] Register"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\PUBLIC USER\About.html" --title "[PUBLIC USER] About"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\PUBLIC USER\Login.html" --title "[PUBLIC USER] Login"
+npx -y @_davideast/stitch-mcp upload -p 17799432416129995673 -f "c:\xampp\htdocs\Itop_management_system\Stitch_Export\PUBLIC USER\Courses.html" --title "[PUBLIC USER] Courses"

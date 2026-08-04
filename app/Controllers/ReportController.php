@@ -79,7 +79,8 @@ final class ReportController extends Controller
                 c.title,
                 COUNT(e.id) AS enrollments,
                 ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate,
-                ROUND(AVG(sub.score), 1) AS avg_assignment_score
+                ROUND(AVG(sub.score), 1) AS avg_assignment_score,
+                ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS completion_rate
             FROM courses c
             LEFT JOIN enrolments e ON e.course_id = c.id
             LEFT JOIN attendance att ON att.enrolment_id = e.id
@@ -124,7 +125,11 @@ final class ReportController extends Controller
         $stmtCert->execute([$traineeId]);
 
         $stmtProgress = $db->prepare('
-            SELECT c.title, e.progress_percent, e.status
+            SELECT 
+                c.title, 
+                e.progress_percent, 
+                e.status,
+                (SELECT ROUND(AVG(score), 0) FROM quiz_results qr JOIN quizzes q ON q.id = qr.quiz_id WHERE q.course_id = c.id AND qr.trainee_id = e.trainee_id) as quiz_avg_score
             FROM enrolments e
             JOIN courses c ON c.id = e.course_id
             WHERE e.trainee_id = ?
