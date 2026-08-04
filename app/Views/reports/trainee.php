@@ -8,7 +8,7 @@
         <div>
             <div class="d-flex align-items-center gap-2 mb-1">
                 <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-3 py-1 fw-semibold">Trainee</span>
-                <h1 class="h3 mb-0 fw-bold">My Learning Report</h1>
+                <h1 class="section-title mb-0">My Learning Report</h1>
             </div>
             <p class="text-muted mb-0">Track your progress, achievements, and certificate timeline.</p>
         </div>

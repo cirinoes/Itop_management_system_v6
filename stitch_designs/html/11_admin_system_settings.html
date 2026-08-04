@@ -1,0 +1,290 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"surface-container-highest":"#d9e3f6","secondary":"#006b60","on-background":"#121c2a","secondary-container":"#7df7e4","on-primary-fixed-variant":"#004590","on-secondary":"#ffffff","inverse-surface":"#273140","on-tertiary-fixed":"#341100","warning":"#EA580C","secondary-fixed-dim":"#5edac8","error-container":"#ffdad6","on-tertiary":"#ffffff","tertiary":"#622600","outline":"#737783","on-tertiary-container":"#ffae86","on-surface-variant":"#424751","border":"#E2E8F0","surface-dim":"#d0daee","on-surface":"#121c2a","inverse-on-surface":"#ebf1ff","on-secondary-fixed-variant":"#005048","on-secondary-container":"#007166","tertiary-fixed":"#ffdbcb","primary-fixed-dim":"#abc7ff","surface":"#FFFFFF","surface-container-high":"#dfe9fc","surface-container-lowest":"#ffffff","surface-container-low":"#eff3ff","canvas":"#F0F4F8","primary-fixed":"#d7e2ff","surface-container":"#e6eeff","surface-bright":"#f8f9ff","outline-variant":"#c2c6d3","tertiary-container":"#863700","danger":"#DC2626","primary-container":"#054d9e","muted":"#64748B","on-tertiary-fixed-variant":"#793100","on-error":"#ffffff","on-error-container":"#93000a","on-primary":"#ffffff","on-secondary-fixed":"#00201c","sidebar-dark":"#0C1929","on-primary-fixed":"#001b3f","error":"#ba1a1a","primary":"#003775","tertiary-fixed-dim":"#ffb692","background":"#f8f9ff","surface-variant":"#d9e3f6","secondary-fixed":"#7df7e4","on-primary-container":"#a3c1ff","surface-tint":"#245dae","success":"#16A34A","inverse-primary":"#abc7ff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"stack-lg":"24px","stack-sm":"8px","sidebar-width":"260px","margin-mobile":"16px","gutter":"24px","stack-md":"16px","container-max":"1440px"},"fontFamily":{"headline-lg":["Inter"],"body-md":["Inter"],"body-lg":["Inter"],"headline-md":["Inter"],"headline-lg-mobile":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"label-md":["Inter"]},"fontSize":{"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"700"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}]}}}}</script><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-canvas font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-sidebar-width bg-sidebar-dark z-50 flex flex-col shadow-xl"><div class="px-gutter py-stack-lg flex items-center gap-stack-sm"><div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[20px]">settings_input_component</span></div><span class="font-headline-sm text-surface-bright tracking-tight">IMS Core</span></div><nav class="flex-1 px-4 space-y-1 mt-stack-md" data-active-classes="bg-primary text-on-primary shadow-lg shadow-primary/20"><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="dashboard" href="#"><span class="material-symbols-outlined mr-3">dashboard</span>Dashboard</a><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="courses" href="#"><span class="material-symbols-outlined mr-3">school</span>Courses</a><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="users" href="#"><span class="material-symbols-outlined mr-3">group</span>Users</a><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="reports" href="#"><span class="material-symbols-outlined mr-3">assessment</span>Reports</a><a aria-current="page" class="flex items-center px-4 py-3 rounded-lg transition-all bg-primary text-on-primary shadow-lg shadow-primary/20" data-path="settings" href="#"><span class="material-symbols-outlined mr-3">settings</span>Settings</a></nav><div class="p-4 mt-auto"><div class="bg-surface-variant/5 rounded-xl p-4 border border-outline-variant/10"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="overflow-hidden"><p class="text-label-md text-surface-bright truncate">Admin User</p><p class="text-label-sm text-surface-container-highest/50">System Lead</p></div></div></div></div></aside><div class="pl-sidebar-width"><header class="fixed top-0 left-sidebar-width right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-border z-40 flex items-center justify-between px-gutter"><div class="flex items-center bg-surface-container-low px-stack-md py-stack-sm rounded-lg border border-border w-96"><span class="material-symbols-outlined text-muted text-[20px] mr-2">search</span><input class="bg-transparent border-none outline-none text-body-sm w-full text-on-surface placeholder-muted" placeholder="Search across system..." type="text"/></div><div class="flex items-center gap-stack-md"><button class="p-2 text-muted hover:text-on-surface-variant transition-colors"><span class="material-symbols-outlined">notifications</span></button><button class="p-2 text-muted hover:text-on-surface-variant transition-colors"><span class="material-symbols-outlined">help</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-2 cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 min-h-screen"><div class="flex flex-col w-full px-gutter py-stack-lg gap-stack-lg">
+<div class="flex flex-col gap-stack-sm mb-stack-md">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">System Status & Settings</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage global server configurations, maintenance states, and system activity.</p>
+</div>
+<div class="grid grid-cols-12 gap-gutter items-start">
+<!-- Left Column: Server Info & Checks (4 cols) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- Server Information -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col relative group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none"></div>
+<div class="p-stack-md flex items-center justify-between z-10 relative">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-[24px]" style="font-variation-settings: 'FILL' 1;">dns</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Server Information</h2>
+<p class="font-body-sm text-body-sm text-muted">Core infrastructure details</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col z-10 relative">
+<div class="px-stack-md py-stack-sm flex justify-between items-center bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">PHP Version</span>
+<span class="font-body-md text-body-md text-on-surface font-medium flex items-center gap-2">
+                 8.2.14 <span class="material-symbols-outlined text-success text-[16px]">check_circle</span>
+</span>
+</div>
+<div class="px-stack-md py-stack-sm flex justify-between items-center bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Web Server</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Nginx 1.24.0</span>
+</div>
+<div class="px-stack-md py-stack-sm flex justify-between items-center bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Database</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">PostgreSQL 15.4</span>
+</div>
+<div class="px-stack-md py-stack-sm flex justify-between items-center bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Memory Limit</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">512M</span>
+</div>
+<div class="px-stack-md py-stack-sm flex justify-between items-center bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Max Upload Size</span>
+<span class="font-body-md text-body-md text-on-surface font-medium flex items-center gap-2">
+                 100M <span class="material-symbols-outlined text-warning text-[16px]" title="Approaching limit for media files">warning</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Storage Directory Checks -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="p-stack-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]" style="font-variation-settings: 'FILL' 1;">folder_special</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Storage Status</h2>
+<p class="font-body-sm text-body-sm text-muted">Directory permissions</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full hover:bg-surface-variant flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-muted text-[20px]">sync</span>
+</button>
+</div>
+<div class="flex flex-col">
+<div class="px-stack-md py-stack-sm flex items-center gap-3 bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors group">
+<div class="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-success text-[14px]">check</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface truncate">/storage/uploads</p>
+<p class="font-label-sm text-label-sm text-muted">Writable • 4.2GB used</p>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-primary">View</span>
+</div>
+<div class="px-stack-md py-stack-sm flex items-center gap-3 bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors group">
+<div class="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-success text-[14px]">check</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface truncate">/storage/submissions</p>
+<p class="font-label-sm text-label-sm text-muted">Writable • 1.8GB used</p>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-primary">View</span>
+</div>
+<div class="px-stack-md py-stack-sm flex items-center gap-3 bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors group">
+<div class="w-6 h-6 rounded-full bg-warning/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-warning text-[14px]">warning</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface truncate">/storage/certificates</p>
+<p class="font-label-sm text-label-sm text-warning">Read-only • 98% full</p>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-primary">Fix</span>
+</div>
+<div class="px-stack-md py-stack-sm flex items-center gap-3 bg-surface-container-lowest/50 hover:bg-surface-variant/20 transition-colors group">
+<div class="w-6 h-6 rounded-full bg-error/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-[14px]">close</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md text-on-surface truncate">/storage/backups</p>
+<p class="font-label-sm text-label-sm text-error">Missing directory</p>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-primary">Create</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle Column: Maintenance & Global Settings (4 cols) -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- Maintenance Mode -->
+<div class="bg-surface rounded-xl shadow-md overflow-hidden relative">
+<div class="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[80px]">construction</span>
+</div>
+<div class="p-stack-md relative z-10 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-on-surface">Maintenance Mode</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Lock access for regular users</p>
+</div>
+<!-- Toggle Switch -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-warning"></div>
+</label>
+</div>
+<div class="flex flex-col gap-2 mt-2">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Maintenance Message</label>
+<textarea class="w-full bg-canvas rounded-lg p-3 font-body-md text-body-md text-on-surface focus:outline-none resize-none h-24 shadow-inner" placeholder="We are currently performing scheduled maintenance..."></textarea>
+</div>
+<div class="flex items-center gap-2 mt-1 p-3 bg-warning/10 rounded-lg">
+<span class="material-symbols-outlined text-warning text-[20px]">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Admins will still be able to log in while maintenance mode is active.</p>
+</div>
+</div>
+</div>
+<!-- Global Site Settings -->
+<div class="bg-surface rounded-xl shadow-sm p-stack-md flex flex-col gap-stack-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Global Settings</h2>
+<p class="font-body-sm text-body-sm text-muted">Core application configuration</p>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Setting Item -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface-variant">System Name</label>
+<input class="w-full bg-canvas rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-shadow" type="text" value="IMS Core Platform"/>
+</div>
+<!-- Setting Item -->
+<div class="flex flex-col gap-1">
+<label class="font-label-md text-label-md text-on-surface-variant">Admin Contact Email</label>
+<input class="w-full bg-canvas rounded-lg px-3 py-2 font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-inner transition-shadow" type="email" value="sysadmin@ims-core.local"/>
+</div>
+<!-- Setting Item -->
+<div class="flex items-center justify-between py-2">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Allow Public Registration</span>
+<span class="font-body-sm text-body-sm text-muted">Users can create accounts freely</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Setting Item -->
+<div class="flex items-center justify-between py-2">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Require Email Verification</span>
+<span class="font-body-sm text-body-sm text-muted">Send OTP before activation</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<button class="mt-4 bg-primary text-on-primary font-label-md text-label-md px-4 py-3 rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">save</span> Save Configuration
+         </button>
+</div>
+</div>
+<!-- Right Column: System Activity Logs (4 cols) -->
+<div class="col-span-12 lg:col-span-4 bg-surface rounded-xl shadow-sm overflow-hidden flex flex-col h-[800px]">
+<div class="p-stack-md flex items-center justify-between border-b border-surface-container relative z-10 bg-surface">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-on-surface text-[24px]" style="font-variation-settings: 'FILL' 1;">manage_search</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Activity Logs</h2>
+<p class="font-body-sm text-body-sm text-muted">Real-time system events</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full hover:bg-surface-variant flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-muted text-[20px]">filter_list</span>
+</button>
+</div>
+<!-- Log List -->
+<div class="flex-1 overflow-y-auto bg-canvas pb-4">
+<div class="flex flex-col gap-2 p-3">
+<!-- Log Item -->
+<div class="bg-surface p-3 rounded-lg shadow-sm flex gap-3 hover:-translate-y-0.5 transition-transform cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[16px]">person_add</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface truncate">Admin User</span>
+<span class="font-label-sm text-label-sm text-muted font-mono whitespace-nowrap ml-2">10:42 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Created new user account <span class="font-mono text-primary bg-primary/5 px-1 rounded">jdoe@ims.com</span> with role 'Instructor'.</p>
+</div>
+</div>
+<!-- Log Item -->
+<div class="bg-surface p-3 rounded-lg shadow-sm flex gap-3 hover:-translate-y-0.5 transition-transform cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-success/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-success text-[16px]">update</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface truncate">System Daemon</span>
+<span class="font-label-sm text-label-sm text-muted font-mono whitespace-nowrap ml-2">09:00 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Successfully completed daily database backup <span class="font-mono text-xs opacity-70">db_backup_20231024.sql.gz</span>.</p>
+</div>
+</div>
+<!-- Log Item -->
+<div class="bg-surface p-3 rounded-lg shadow-sm flex gap-3 hover:-translate-y-0.5 transition-transform cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-warning/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-warning text-[16px]">vpn_key_alert</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface truncate">Unknown IP</span>
+<span class="font-label-sm text-label-sm text-warning font-mono whitespace-nowrap ml-2">08:15 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Failed login attempt for user 'admin' from <span class="font-mono text-xs opacity-70">192.168.1.105</span>.</p>
+</div>
+</div>
+<!-- Log Item -->
+<div class="bg-surface p-3 rounded-lg shadow-sm flex gap-3 hover:-translate-y-0.5 transition-transform cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[16px]">settings</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface truncate">Admin User</span>
+<span class="font-label-sm text-label-sm text-muted font-mono whitespace-nowrap ml-2">Yesterday</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Modified global setting: <span class="italic">Allow Public Registration</span> changed from false to true.</p>
+</div>
+</div>
+<!-- Log Item -->
+<div class="bg-surface p-3 rounded-lg shadow-sm flex gap-3 hover:-translate-y-0.5 transition-transform cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error text-[16px]">error</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface truncate">API Gateway</span>
+<span class="font-label-sm text-label-sm text-error font-mono whitespace-nowrap ml-2">Yesterday</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Connection timeout while syncing with external HR system. Retried 3 times.</p>
+</div>
+</div>
+<!-- Log Item -->
+<div class="bg-surface p-3 rounded-lg shadow-sm flex gap-3 hover:-translate-y-0.5 transition-transform cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface text-[16px]">download</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface truncate">Sarah Jenkins</span>
+<span class="font-label-sm text-label-sm text-muted font-mono whitespace-nowrap ml-2">Oct 22</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Exported <span class="font-mono text-xs">Course_Completion_Report_Q3.csv</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-3 bg-surface border-t border-surface-container flex justify-center">
+<button class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors py-2 px-4">View All Logs</button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

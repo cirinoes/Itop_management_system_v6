@@ -245,26 +245,19 @@ html {
 }
 
 .sidenav-link.active {
-    background: rgba(24, 169, 153, .18);
+    background: var(--ims-primary);
     color: #fff;
     font-weight: 600;
+    box-shadow: 0 4px 12px rgba(5, 77, 158, .35);
 }
 
 .sidenav-link.active svg {
     opacity: 1;
-    stroke: var(--ims-accent);
+    stroke: #fff;
 }
 
 .sidenav-link.active::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 3px;
-    height: 60%;
-    border-radius: 0 3px 3px 0;
-    background: var(--ims-accent);
+    display: none;
 }
 
 .sidenav-link-danger {
@@ -684,20 +677,20 @@ body.motion-ready .main-content {
 
 .section-label {
     display: block;
-    font-size: .72rem;
-    font-weight: 800;
-    letter-spacing: .12em;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .03em;
     text-transform: uppercase;
-    color: var(--ims-primary);
+    color: var(--ims-muted);
     margin-bottom: .35rem;
 }
 
 .section-title {
-    font-size: clamp(1.35rem, 3.5vw, 1.85rem);
-    font-weight: 800;
+    font-size: clamp(1.5rem, 3.5vw, 1.875rem);
+    font-weight: 700;
     color: var(--ims-ink);
     margin-bottom: 1.25rem;
-    line-height: 1.15;
+    line-height: 1.27;
     letter-spacing: -.02em;
 }
 
@@ -778,63 +771,81 @@ body.motion-ready .main-content {
 }
 
 .overview-stat-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--ims-primary);
-    transition: height var(--ims-transition-smooth);
+    display: none;
 }
 
 .overview-stat-card.accent-green::before {
-    background: var(--ims-accent);
+    display: none;
 }
 
 .overview-stat-card.accent-red::before {
-    background: var(--ims-danger);
+    display: none;
 }
 
 .overview-stat-card.accent-orange::before {
-    background: var(--ims-warning);
+    display: none;
 }
 
+/* Decorative orb — scales on hover like Stitch concept */
 .overview-stat-card::after {
     content: '';
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle, rgba(5, 77, 158, .04) 0%, transparent 70%);
-    border-radius: 0 0 0 100%;
+    top: -16px;
+    right: -16px;
+    width: 96px;
+    height: 96px;
+    background: radial-gradient(circle, rgba(5, 77, 158, .06) 0%, transparent 70%);
+    border-radius: 50%;
     pointer-events: none;
+    transition: transform .5s cubic-bezier(.22, .61, .36, 1);
+}
+
+.overview-stat-card.accent-green::after {
+    background: radial-gradient(circle, rgba(24, 169, 153, .08) 0%, transparent 70%);
+}
+
+.overview-stat-card.accent-orange::after {
+    background: radial-gradient(circle, rgba(234, 88, 12, .06) 0%, transparent 70%);
+}
+
+.overview-stat-card.accent-red::after {
+    background: radial-gradient(circle, rgba(220, 38, 38, .06) 0%, transparent 70%);
 }
 
 .overview-stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--ims-shadow-hover);
-    border-color: var(--ims-primary);
+    transform: translateY(-3px);
+    box-shadow: var(--ims-shadow-md);
 }
 
-.overview-stat-card:hover::before {
-    height: 4px;
+.overview-stat-card:hover::after {
+    transform: scale(1.6);
 }
 
 .overview-stat-label {
-    font-size: .72rem;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: .06em;
+    letter-spacing: .03em;
     color: var(--ims-muted);
 }
 
 .overview-stat-value {
-    font-size: 1.75rem;
-    font-weight: 800;
+    font-size: 1.875rem;
+    font-weight: 700;
     color: var(--ims-ink);
     line-height: 1.1;
+    margin-top: .25rem;
+}
+
+/* Stat card icon — circular like Stitch */
+.overview-stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 /* Clickable stat cards */
@@ -853,15 +864,15 @@ a.overview-stat-card {
 }
 
 .table thead th {
-    font-size: .75rem;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: .05em;
+    letter-spacing: .02em;
     color: var(--ims-muted);
-    border-bottom: 2px solid var(--ims-border);
+    border-bottom: 1px solid var(--ims-border);
     padding: .85rem .75rem;
     white-space: nowrap;
-    background: var(--ims-soft);
+    background: var(--ims-surface);
     position: sticky;
     top: 0;
     z-index: 5;
@@ -878,7 +889,7 @@ a.overview-stat-card {
 }
 
 .table tbody tr:hover {
-    background: rgba(5, 77, 158, .02);
+    background: rgba(5, 77, 158, .025);
 }
 
 /* Responsive table wrapper */
@@ -1192,7 +1203,7 @@ canvas {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(15, 77, 143, 0.9) 0%, rgba(24, 169, 153, 0.85) 100%);
+    background: linear-gradient(135deg, rgba(0, 55, 117, 0.92) 0%, rgba(5, 77, 158, 0.8) 50%, rgba(0, 55, 117, 0.88) 100%);
     z-index: 1;
 }
 
@@ -1303,10 +1314,12 @@ canvas {
 }
 
 .auth-form-title {
-    font-size: 1.6rem;
-    font-weight: 800;
+    font-size: 1.875rem;
+    font-weight: 700;
     color: var(--ims-ink);
     margin-bottom: 0.5rem;
+    letter-spacing: -.02em;
+    line-height: 1.27;
 }
 
 .auth-form-subtitle {
@@ -1340,8 +1353,8 @@ canvas {
 }
 
 .form-floating-custom .form-control:focus {
-    border-color: var(--ims-accent);
-    box-shadow: 0 0 0 3px rgba(24, 169, 153, 0.15);
+    border-color: var(--ims-primary);
+    box-shadow: 0 0 0 2px rgba(5, 77, 158, .12);
 }
 
 .form-floating-custom label {

@@ -43,31 +43,39 @@ $profileCompletion = (int) round(($filledFields / 8) * 100);
 <!-- ── Stat Cards Row ────────────────────────────── -->
 <div class="overview-stats">
     <div class="overview-stat-card animate-in">
-        <span class="overview-stat-label d-flex align-items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-            Enrolled Courses
-        </span>
+        <div class="d-flex justify-content-between align-items-start">
+            <span class="overview-stat-label">Enrolled Courses</span>
+            <span class="overview-stat-icon" style="background: rgba(5, 77, 158, .1); color: var(--ims-primary);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+            </span>
+        </div>
         <strong class="overview-stat-value"><?= $enrolled ?></strong>
     </div>
     <div class="overview-stat-card accent-green animate-in" style="animation-delay: 0.1s">
-        <span class="overview-stat-label d-flex align-items-center gap-2 text-success">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            Learning Progress
-        </span>
+        <div class="d-flex justify-content-between align-items-start">
+            <span class="overview-stat-label">Learning Progress</span>
+            <span class="overview-stat-icon" style="background: rgba(24, 169, 153, .1); color: var(--ims-accent);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </span>
+        </div>
         <strong class="overview-stat-value"><?= $avgProgress ?>%</strong>
     </div>
     <div class="overview-stat-card animate-in" style="animation-delay: 0.2s">
-        <span class="overview-stat-label d-flex align-items-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-            Certificates
-        </span>
+        <div class="d-flex justify-content-between align-items-start">
+            <span class="overview-stat-label">Certificates</span>
+            <span class="overview-stat-icon" style="background: rgba(5, 77, 158, .1); color: var(--ims-primary);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </span>
+        </div>
         <strong class="overview-stat-value"><?= $certCount ?></strong>
     </div>
     <div class="overview-stat-card accent-orange animate-in" style="animation-delay: 0.3s">
-        <span class="overview-stat-label d-flex align-items-center gap-2 text-warning">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            Notifications
-        </span>
+        <div class="d-flex justify-content-between align-items-start">
+            <span class="overview-stat-label">Notifications</span>
+            <span class="overview-stat-icon" style="background: rgba(234, 88, 12, .1); color: var(--ims-warning);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </span>
+        </div>
         <strong class="overview-stat-value"><?= (int) $notificationCount ?></strong>
     </div>
 </div>

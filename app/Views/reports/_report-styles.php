@@ -7,7 +7,7 @@
 }
 .hover-lift:hover { 
     transform: translateY(-3px); 
-    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1) !important; 
+    box-shadow: var(--ims-shadow-md, 0 4px 6px -1px rgba(24,34,48,.07), 0 2px 4px -2px rgba(24,34,48,.05)) !important; 
 }
 
 /* Unified Table */
@@ -15,27 +15,29 @@
     margin-bottom: 0;
 }
 .custom-table th { 
-    background-color: var(--ims-soft, #f8f9fa); 
-    border-bottom: 2px solid var(--ims-border, #e9ecef); 
-    color: var(--ims-muted, #6c757d);
-    font-size: 0.75rem;
+    background-color: var(--ims-surface, #fff); 
+    border-bottom: 1px solid var(--ims-border, #e2e8f0); 
+    color: var(--ims-muted, #64748b);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
 .custom-table td { 
-    border-bottom: 1px solid var(--ims-border-light, #f1f3f5); 
-    color: var(--ims-ink, #495057); 
+    border-bottom: 1px solid var(--ims-border-light, #eef2f8); 
+    color: var(--ims-ink, #182230); 
     vertical-align: middle;
 }
 .custom-table tbody tr:hover td {
-    background-color: rgba(0,0,0,0.015);
+    background-color: rgba(5, 77, 158, 0.025);
 }
 
 /* Stat Cards */
 .stat-card {
     border-radius: var(--ims-radius-lg, 16px);
-    border: 0;
-    box-shadow: var(--ims-shadow-sm, 0 1px 2px rgba(0,0,0,0.05));
+    border: 1px solid var(--ims-border, #e2e8f0);
+    box-shadow: var(--ims-shadow, 0 1px 3px rgba(24,34,48,.06), 0 1px 2px rgba(24,34,48,.04));
     background: white;
     height: 100%;
     position: relative;
@@ -52,18 +54,18 @@
     margin-bottom: 0.75rem;
 }
 .stat-card .value {
-    font-size: 1.75rem;
-    font-weight: 800;
+    font-size: 1.875rem;
+    font-weight: 700;
     color: var(--ims-ink, #182230);
     line-height: 1.2;
     margin-bottom: 0.25rem;
 }
 .stat-card .label {
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 500;
     color: var(--ims-muted, #64748b);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.03em;
 }
 .stat-card .trend-indicator {
     font-size: 0.8rem;

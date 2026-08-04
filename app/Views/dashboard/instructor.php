@@ -16,16 +16,16 @@
 <!-- ── Stat Cards ────────────────────────────────── -->
 <div class="overview-stats mb-4">
     <div class="overview-stat-card animate-in">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-start">
             <span class="overview-stat-label">Active Courses</span>
-            <span class="text-primary" style="font-size: 1.25rem;">📚</span>
+            <span class="overview-stat-icon" style="background: rgba(5, 77, 158, .1); color: var(--ims-primary); font-size: 1.1rem;">📚</span>
         </div>
         <strong class="overview-stat-value"><?= count($courses) ?></strong>
     </div>
     <div class="overview-stat-card animate-in">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-start">
             <span class="overview-stat-label">Total Trainees</span>
-            <span class="text-info" style="font-size: 1.25rem;">👥</span>
+            <span class="overview-stat-icon" style="background: rgba(5, 77, 158, .1); color: var(--ims-primary); font-size: 1.1rem;">👥</span>
         </div>
         <strong class="overview-stat-value"><?php
             $traineeCount = 0;
@@ -34,16 +34,16 @@
         ?></strong>
     </div>
     <div class="overview-stat-card accent-orange animate-in">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-start">
             <span class="overview-stat-label">Pending Grading</span>
-            <span class="text-warning" style="font-size: 1.25rem;">✍️</span>
+            <span class="overview-stat-icon" style="background: rgba(234, 88, 12, .1); color: var(--ims-warning); font-size: 1.1rem;">✍️</span>
         </div>
         <strong class="overview-stat-value"><?= count(array_filter($submissions, fn($s) => ($s['status'] ?? '') === 'submitted')) ?></strong>
     </div>
     <div class="overview-stat-card accent-green animate-in">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between align-items-start">
             <span class="overview-stat-label">Upcoming Deadlines</span>
-            <span class="text-success" style="font-size: 1.25rem;">⏰</span>
+            <span class="overview-stat-icon" style="background: rgba(24, 169, 153, .1); color: var(--ims-accent); font-size: 1.1rem;">⏰</span>
         </div>
         <strong class="overview-stat-value">2</strong> <!-- Mocked for now -->
     </div>

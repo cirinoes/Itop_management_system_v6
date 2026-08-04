@@ -1,0 +1,297 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"surface-bright":"#f8f9ff","outline":"#737783","surface-dim":"#d0daee","surface-container-highest":"#d9e3f6","on-surface-variant":"#424751","on-secondary":"#ffffff","canvas":"#F0F4F8","error":"#ba1a1a","primary-container":"#054d9e","on-primary-fixed-variant":"#004590","on-secondary-fixed-variant":"#005048","secondary-container":"#7df7e4","tertiary-container":"#863700","surface-container":"#e6eeff","surface-container-high":"#dfe9fc","danger":"#DC2626","error-container":"#ffdad6","inverse-surface":"#273140","tertiary":"#622600","on-tertiary":"#ffffff","inverse-primary":"#abc7ff","tertiary-fixed-dim":"#ffb692","sidebar-dark":"#0C1929","border":"#E2E8F0","surface-variant":"#d9e3f6","on-tertiary-fixed":"#341100","primary":"#003775","secondary-fixed":"#7df7e4","on-primary":"#ffffff","outline-variant":"#c2c6d3","secondary":"#006b60","primary-fixed":"#d7e2ff","on-tertiary-fixed-variant":"#793100","surface-tint":"#245dae","muted":"#64748B","inverse-on-surface":"#ebf1ff","tertiary-fixed":"#ffdbcb","on-background":"#121c2a","success":"#16A34A","on-surface":"#121c2a","surface-container-low":"#eff3ff","background":"#f8f9ff","on-primary-container":"#a3c1ff","on-primary-fixed":"#001b3f","surface":"#FFFFFF","on-error-container":"#93000a","surface-container-lowest":"#ffffff","primary-fixed-dim":"#abc7ff","on-tertiary-container":"#ffae86","warning":"#EA580C","on-error":"#ffffff","on-secondary-container":"#007166","on-secondary-fixed":"#00201c","secondary-fixed-dim":"#5edac8"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"sidebar-width":"260px","margin-mobile":"16px","gutter":"24px","stack-md":"16px","container-max":"1440px","stack-lg":"24px","stack-sm":"8px"},"fontFamily":{"headline-lg-mobile":["Inter"],"headline-md":["Inter"],"body-sm":["Inter"],"body-lg":["Inter"],"label-md":["Inter"],"label-sm":["Inter"],"headline-sm":["Inter"],"headline-lg":["Inter"],"body-md":["Inter"]},"fontSize":{"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"700"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}]}}}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-canvas font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-screen w-sidebar-width bg-sidebar-dark z-50 flex flex-col shadow-lg"><div class="h-16 flex items-center px-stack-lg border-b border-white/5"><span class="font-headline-sm text-on-primary tracking-tight">ITOP <span class="text-secondary-fixed-dim">IMS</span></span></div><nav class="flex-1 py-stack-lg space-y-1" data-active-classes="bg-primary-container text-on-primary border-l-4 border-secondary-fixed-dim"><a aria-current="page" class="flex items-center px-stack-lg py-3 transition-all gap-stack-md bg-primary-container text-on-primary border-l-4 border-secondary-fixed-dim" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span><span class="font-label-md">Dashboard</span></a><a class="flex items-center px-stack-lg py-3 text-on-primary/70 hover:bg-white/5 hover:text-on-primary transition-all gap-stack-md" data-path="courses" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span class="font-label-md">Courses</span></a><a class="flex items-center px-stack-lg py-3 text-on-primary/70 hover:bg-white/5 hover:text-on-primary transition-all gap-stack-md" data-path="users" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-label-md">Users</span></a><a class="flex items-center px-stack-lg py-3 text-on-primary/70 hover:bg-white/5 hover:text-on-primary transition-all gap-stack-md" data-path="reports" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-label-md">Reports</span></a><a class="flex items-center px-stack-lg py-3 text-on-primary/70 hover:bg-white/5 hover:text-on-primary transition-all gap-stack-md" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label-md">Settings</span></a></nav></aside><div class="pl-sidebar-width"><header class="fixed top-0 left-sidebar-width right-0 h-16 bg-surface border-b border-border z-40 flex items-center justify-between px-gutter"><div class="flex items-center bg-surface-container px-stack-md py-1.5 rounded-lg border border-outline-variant w-96"><span class="material-symbols-outlined text-muted text-[20px]">search</span><input class="bg-transparent border-none focus:ring-0 text-body-sm w-full ml-2 outline-none text-on-surface" placeholder="Search records..." type="text"/></div><div class="flex items-center gap-stack-lg"><button class="p-2 hover:bg-surface-container-high rounded-full transition-colors text-on-surface-variant"><span class="material-symbols-outlined">help</span></button><button class="p-2 hover:bg-surface-container-high rounded-full transition-colors text-on-surface-variant relative"><span class="material-symbols-outlined">notifications</span><span class="absolute top-2 right-2 w-2 h-2 bg-danger rounded-full border-2 border-surface"></span></button><div class="flex items-center gap-stack-sm pl-stack-md border-l border-border"><div class="text-right hidden lg:block"><div class="text-label-md text-on-surface leading-none">Admin User</div><div class="text-label-sm text-muted">Systems Architect</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 min-h-screen bg-canvas p-gutter"><div class="max-w-container-max mx-auto"><div class="flex flex-col w-full gap-stack-lg animate-fade-in pb-gutter">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-stack-md pt-stack-sm">
+<div class="flex flex-col">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Instructor Dashboard</h1>
+<p class="font-body-lg text-body-lg text-muted mt-1">Welcome back. Here is your overview for the current semester.</p>
+</div>
+<div class="flex gap-stack-md">
+<button class="px-4 py-2 bg-surface text-on-surface border border-border rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                View Calendar
+            </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:brightness-90 transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                New Assignment
+            </button>
+</div>
+</div>
+<!-- Metrics Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-stack-lg">
+<!-- Active Courses -->
+<div class="bg-surface rounded-xl p-stack-lg shadow-sm flex flex-col gap-stack-md relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-primary/5 rounded-full transition-transform group-hover:scale-150 duration-500 ease-out"></div>
+<div class="flex items-center justify-between z-10">
+<span class="font-label-md text-label-md text-muted uppercase tracking-wider">Active Courses</span>
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">school</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 z-10">
+<span class="font-headline-lg text-headline-lg text-on-surface">4</span>
+<span class="font-label-sm text-label-sm text-success bg-success/10 px-2 py-0.5 rounded-full">Current Term</span>
+</div>
+</div>
+<!-- Total Students -->
+<div class="bg-surface rounded-xl p-stack-lg shadow-sm flex flex-col gap-stack-md relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-secondary-container/20 rounded-full transition-transform group-hover:scale-150 duration-500 ease-out"></div>
+<div class="flex items-center justify-between z-10">
+<span class="font-label-md text-label-md text-muted uppercase tracking-wider">Total Students</span>
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 z-10">
+<span class="font-headline-lg text-headline-lg text-on-surface">156</span>
+<span class="font-label-sm text-label-sm text-success flex items-center"><span class="material-symbols-outlined text-[14px]">trending_up</span> +12%</span>
+</div>
+</div>
+<!-- Pending Grading -->
+<div class="bg-surface rounded-xl p-stack-lg shadow-sm flex flex-col gap-stack-md relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-warning/5 rounded-full transition-transform group-hover:scale-150 duration-500 ease-out"></div>
+<div class="flex items-center justify-between z-10">
+<span class="font-label-md text-label-md text-muted uppercase tracking-wider">Pending Grading</span>
+<div class="w-10 h-10 rounded-full bg-warning/10 text-warning flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">assignment</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 z-10">
+<span class="font-headline-lg text-headline-lg text-on-surface">24</span>
+<span class="font-label-sm text-label-sm text-muted">Submissions</span>
+</div>
+</div>
+<!-- Upcoming Deadlines -->
+<div class="bg-surface rounded-xl p-stack-lg shadow-sm flex flex-col gap-stack-md relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-danger/5 rounded-full transition-transform group-hover:scale-150 duration-500 ease-out"></div>
+<div class="flex items-center justify-between z-10">
+<span class="font-label-md text-label-md text-muted uppercase tracking-wider">Deadlines (48h)</span>
+<div class="w-10 h-10 rounded-full bg-danger/10 text-danger flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 z-10">
+<span class="font-headline-lg text-headline-lg text-danger">3</span>
+<span class="font-label-sm text-label-sm text-muted">Assignments</span>
+</div>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-stack-lg">
+<!-- Left Column: Engagement & Schedule -->
+<div class="xl:col-span-8 flex flex-col gap-stack-lg">
+<!-- Class Engagement Tracker -->
+<div class="bg-surface rounded-xl shadow-sm flex flex-col h-[400px]">
+<div class="p-stack-lg pb-0 flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Class Engagement Tracker</h2>
+<p class="font-body-sm text-body-sm text-muted mt-1">Average participation across all active courses</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-muted"><span class="w-2 h-2 rounded-full bg-primary"></span> CS101</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-muted"><span class="w-2 h-2 rounded-full bg-secondary"></span> MATH202</span>
+</div>
+</div>
+<div class="flex-1 p-stack-lg flex items-end justify-between gap-2 relative">
+<!-- Faux Grid Lines -->
+<div class="absolute inset-0 p-stack-lg flex flex-col justify-between pointer-events-none">
+<div class="w-full h-px bg-border/50"></div>
+<div class="w-full h-px bg-border/50"></div>
+<div class="w-full h-px bg-border/50"></div>
+<div class="w-full h-px bg-border/50"></div>
+<div class="w-full h-px bg-border/50"></div>
+</div>
+<!-- Faux Bar Chart -->
+<div class="w-full h-full flex items-end justify-around z-10 pt-8">
+<div class="flex flex-col items-center gap-2 group w-full max-w-[40px]">
+<div class="w-full flex items-end gap-1 h-[200px]">
+<div class="w-1/2 bg-primary rounded-t-sm h-[60%] transition-all duration-300 group-hover:brightness-110"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm h-[40%] transition-all duration-300 group-hover:brightness-110"></div>
+</div>
+<span class="font-label-sm text-label-sm text-muted">Week 1</span>
+</div>
+<div class="flex flex-col items-center gap-2 group w-full max-w-[40px]">
+<div class="w-full flex items-end gap-1 h-[200px]">
+<div class="w-1/2 bg-primary rounded-t-sm h-[65%] transition-all duration-300 group-hover:brightness-110"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm h-[50%] transition-all duration-300 group-hover:brightness-110"></div>
+</div>
+<span class="font-label-sm text-label-sm text-muted">Week 2</span>
+</div>
+<div class="flex flex-col items-center gap-2 group w-full max-w-[40px]">
+<div class="w-full flex items-end gap-1 h-[200px]">
+<div class="w-1/2 bg-primary rounded-t-sm h-[80%] transition-all duration-300 group-hover:brightness-110"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm h-[60%] transition-all duration-300 group-hover:brightness-110"></div>
+</div>
+<span class="font-label-sm text-label-sm text-muted">Week 3</span>
+</div>
+<div class="flex flex-col items-center gap-2 group w-full max-w-[40px]">
+<div class="w-full flex items-end gap-1 h-[200px]">
+<div class="w-1/2 bg-primary rounded-t-sm h-[75%] transition-all duration-300 group-hover:brightness-110"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm h-[70%] transition-all duration-300 group-hover:brightness-110"></div>
+</div>
+<span class="font-label-sm text-label-sm text-muted">Week 4</span>
+</div>
+<div class="flex flex-col items-center gap-2 group w-full max-w-[40px]">
+<div class="w-full flex items-end gap-1 h-[200px]">
+<div class="w-1/2 bg-primary rounded-t-sm h-[85%] transition-all duration-300 group-hover:brightness-110"></div>
+<div class="w-1/2 bg-secondary rounded-t-sm h-[75%] transition-all duration-300 group-hover:brightness-110"></div>
+</div>
+<span class="font-label-sm text-label-sm text-muted">Week 5</span>
+</div>
+<div class="flex flex-col items-center gap-2 group w-full max-w-[40px]">
+<div class="w-full flex items-end gap-1 h-[200px]">
+<div class="w-1/2 bg-primary rounded-t-sm h-[90%] transition-all duration-300 group-hover:brightness-110 relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-2 py-1 rounded text-[10px] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">90%</div>
+</div>
+<div class="w-1/2 bg-secondary rounded-t-sm h-[85%] transition-all duration-300 group-hover:brightness-110"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Week 6</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming Schedule -->
+<div class="bg-surface rounded-xl shadow-sm flex flex-col">
+<div class="p-stack-lg border-b border-border/50 flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Upcoming Schedule</h2>
+<button class="text-primary font-label-md text-label-md hover:underline">View Full Calendar</button>
+</div>
+<div class="flex flex-col p-stack-lg gap-stack-md">
+<!-- Schedule Item -->
+<div class="flex items-start gap-stack-md p-stack-sm hover:bg-surface-container-lowest rounded-lg transition-colors group cursor-pointer border border-transparent hover:border-border/50">
+<div class="w-16 flex flex-col items-center justify-center shrink-0">
+<span class="font-label-md text-label-md text-muted uppercase">Today</span>
+<span class="font-headline-md text-headline-md text-on-surface">09:00</span>
+</div>
+<div class="w-1 bg-primary/20 group-hover:bg-primary h-12 rounded-full transition-colors"></div>
+<div class="flex-1">
+<h3 class="font-label-md text-label-md text-on-surface">Introduction to Computer Science (CS101)</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-muted">location_on</span>
+<span class="font-body-sm text-body-sm text-muted">Room 302, Science Building</span>
+</div>
+</div>
+<div class="flex -space-x-2 shrink-0">
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="Corporate headshot of a student in professional attire, natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBegGIph20Szrevwgv9EdSBGBdy6PeFe09J0qqqaEtVG2cGcwbnyoOgOCu9inOWB-kDeKUTVqeUvY7_fT6jUG_hEFKRu7FDbpqMhT1ppJ8_3CT4FD0-6Qyo1Tga-H-NV1gnVnnLr52Eb37sZx_jFasXQhoLYD3SCJZJru4Mpi5QObnEplgsEfk-I5JCyxE_-RrwXOG0M7rFvEMOif6lswk7tGNHxYvunAi8E4keIgr6eSNCBH55V9jS0w"/>
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="Corporate headshot of a student with glasses, smiling, professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAj2fawNl6i0SksU2-KBotl77uiXRbQwGaf0LOVmmSDpYvWB-_bJaOw96o0iUNLUPom0OBebV_mJv-GGEmVc1QhIaxoILlDMrYUYWry6ZmxrnnBJdWeeb331gu_6LkeHvIqKDVQ4yp8EmKzIKR3YpVBvRgIxrY2yup_so0t4OVSL7qkP1-KBLzVNOLAurRft-TefR67MboS1x6LOZGTzgIbNcqYfcPtJa0EROU31HHzbSdneQpZELripQ"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center font-label-sm text-[10px] text-muted">+42</div>
+</div>
+</div>
+<!-- Schedule Item -->
+<div class="flex items-start gap-stack-md p-stack-sm hover:bg-surface-container-lowest rounded-lg transition-colors group cursor-pointer border border-transparent hover:border-border/50">
+<div class="w-16 flex flex-col items-center justify-center shrink-0">
+<span class="font-label-md text-label-md text-muted uppercase">Today</span>
+<span class="font-headline-md text-headline-md text-on-surface">13:30</span>
+</div>
+<div class="w-1 bg-secondary/20 group-hover:bg-secondary h-12 rounded-full transition-colors"></div>
+<div class="flex-1">
+<h3 class="font-label-md text-label-md text-on-surface">Advanced Calculus (MATH202)</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-[14px] text-muted">videocam</span>
+<span class="font-body-sm text-body-sm text-muted">Online Lecture (Zoom)</span>
+</div>
+</div>
+<div class="flex -space-x-2 shrink-0">
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="Corporate headshot of a student in casual tech wear, bright background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKPcWTKBaAurB6thj06ZFNILwFisZGta3MEEoB1MAXyb8VA4pysf3bJ7HjrEwdb-7C-ce2lCE9ZR_o810JHL2juVJJmQHRvJ2yACJKypUwxNcmVaY9dzACasmS1CavmHa9ulseWxxRSB0rZcLiL4bdyFF_oajKjPoPrpeDbDC4fRfbZLbjksd-WkjZ1KQbRzpfHcIv8xSxiO5a3-hWNQtFfNFIJvbrZv1ZOUFFv2rSDBqIf6puPTcjew"/>
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container flex items-center justify-center font-label-sm text-[10px] text-muted">+28</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Grading Queue -->
+<div class="xl:col-span-4 flex flex-col gap-stack-lg">
+<div class="bg-surface rounded-xl shadow-sm flex flex-col h-full border border-border/50">
+<div class="p-stack-lg border-b border-border/50 flex items-center justify-between bg-surface-container-lowest rounded-t-xl">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Grading Queue</h2>
+<span class="bg-warning/10 text-warning px-2 py-0.5 rounded-full font-label-sm text-label-sm">24 pending</span>
+</div>
+<button class="p-1 hover:bg-surface-container rounded transition-colors text-muted">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+<div class="flex flex-col divide-y divide-border/30 overflow-y-auto max-h-[600px]">
+<!-- Grading Item -->
+<div class="p-stack-md hover:bg-surface-container-lowest transition-colors group cursor-pointer flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">CS101 - Project 1</span>
+<span class="font-label-sm text-label-sm text-danger flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                2h left
+                            </span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface font-medium leading-tight line-clamp-2">Algorithm Optimization Analysis Report</h3>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full object-cover" data-alt="Avatar of student, professional headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrkpxefyqI8FPJVIsTtgRKAuu2HyzOZcHprymT0w97ePsWvIs7_IEpw8PyAT1dNwyBfoJDYUBF7BstBvYBndhr3QITt-Z9jNtAmydObsLT2gnVWrwI52SrR_apTlaSgW7PGhgtUaUwWb5vJK6Hf91wS5iHjbRQENpU-35_Y28Ejl-t7h1DLb-TPP2n1kXj1sGlyde_RiLDN0trI9kKvK42EV3ySmEKrC0WUctHibH41dvLZ6CENXqQkQ"/>
+<span class="font-body-sm text-body-sm text-muted">Sarah Jenkins</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-primary font-label-sm text-label-sm bg-primary/10 px-3 py-1 rounded">Grade Now</button>
+</div>
+</div>
+<!-- Grading Item -->
+<div class="p-stack-md hover:bg-surface-container-lowest transition-colors group cursor-pointer flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">CS101 - Project 1</span>
+<span class="font-label-sm text-label-sm text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                5h left
+                            </span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface font-medium leading-tight line-clamp-2">Algorithm Optimization Analysis Report</h3>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full object-cover" data-alt="Avatar of student, male, professional setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2et_oRVGpkdkh_AoR8zm7BWbeTe_xsyWAkDKeyZYvF9bFbMC9ugA_Cam0kJh0q-WPFG_-pNPYq0VaMoDZpbLVkl6gAI-g5wuGsiqoWPP2whjxjaRcecqVGy5Ji0S4JKIpGdM4fuIflLjadRWkNno_IgPrwxCjsnbUKG_3UscswZbEumXKXfi0VqOT_zCvKtdA2Br98plYyYAFRu07yAayyDDqamsu5iGsEs0BlIZLFfk92dm0iDltag"/>
+<span class="font-body-sm text-body-sm text-muted">Marcus Chen</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-primary font-label-sm text-label-sm bg-primary/10 px-3 py-1 rounded">Grade Now</button>
+</div>
+</div>
+<!-- Grading Item -->
+<div class="p-stack-md hover:bg-surface-container-lowest transition-colors group cursor-pointer flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">MATH202 - Midterm</span>
+<span class="font-label-sm text-label-sm text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                Tomorrow
+                            </span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface font-medium leading-tight line-clamp-2">Series Expansion Proofs and Applications</h3>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center font-label-sm text-[10px]">EP</div>
+<span class="font-body-sm text-body-sm text-muted">Elena Patel</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-primary font-label-sm text-label-sm bg-primary/10 px-3 py-1 rounded">Grade Now</button>
+</div>
+</div>
+<!-- Grading Item -->
+<div class="p-stack-md hover:bg-surface-container-lowest transition-colors group cursor-pointer flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">MATH202 - Midterm</span>
+<span class="font-label-sm text-label-sm text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                Tomorrow
+                            </span>
+</div>
+<h3 class="font-body-md text-body-md text-on-surface font-medium leading-tight line-clamp-2">Series Expansion Proofs and Applications</h3>
+<div class="flex items-center justify-between mt-2">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full object-cover" data-alt="Avatar of student, casual, outdoor background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_LWE8bEIqnf6dWRhiLE91W6nVL5n7MB7GfQliM28PPnYW6akl828cvVIHVtTY8NHbxP3dhEpOvnLaXmP8EIQ2qwEwau1eeMEVmXaac_HUrTAcpXKZHgg2CPAYHNKx7UXZI1n8yGSJr6pReosbtoP24e58ap5OXz_Mg4sfbqAbuYx-bInNFnT-9ObKpixLjMBuDES9FCjD9WB9NwxsGE3KKXqpfukwPHo75DBQXmvkAAtbo2WMbkF67Q"/>
+<span class="font-body-sm text-body-sm text-muted">David Kim</span>
+</div>
+<button class="opacity-0 group-hover:opacity-100 transition-opacity text-primary font-label-sm text-label-sm bg-primary/10 px-3 py-1 rounded">Grade Now</button>
+</div>
+</div>
+</div>
+<div class="p-stack-md border-t border-border/50 mt-auto bg-surface-container-lowest rounded-b-xl">
+<button class="w-full py-2 bg-surface text-primary border border-primary/20 rounded-lg font-label-md text-label-md hover:bg-primary/5 transition-colors flex items-center justify-center gap-2">
+                        View All Pending (24)
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div></div></main></div></body></html>

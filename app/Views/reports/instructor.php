@@ -8,7 +8,7 @@
         <div>
             <div class="d-flex align-items-center gap-2 mb-1">
                 <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1 fw-semibold">Instructor</span>
-                <h1 class="h3 mb-0 fw-bold">My Teaching Analytics</h1>
+                <h1 class="section-title mb-0">My Teaching Analytics</h1>
             </div>
             <p class="text-muted mb-0">Overview of your courses, student performance, and pending tasks.</p>
         </div>

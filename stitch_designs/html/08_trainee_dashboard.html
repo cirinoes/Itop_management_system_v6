@@ -1,0 +1,215 @@
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"surface-container-highest":"#d9e3f6","secondary":"#006b60","on-background":"#121c2a","secondary-container":"#7df7e4","on-primary-fixed-variant":"#004590","on-secondary":"#ffffff","inverse-surface":"#273140","on-tertiary-fixed":"#341100","warning":"#EA580C","secondary-fixed-dim":"#5edac8","error-container":"#ffdad6","on-tertiary":"#ffffff","tertiary":"#622600","outline":"#737783","on-tertiary-container":"#ffae86","on-surface-variant":"#424751","border":"#E2E8F0","surface-dim":"#d0daee","on-surface":"#121c2a","inverse-on-surface":"#ebf1ff","on-secondary-fixed-variant":"#005048","on-secondary-container":"#007166","tertiary-fixed":"#ffdbcb","primary-fixed-dim":"#abc7ff","surface":"#FFFFFF","surface-container-high":"#dfe9fc","surface-container-lowest":"#ffffff","surface-container-low":"#eff3ff","canvas":"#F0F4F8","primary-fixed":"#d7e2ff","surface-container":"#e6eeff","surface-bright":"#f8f9ff","outline-variant":"#c2c6d3","tertiary-container":"#863700","danger":"#DC2626","primary-container":"#054d9e","muted":"#64748B","on-tertiary-fixed-variant":"#793100","on-error":"#ffffff","on-error-container":"#93000a","on-primary":"#ffffff","on-secondary-fixed":"#00201c","sidebar-dark":"#0C1929","on-primary-fixed":"#001b3f","error":"#ba1a1a","primary":"#003775","tertiary-fixed-dim":"#ffb692","background":"#f8f9ff","surface-variant":"#d9e3f6","secondary-fixed":"#7df7e4","on-primary-container":"#a3c1ff","surface-tint":"#245dae","success":"#16A34A","inverse-primary":"#abc7ff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"stack-lg":"24px","stack-sm":"8px","sidebar-width":"260px","margin-mobile":"16px","gutter":"24px","stack-md":"16px","container-max":"1440px"},"fontFamily":{"headline-lg":["Inter"],"body-md":["Inter"],"body-lg":["Inter"],"headline-md":["Inter"],"headline-lg-mobile":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"label-md":["Inter"]},"fontSize":{"headline-lg":["30px",{"lineHeight":"38px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-md":["24px",{"lineHeight":"32px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-lg-mobile":["24px",{"lineHeight":"32px","fontWeight":"700"}],"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-sm":["20px",{"lineHeight":"28px","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}]}}}}</script><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/></head><body class="bg-canvas font-body-md text-on-surface"><aside class="fixed left-0 top-0 h-full w-sidebar-width bg-sidebar-dark z-50 flex flex-col shadow-xl"><div class="px-gutter py-stack-lg flex items-center gap-stack-sm"><div class="w-8 h-8 rounded bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[20px]">settings_input_component</span></div><span class="font-headline-sm text-surface-bright tracking-tight">IMS Core</span></div><nav class="flex-1 px-4 space-y-1 mt-stack-md" data-active-classes="bg-primary text-on-primary shadow-lg shadow-primary/20"><a aria-current="page" class="flex items-center px-4 py-3 rounded-lg transition-all bg-primary text-on-primary shadow-lg shadow-primary/20" data-path="dashboard" href="#"><span class="material-symbols-outlined mr-3">dashboard</span>Dashboard</a><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="courses" href="#"><span class="material-symbols-outlined mr-3">school</span>Courses</a><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="users" href="#"><span class="material-symbols-outlined mr-3">group</span>Users</a><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="reports" href="#"><span class="material-symbols-outlined mr-3">assessment</span>Reports</a><a class="flex items-center px-4 py-3 rounded-lg text-surface-container-highest/70 hover:bg-surface-variant/10 hover:text-surface-bright transition-all" data-path="settings" href="#"><span class="material-symbols-outlined mr-3">settings</span>Settings</a></nav><div class="p-4 mt-auto"><div class="bg-surface-variant/5 rounded-xl p-4 border border-outline-variant/10"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="overflow-hidden"><p class="text-label-md text-surface-bright truncate">Admin User</p><p class="text-label-sm text-surface-container-highest/50">System Lead</p></div></div></div></div></aside><div class="pl-sidebar-width"><header class="fixed top-0 left-sidebar-width right-0 h-16 bg-surface/80 backdrop-blur-xl border-b border-border z-40 flex items-center justify-between px-gutter"><div class="flex items-center bg-surface-container-low px-stack-md py-stack-sm rounded-lg border border-border w-96"><span class="material-symbols-outlined text-muted text-[20px] mr-2">search</span><input class="bg-transparent border-none outline-none text-body-sm w-full text-on-surface placeholder-muted" placeholder="Search across system..." type="text"/></div><div class="flex items-center gap-stack-md"><button class="p-2 text-muted hover:text-on-surface-variant transition-colors"><span class="material-symbols-outlined">notifications</span></button><button class="p-2 text-muted hover:text-on-surface-variant transition-colors"><span class="material-symbols-outlined">help</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-2 cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 min-h-screen"><div class="flex flex-col w-full relative">
+<!-- Decorative background elements -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute top-0 right-0 w-1/2 h-[600px] bg-gradient-to-bl from-primary-fixed/20 via-surface-container-low/50 to-transparent blur-3xl opacity-60"></div>
+<div class="absolute bottom-0 left-0 w-3/4 h-[800px] bg-gradient-to-tr from-secondary-container/10 via-canvas/10 to-transparent blur-3xl opacity-40"></div>
+</div>
+<div class="px-gutter pb-gutter relative z-10 w-full max-w-container-max mx-auto space-y-gutter mt-stack-lg">
+<!-- Header / Hero Section -->
+<section class="flex flex-col lg:flex-row gap-gutter justify-between items-start lg:items-center bg-surface p-stack-lg rounded-xl shadow-sm">
+<div class="flex-1 min-w-0">
+<p class="font-label-md text-label-md text-primary tracking-widest uppercase mb-2">Trainee Portal</p>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-2">Welcome back, Sarah!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">Ready to level up your ITOP skills? You have 2 active courses and 1 upcoming assessment this week.</p>
+</div>
+<div class="w-full lg:w-auto min-w-[280px] bg-surface-container-lowest p-stack-md rounded-lg shadow-sm shrink-0">
+<div class="flex items-center justify-between mb-4">
+<span class="font-headline-sm text-headline-sm text-on-surface">Overall Progress</span>
+<span class="font-headline-md text-headline-md text-primary">68%</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-3 mb-2 overflow-hidden relative">
+<div class="bg-primary h-3 rounded-full relative z-10 w-[68%] transition-all duration-1000 ease-out"></div>
+<!-- Animated shine effect on progress bar -->
+<div class="absolute top-0 left-0 h-full w-[68%] z-20 pointer-events-none">
+<div class="h-full w-20 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full animate-[shimmer_2.5s_infinite]"></div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-right">4/6 Modules Completed</p>
+</div>
+</section>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Active Courses (Spans 8 cols on LG) -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">school</span>
+            Active Courses
+          </h2>
+<button class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors flex items-center">
+            View All Catalog <span class="material-symbols-outlined text-[16px] ml-1">arrow_forward</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<!-- Course Card 1 -->
+<div class="bg-surface rounded-xl p-stack-md shadow-sm group hover:shadow-md transition-shadow relative overflow-hidden flex flex-col h-full">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-500 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">security</span>
+</div>
+<span class="bg-surface-container px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant">Mandatory</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2 relative z-10 line-clamp-1">Incident Management Protocol</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 relative z-10 line-clamp-2">Master the core procedures for identifying, logging, and resolving critical system incidents within SLA parameters.</p>
+<div class="mt-auto space-y-4 relative z-10">
+<div>
+<div class="flex justify-between text-body-sm text-on-surface-variant mb-1 font-body-sm">
+<span>Progress</span>
+<span class="font-medium text-on-surface">45%</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-primary h-1.5 rounded-full w-[45%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-variant">
+<div class="flex items-center text-on-surface-variant gap-1.5">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-label-md text-label-md">2h 15m left</span>
+</div>
+<button class="bg-primary text-on-primary hover:bg-primary-container px-4 py-2 rounded-lg font-label-md text-label-md transition-colors shadow-sm">
+                  Resume
+                </button>
+</div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="bg-surface rounded-xl p-stack-md shadow-sm group hover:shadow-md transition-shadow relative overflow-hidden flex flex-col h-full">
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-500 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+</div>
+<span class="bg-surface-container px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant">Elective</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2 relative z-10 line-clamp-1">Security Admin Advanced</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 relative z-10 line-clamp-2">Deep dive into access control models, identity federation, and audit logging for enterprise environments.</p>
+<div class="mt-auto space-y-4 relative z-10">
+<div>
+<div class="flex justify-between text-body-sm text-on-surface-variant mb-1 font-body-sm">
+<span>Progress</span>
+<span class="font-medium text-on-surface">82%</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-secondary h-1.5 rounded-full w-[82%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-variant">
+<div class="flex items-center text-on-surface-variant gap-1.5">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-label-md text-label-md">45m left</span>
+</div>
+<button class="bg-secondary text-on-secondary hover:bg-on-secondary-fixed px-4 py-2 rounded-lg font-label-md text-label-md transition-colors shadow-sm">
+                  Resume
+                </button>
+</div>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="bg-surface rounded-xl p-stack-md shadow-sm group hover:shadow-md transition-shadow relative overflow-hidden flex flex-col h-full">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary/5 rounded-bl-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-500 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined">network_node</span>
+</div>
+<span class="bg-surface-container px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant">Mandatory</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2 relative z-10 line-clamp-1">Network Topology Basics</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 relative z-10 line-clamp-2">Understand the fundamental architecture of our global hybrid cloud deployment.</p>
+<div class="mt-auto space-y-4 relative z-10">
+<div>
+<div class="flex justify-between text-body-sm text-on-surface-variant mb-1 font-body-sm">
+<span>Progress</span>
+<span class="font-medium text-on-surface">15%</span>
+</div>
+<div class="w-full bg-surface-variant rounded-full h-1.5">
+<div class="bg-tertiary h-1.5 rounded-full w-[15%]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-variant">
+<div class="flex items-center text-on-surface-variant gap-1.5">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span class="font-label-md text-label-md">3h 40m left</span>
+</div>
+<button class="bg-surface-container-high text-on-surface hover:bg-surface-variant px-4 py-2 rounded-lg font-label-md text-label-md transition-colors shadow-sm">
+                  Resume
+                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar (Spans 4 cols on LG) -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Upcoming Deadlines -->
+<div class="bg-surface rounded-xl p-stack-md shadow-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-warning">event_upcoming</span>
+            Upcoming Deadlines
+          </h2>
+<div class="space-y-4">
+<div class="flex gap-4 p-3 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors border-l-4 border-warning">
+<div class="flex flex-col items-center justify-center w-12 shrink-0 bg-warning/10 rounded text-warning">
+<span class="font-label-md text-label-md uppercase">Oct</span>
+<span class="font-headline-sm text-headline-sm font-bold">24</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface line-clamp-1">Final Assessment</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Incident Management</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-colors border-l-4 border-primary">
+<div class="flex flex-col items-center justify-center w-12 shrink-0 bg-primary/10 rounded text-primary">
+<span class="font-label-md text-label-md uppercase">Oct</span>
+<span class="font-headline-sm text-headline-sm font-bold">28</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface line-clamp-1">Peer Review</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Security Architecture</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Latest Updates Timeline -->
+<div class="bg-surface rounded-xl p-stack-md shadow-sm flex-1">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">update</span>
+            Latest Updates
+          </h2>
+<div class="relative pl-6 space-y-6 before:absolute before:inset-y-0 before:left-[11px] before:w-[2px] before:bg-surface-variant">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<div class="absolute -left-[30px] top-1 w-[10px] h-[10px] rounded-full bg-primary ring-4 ring-surface"></div>
+<p class="font-label-sm text-label-sm text-muted mb-1">Today, 09:41 AM</p>
+<h4 class="font-body-md text-body-md font-medium text-on-surface">New Module Available</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">"Cloud IAM Basics" has been added to your elective catalog.</p>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<div class="absolute -left-[30px] top-1 w-[10px] h-[10px] rounded-full bg-secondary ring-4 ring-surface"></div>
+<p class="font-label-sm text-label-sm text-muted mb-1">Yesterday, 14:20 PM</p>
+<h4 class="font-body-md text-body-md font-medium text-on-surface">Assessment Scored</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">You scored 94% on "Network Troubleshooting". Badge awarded.</p>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative">
+<div class="absolute -left-[30px] top-1 w-[10px] h-[10px] rounded-full bg-outline-variant ring-4 ring-surface"></div>
+<p class="font-label-sm text-label-sm text-muted mb-1">Oct 18, 11:00 AM</p>
+<h4 class="font-body-md text-body-md font-medium text-on-surface">System Maintenance</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">IMS Core will be offline for scheduled maintenance on Sunday.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+    @keyframes shimmer {
+      100% {
+        transform: translateX(100%);
+      }
+    }
+  </style>
+</div></main></div></body></html>

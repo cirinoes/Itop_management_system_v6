@@ -89,10 +89,24 @@ if (!function_exists('hasChartData')) {
         $link = $statLinks[$label] ?? '#';
         $icon = $statIcons[$label] ?? '';
     ?>
+        <?php
+        $iconBg = 'rgba(5, 77, 158, .1)';
+        $iconColor = 'var(--ims-primary)';
+        if ($accent === 'accent-green') {
+            $iconBg = 'rgba(24, 169, 153, .1)';
+            $iconColor = 'var(--ims-accent)';
+        } elseif ($accent === 'accent-orange') {
+            $iconBg = 'rgba(234, 88, 12, .1)';
+            $iconColor = 'var(--ims-warning)';
+        } elseif ($accent === 'accent-red') {
+            $iconBg = 'rgba(220, 38, 38, .1)';
+            $iconColor = 'var(--ims-danger)';
+        }
+        ?>
         <a href="<?= $link ?>" class="overview-stat-card <?= $accent ?> animate-in" title="View details">
             <div class="d-flex justify-content-between align-items-start">
                 <span class="overview-stat-label"><?= Security::e(ucwords(str_replace('_', ' ', $label))) ?></span>
-                <span class="overview-stat-icon" style="color: var(--ims-muted); opacity:.4;"><?= $icon ?></span>
+                <span class="overview-stat-icon" style="background: <?= $iconBg ?>; color: <?= $iconColor ?>;"><?= $icon ?></span>
             </div>
             <div class="d-flex align-items-center justify-content-between mt-1">
                 <strong class="overview-stat-value"><?= $label === 'total_revenue' ? 'RM ' . number_format((float) $value) : number_format((int) $value) ?></strong>
