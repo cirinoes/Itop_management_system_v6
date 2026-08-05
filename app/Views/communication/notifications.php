@@ -110,7 +110,7 @@
                                 </form>
                             <?php endif; ?>
                             
-                            <form method="post" action="index.php?page=delete-notification" data-ajax-form>
+                            <form method="post" action="index.php?page=delete-notification" data-ajax-form onsubmit="return confirm('Are you sure you want to delete this notification?');">
                                 <input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>">
                                 <input type="hidden" name="id" value="<?= (int) $notification['id'] ?>">
                                 <button class="btn btn-sm btn-outline-danger rounded-pill px-2" title="Delete">

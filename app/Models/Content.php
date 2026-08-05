@@ -17,10 +17,10 @@ final class Content extends Model
             $query->where('a.is_public', 1);
         } elseif ($role === 'trainee' && $userId !== null) {
             $query->whereRaw('a.is_public = 1 OR a.created_by IN (
-                SELECT DISTINCT c.instructor_id 
+                SELECT DISTINCT ts.instructor_id 
                 FROM enrolments e 
-                JOIN courses c ON c.id = e.course_id 
-                WHERE e.trainee_id = ? AND c.instructor_id IS NOT NULL
+                JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id 
+                WHERE e.trainee_id = ? AND ts.instructor_id IS NOT NULL
             )', [$userId]);
         } elseif ($role === 'instructor' && $userId !== null) {
             $query->whereRaw('a.is_public = 1 OR a.created_by = ?', [$userId]);
@@ -48,7 +48,7 @@ final class Content extends Model
             'total_companies' => 'SELECT COUNT(*) FROM companies',
             'total_institutions' => 'SELECT COUNT(*) FROM institutions',
             'certificates_issued' => 'SELECT COUNT(*) FROM certificates',
-            'total_revenue' => 'SELECT COALESCE(SUM(courses.fee), 0) FROM enrolments JOIN courses ON courses.id = enrolments.course_id WHERE enrolments.status IN ("active","completed")',
+            'total_revenue' => 'SELECT COALESCE(SUM(training_sessions.fee), 0) FROM enrolments JOIN training_sessions ON training_sessions.id = enrolments.training_session_id JOIN courses ON courses.id = training_sessions.course_id WHERE enrolments.status IN ("active","completed")',
         ];
         $stats = [];
         foreach ($queries as $key => $sql) {
@@ -121,9 +121,9 @@ final class Content extends Model
     {
         return [
             'registrations' => $this->db->query('SELECT users.name, users.email, users.created_at FROM users JOIN roles ON roles.id = users.role_id WHERE roles.slug = "trainee" ORDER BY users.created_at DESC LIMIT 5')->fetchAll(),
-            'enrolments' => $this->db->query('SELECT e.created_at, u.name AS trainee_name, c.title AS course_title, e.status FROM enrolments e JOIN users u ON u.id = e.trainee_id JOIN courses c ON c.id = e.course_id ORDER BY e.created_at DESC LIMIT 5')->fetchAll(),
-            'certificates' => $this->db->query('SELECT cert.certificate_number, cert.certificate_no, COALESCE(cert.issue_date, cert.issued_at) AS issued_on, u.name AS trainee_name, c.title AS course_title FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id ORDER BY COALESCE(cert.issue_date, cert.issued_at) DESC LIMIT 5')->fetchAll(),
-            'evaluations' => $this->db->query('SELECT e.*, u.name AS trainee_name, c.title AS course_title FROM evaluations e JOIN users u ON u.id = e.trainee_id JOIN courses c ON c.id = e.course_id WHERE e.comments IS NULL AND e.feedback IS NULL ORDER BY e.created_at DESC LIMIT 5')->fetchAll(),
+            'enrolments' => $this->db->query('SELECT e.created_at, u.name AS trainee_name, c.title AS course_title, e.status FROM enrolments e JOIN users u ON u.id = e.trainee_id JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id ORDER BY e.created_at DESC LIMIT 5')->fetchAll(),
+            'certificates' => $this->db->query('SELECT cert.certificate_number, cert.certificate_no, COALESCE(cert.issue_date, cert.issued_at) AS issued_on, u.name AS trainee_name, c.title AS course_title FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id ORDER BY COALESCE(cert.issue_date, cert.issued_at) DESC LIMIT 5')->fetchAll(),
+            'evaluations' => $this->db->query('SELECT e.*, u.name AS trainee_name, c.title AS course_title FROM evaluations e JOIN users u ON u.id = e.trainee_id JOIN training_sessions ts ON ts.id = e.course_id JOIN courses c ON c.id = ts.course_id WHERE e.comments IS NULL AND e.feedback IS NULL ORDER BY e.created_at DESC LIMIT 5')->fetchAll(),
         ];
     }
 
@@ -157,8 +157,8 @@ final class Content extends Model
         $trends['certificates_issued'] = $this->calculatePercentageChange($currCert, $prevCert);
 
         // 6. Total Revenue
-        $currRev = (float) $this->db->query('SELECT COALESCE(SUM(courses.fee), 0) FROM enrolments JOIN courses ON courses.id = enrolments.course_id WHERE enrolments.status IN ("active","completed") AND enrolments.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)')->fetchColumn();
-        $prevRev = (float) $this->db->query('SELECT COALESCE(SUM(courses.fee), 0) FROM enrolments JOIN courses ON courses.id = enrolments.course_id WHERE enrolments.status IN ("active","completed") AND enrolments.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 60 DAY) AND DATE_SUB(NOW(), INTERVAL 30 DAY)')->fetchColumn();
+        $currRev = (float) $this->db->query('SELECT COALESCE(SUM(training_sessions.fee), 0) FROM enrolments JOIN training_sessions ON training_sessions.id = enrolments.training_session_id JOIN courses ON courses.id = training_sessions.course_id WHERE enrolments.status IN ("active","completed") AND enrolments.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)')->fetchColumn();
+        $prevRev = (float) $this->db->query('SELECT COALESCE(SUM(training_sessions.fee), 0) FROM enrolments JOIN training_sessions ON training_sessions.id = enrolments.training_session_id JOIN courses ON courses.id = training_sessions.course_id WHERE enrolments.status IN ("active","completed") AND enrolments.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 60 DAY) AND DATE_SUB(NOW(), INTERVAL 30 DAY)')->fetchColumn();
         $trends['total_revenue'] = $this->calculatePercentageChange($currRev, $prevRev);
 
         return $trends;
@@ -174,11 +174,11 @@ final class Content extends Model
             $params[] = (int) $filters['academy_id'];
         }
         if (!empty($filters['course_id'])) {
-            $where .= ' AND e.course_id = ?';
+            $where .= ' AND e.training_session_id = ?';
             $params[] = (int) $filters['course_id'];
         }
         if (!empty($filters['instructor_id'])) {
-            $where .= ' AND c.instructor_id = ?';
+            $where .= ' AND ts.instructor_id = ?';
             $params[] = (int) $filters['instructor_id'];
         }
         if (!empty($filters['start_date'])) {
@@ -193,7 +193,7 @@ final class Content extends Model
         // 1. Programme (Academy participants)
         $progSql = 'SELECT a.code AS label, COUNT(e.id) AS value 
                     FROM enrolments e 
-                    JOIN courses c ON c.id = e.course_id 
+                    JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id 
                     JOIN academies a ON a.id = c.academy_id' 
                     . $where . ' GROUP BY a.id ORDER BY value DESC';
         $stmt = $this->db->prepare($progSql);
@@ -203,7 +203,7 @@ final class Content extends Model
         // 2. Course participants
         $courseSql = 'SELECT c.title AS label, COUNT(e.id) AS value 
                       FROM enrolments e 
-                      JOIN courses c ON c.id = e.course_id' 
+                      JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id' 
                       . $where . ' GROUP BY c.id ORDER BY value DESC LIMIT 12';
         $stmt = $this->db->prepare($courseSql);
         $stmt->execute($params);
@@ -212,7 +212,7 @@ final class Content extends Model
         // 3. Monthly Trend
         $monthlySql = 'SELECT DATE_FORMAT(e.created_at, "%Y-%m") AS label, COUNT(e.id) AS value 
                        FROM enrolments e 
-                       JOIN courses c ON c.id = e.course_id' 
+                       JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id' 
                        . $where . ' GROUP BY label ORDER BY label DESC LIMIT 12';
         $stmt = $this->db->prepare($monthlySql);
         $stmt->execute($params);
@@ -221,7 +221,7 @@ final class Content extends Model
         // 4. Categories
         $catSql = 'SELECT tc.name AS label, COUNT(e.id) AS value 
                    FROM enrolments e 
-                   JOIN courses c ON c.id = e.course_id 
+                   JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id 
                    JOIN training_categories tc ON tc.id = c.training_category_id' 
                    . $where . ' GROUP BY tc.id ORDER BY value DESC';
         $stmt = $this->db->prepare($catSql);
@@ -231,7 +231,7 @@ final class Content extends Model
         // 5. Completion
         $compSql = 'SELECT e.status AS label, COUNT(e.id) AS value 
                     FROM enrolments e 
-                    JOIN courses c ON c.id = e.course_id' 
+                    JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id' 
                     . $where . ' GROUP BY e.status';
         $stmt = $this->db->prepare($compSql);
         $stmt->execute($params);
@@ -239,10 +239,10 @@ final class Content extends Model
 
         // 6. Certificates
         $certWhere = str_replace('e.created_at', 'cert.issued_at', $where);
-        $certWhere = str_replace('e.course_id', 'cert.course_id', $certWhere);
+        $certWhere = str_replace('e.training_session_id', 'cert.course_id', $certWhere);
         $certSql = 'SELECT DATE_FORMAT(COALESCE(cert.issue_date, cert.issued_at), "%Y-%m") AS label, COUNT(cert.id) AS value 
                     FROM certificates cert 
-                    JOIN courses c ON c.id = cert.course_id' 
+                    JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id' 
                     . $certWhere . ' GROUP BY label ORDER BY label DESC LIMIT 12';
         $stmt = $this->db->prepare($certSql);
         $stmt->execute($params);
@@ -251,7 +251,7 @@ final class Content extends Model
         // 7. Years
         $yearsSql = 'SELECT DATE_FORMAT(e.created_at, "%Y") AS label, COUNT(e.id) AS value 
                      FROM enrolments e 
-                     JOIN courses c ON c.id = e.course_id' 
+                     JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id' 
                      . $where . ' GROUP BY label ORDER BY label';
         $stmt = $this->db->prepare($yearsSql);
         $stmt->execute($params);

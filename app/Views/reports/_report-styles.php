@@ -42,8 +42,18 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+    padding: 1.25rem !important; /* Force tighter padding */
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 
+        "value icon"
+        "label icon"
+        "trend trend";
+    align-items: start;
+    row-gap: 0.25rem;
 }
 .stat-card .icon-circle {
+    grid-area: icon;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -51,26 +61,31 @@
     align-items: center;
     justify-content: center;
     font-size: 1.25rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0;
+    align-self: center;
 }
 .stat-card .value {
-    font-size: 1.875rem;
+    grid-area: value;
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--ims-ink, #182230);
-    line-height: 1.2;
-    margin-bottom: 0.25rem;
+    line-height: 1;
+    margin-bottom: 0;
 }
 .stat-card .label {
+    grid-area: label;
     font-size: 11px;
     font-weight: 500;
     color: var(--ims-muted, #64748b);
     text-transform: uppercase;
     letter-spacing: 0.03em;
+    margin-bottom: 0;
 }
 .stat-card .trend-indicator {
-    font-size: 0.8rem;
+    grid-area: trend;
+    font-size: 0.75rem;
     font-weight: 500;
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
 }
 
 /* Chart Cards */

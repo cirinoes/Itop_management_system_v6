@@ -34,7 +34,7 @@
                 <div class="panel table-responsive">
                     <table class="table align-middle"><thead><tr><th>Academy</th><th>Course</th><th>Participants</th><th></th></tr></thead><tbody>
                         <?php foreach ($statistics['training'] as $row): ?>
-                            <tr><td><?= Security::e($row['academy_code']) ?></td><td><?= Security::e($row['course_name']) ?></td><td><?= (int) $row['participants'] ?></td><td class="text-end"><form method="post" action="index.php?page=delete-training-statistic"><input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>"><input type="hidden" name="id" value="<?= (int) $row['id'] ?>"><button class="btn btn-sm btn-outline-danger">Delete</button></form></td></tr>
+                            <tr><td><?= Security::e($row['academy_code']) ?></td><td><?= Security::e($row['course_name']) ?></td><td><?= (int) $row['participants'] ?></td><td class="text-end"><form method="post" action="index.php?page=delete-training-statistic" onsubmit="return confirm('Are you sure you want to delete this record?');"><input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>"><input type="hidden" name="id" value="<?= (int) $row['id'] ?>"><button class="btn btn-sm btn-outline-danger">Delete</button></form></td></tr>
                         <?php endforeach; ?>
                     </tbody></table>
                 </div>
@@ -62,7 +62,7 @@
                 <div class="panel table-responsive">
                     <table class="table align-middle"><thead><tr><th>Name</th><th>Status</th><th class="text-end">Actions</th></tr></thead><tbody>
                         <?php foreach ($rows as $row): ?>
-                            <tr><td><strong><?= Security::e($row['name']) ?></strong><?php if (!empty($row['code'])): ?><br><span class="small text-muted"><?= Security::e($row['code']) ?></span><?php endif; ?></td><td><?= Security::e($row['status'] ?? 'active') ?></td><td><div class="d-flex justify-content-end gap-2"><a class="btn btn-sm btn-outline-secondary" href="index.php?page=admin-master-data&table=<?= Security::e($table) ?>&edit=<?= (int) $row['id'] ?>">Edit</a><form method="post" action="index.php?page=delete-master-data"><input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>"><input type="hidden" name="table" value="<?= Security::e($table) ?>"><input type="hidden" name="id" value="<?= (int) $row['id'] ?>"><button class="btn btn-sm btn-outline-danger">Delete</button></form></div></td></tr>
+                            <tr><td><strong><?= Security::e($row['name']) ?></strong><?php if (!empty($row['code'])): ?><br><span class="small text-muted"><?= Security::e($row['code']) ?></span><?php endif; ?></td><td><?= Security::e($row['status'] ?? 'active') ?></td><td><div class="d-flex justify-content-end gap-2"><a class="btn btn-sm btn-outline-secondary" href="index.php?page=admin-master-data&table=<?= Security::e($table) ?>&edit=<?= (int) $row['id'] ?>">Edit</a><form method="post" action="index.php?page=delete-master-data" onsubmit="return confirm('Are you sure you want to delete this record?');"><input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>"><input type="hidden" name="table" value="<?= Security::e($table) ?>"><input type="hidden" name="id" value="<?= (int) $row['id'] ?>"><button class="btn btn-sm btn-outline-danger">Delete</button></form></div></td></tr>
                         <?php endforeach; ?>
                     </tbody></table>
                 </div>

@@ -67,9 +67,9 @@ final class Lms extends Model
         return $this->table('assignment_submissions s')
             ->select('s.*', 'a.title AS assignment_title', 'c.title AS course_title', 'c.id AS course_id', 'u.name AS trainee_name', 'u.email AS trainee_email')
             ->join('assignments a', 'a.id', '=', 's.assignment_id')
-            ->join('courses c', 'c.id', '=', 'a.course_id')
+            ->join('training_sessions ts', 'ts.id', '=', 'a.course_id')->join('courses c', 'c.id', '=', 'ts.course_id')
             ->join('users u', 'u.id', '=', 's.trainee_id')
-            ->where('c.instructor_id', $instructorId)
+            ->where('ts.instructor_id', $instructorId)
             ->orderBy('s.submitted_at', 'DESC')
             ->get();
     }

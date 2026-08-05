@@ -168,7 +168,7 @@ final class AdminController extends Controller
         
         // Add participant count
         $db = \App\Core\Model::getDb();
-        $participantCount = (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE course_id = ' . $id . ' AND status IN ("active","completed")')->fetchColumn();
+        $participantCount = (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE training_session_id = ' . $id . ' AND status IN ("active","completed")')->fetchColumn();
         $course['participant_count'] = $participantCount;
         
         echo json_encode(['status' => 'success', 'course' => $course]);
@@ -251,7 +251,7 @@ final class AdminController extends Controller
         $id = (int) ($_GET['id'] ?? 0);
         
         $db = \App\Core\Model::getDb();
-        $sql = 'SELECT e.*, c.title AS course_title, c.category AS course_category, c.description AS course_description, c.start_date AS course_start, c.end_date AS course_end, c.capacity AS course_capacity, c.max_participants AS course_max, c.fee AS course_fee, u.name AS trainee_name, u.email AS trainee_email, u.phone AS trainee_phone, u.address AS trainee_address, instr.name AS instructor_name FROM enrolments e JOIN courses c ON c.id = e.course_id JOIN users u ON u.id = e.trainee_id LEFT JOIN users instr ON instr.id = c.instructor_id WHERE e.id = ?';
+        $sql = 'SELECT e.*, c.title AS course_title, c.category AS course_category, c.description AS course_description, ts.start_date AS course_start, ts.end_date AS course_end, ts.capacity AS course_capacity, ts.max_participants AS course_max, ts.fee AS course_fee, u.name AS trainee_name, u.email AS trainee_email, u.phone AS trainee_phone, u.address AS trainee_address, instr.name AS instructor_name FROM enrolments e JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id JOIN users u ON u.id = e.trainee_id LEFT JOIN users instr ON instr.id = ts.instructor_id WHERE e.id = ?';
         $stmt = $db->prepare($sql);
         $stmt->execute([$id]);
         $row = $stmt->fetch();
@@ -264,7 +264,7 @@ final class AdminController extends Controller
         }
         
         // Fetch current occupancy
-        $participantCount = (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE course_id = ' . (int) $row['course_id'] . ' AND status IN ("active","completed")')->fetchColumn();
+        $participantCount = (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE training_session_id = ' . (int) $row['course_id'] . ' AND status IN ("active","completed")')->fetchColumn();
         $row['course_occupancy'] = $participantCount;
         
         echo json_encode(['status' => 'success', 'enrolment' => $row]);
@@ -448,7 +448,7 @@ final class AdminController extends Controller
         if (isset($_GET['get_completed_course_id'])) {
             $courseId = (int) $_GET['get_completed_course_id'];
             $db = \App\Core\Model::getDb();
-            $stmt = $db->prepare('SELECT u.id, u.name, u.email FROM enrolments e JOIN users u ON u.id = e.trainee_id WHERE e.course_id = ? AND e.status = "completed" AND e.attendance_requirement_met = 1 AND e.assessments_completed = 1 AND e.evaluation_submitted = 1 AND u.id NOT IN (SELECT trainee_id FROM certificates WHERE course_id = ? AND status != "revoked")');
+            $stmt = $db->prepare('SELECT u.id, u.name, u.email FROM enrolments e JOIN users u ON u.id = e.trainee_id WHERE e.training_session_id = ? AND e.status = "completed" AND e.attendance_requirement_met = 1 AND e.assessments_completed = 1 AND e.evaluation_submitted = 1 AND u.id NOT IN (SELECT trainee_id FROM certificates WHERE training_session_id = ? AND status != "revoked")');
             $stmt->execute([$courseId, $courseId]);
             header('Content-Type: application/json');
             echo json_encode($stmt->fetchAll());
@@ -1154,8 +1154,8 @@ final class AdminController extends Controller
         $completedTrainees = (int) $db->query('SELECT COUNT(DISTINCT trainee_id) FROM enrolments WHERE status = "completed"')->fetchColumn();
 
         // Academy counts (enrolled in at least one course in that academy)
-        $totalAdgeaTrainees = (int) $db->query('SELECT COUNT(DISTINCT e.trainee_id) FROM enrolments e JOIN courses c ON c.id = e.course_id JOIN academies a ON a.id = c.academy_id WHERE a.code = "ADGEA"')->fetchColumn();
-        $totalIesgaTrainees = (int) $db->query('SELECT COUNT(DISTINCT e.trainee_id) FROM enrolments e JOIN courses c ON c.id = e.course_id JOIN academies a ON a.id = c.academy_id WHERE a.code = "IESGA"')->fetchColumn();
+        $totalAdgeaTrainees = (int) $db->query('SELECT COUNT(DISTINCT e.trainee_id) FROM enrolments e JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id JOIN academies a ON a.id = c.academy_id WHERE a.code = "ADGEA"')->fetchColumn();
+        $totalIesgaTrainees = (int) $db->query('SELECT COUNT(DISTINCT e.trainee_id) FROM enrolments e JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id JOIN academies a ON a.id = c.academy_id WHERE a.code = "IESGA"')->fetchColumn();
 
         // Load master data dropdowns
         $locations = $masterModel->list('locations');
@@ -1206,7 +1206,7 @@ final class AdminController extends Controller
                    c.title AS course_title, c.start_date, c.end_date,
                    a.code AS academy_code
             FROM enrolments e
-            JOIN courses c ON c.id = e.course_id
+            JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id
             LEFT JOIN academies a ON a.id = c.academy_id
             WHERE e.trainee_id = ?
             ORDER BY e.created_at DESC
@@ -1219,7 +1219,7 @@ final class AdminController extends Controller
             SELECT cert.certificate_no, cert.issued_at, cert.pdf_path, cert.status AS cert_status,
                    c.title AS course_title
             FROM certificates cert
-            JOIN courses c ON c.id = cert.course_id
+            JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id
             WHERE cert.trainee_id = ?
             ORDER BY cert.issued_at DESC
         ');

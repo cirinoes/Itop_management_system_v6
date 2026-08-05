@@ -198,7 +198,7 @@ final class User extends Model
             $params[] = $filters['status'];
         }
         if (!empty($filters['academy_id'])) {
-            $sql .= ' AND EXISTS (SELECT 1 FROM enrolments e JOIN courses co ON co.id = e.course_id WHERE e.trainee_id = u.id AND co.academy_id = ?)';
+            $sql .= ' AND EXISTS (SELECT 1 FROM enrolments e JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses co ON co.id = ts.course_id WHERE e.trainee_id = u.id AND co.academy_id = ?)';
             $params[] = (int) $filters['academy_id'];
         }
 
@@ -253,7 +253,7 @@ final class User extends Model
             $params[] = $filters['status'];
         }
         if (!empty($filters['academy_id'])) {
-            $sql .= ' AND EXISTS (SELECT 1 FROM enrolments e JOIN courses co ON co.id = e.course_id WHERE e.trainee_id = u.id AND co.academy_id = ?)';
+            $sql .= ' AND EXISTS (SELECT 1 FROM enrolments e JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses co ON co.id = ts.course_id WHERE e.trainee_id = u.id AND co.academy_id = ?)';
             $params[] = (int) $filters['academy_id'];
         }
 

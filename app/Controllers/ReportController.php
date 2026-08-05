@@ -34,11 +34,11 @@ final class ReportController extends Controller
             ],
             'academies' => $db->query('SELECT id, code, name FROM academies ORDER BY code')->fetchAll(),
             'courses' => $db->query('SELECT id, title FROM courses ORDER BY title')->fetchAll(),
-            'completion' => $db->query('SELECT c.title, COUNT(e.id) AS total, SUM(e.status = "completed") AS completed, ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS rate FROM courses c LEFT JOIN enrolments e ON e.course_id = c.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'attendance' => $db->query('SELECT c.title, ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate, COUNT(att.id) AS records FROM courses c LEFT JOIN enrolments e ON e.course_id = c.id LEFT JOIN attendance att ON att.enrolment_id = e.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'assignments' => $db->query('SELECT c.title, COUNT(a.id) AS assignments, COUNT(s.id) AS submissions, SUM(s.status = "graded") AS graded FROM courses c LEFT JOIN assignments a ON a.course_id = c.id LEFT JOIN assignment_submissions s ON s.assignment_id = a.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'evaluations' => $db->query('SELECT c.title, ROUND(AVG(e.rating), 2) AS avg_rating, COUNT(e.id) AS responses FROM courses c LEFT JOIN evaluations e ON e.course_id = c.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'certificates' => $db->query('SELECT c.title, COUNT(cert.id) AS total, SUM(cert.approval_status = "approved") AS approved, SUM(cert.approval_status = "pending") AS pending FROM courses c LEFT JOIN certificates cert ON cert.course_id = c.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
+            'completion' => $db->query('SELECT c.title, COUNT(e.id) AS total, SUM(e.status = "completed") AS completed, ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS rate FROM courses c LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
+            'attendance' => $db->query('SELECT c.title, ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate, COUNT(att.id) AS records FROM courses c LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id LEFT JOIN attendance att ON att.enrolment_id = e.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
+            'assignments' => $db->query('SELECT c.title, COUNT(a.id) AS assignments, COUNT(s.id) AS submissions, SUM(s.status = "graded") AS graded FROM courses c LEFT JOIN training_sessions ts_a ON ts_a.course_id = c.id LEFT JOIN assignments a ON a.course_id = ts_a.id LEFT JOIN assignment_submissions s ON s.assignment_id = a.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
+            'evaluations' => $db->query('SELECT c.title, ROUND(AVG(e.rating), 2) AS avg_rating, COUNT(e.id) AS responses FROM courses c LEFT JOIN training_sessions ts_ev ON ts_ev.course_id = c.id LEFT JOIN evaluations e ON e.course_id = ts_ev.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
+            'certificates' => $db->query('SELECT c.title, COUNT(cert.id) AS total, SUM(cert.approval_status = "approved") AS approved, SUM(cert.approval_status = "pending") AS pending FROM courses c LEFT JOIN training_sessions ts_cert ON ts_cert.course_id = c.id LEFT JOIN certificates cert ON cert.course_id = ts_cert.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
             'master_data_stats' => $db->query('SELECT ts.*, a.code AS academy_code, a.name AS academy_name, c.title AS course_title FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id LEFT JOIN courses c ON c.id = ts.course_id ORDER BY a.code, ts.participants DESC')->fetchAll(),
             'academyId' => $academy,
             'courseId' => $course,
@@ -53,11 +53,12 @@ final class ReportController extends Controller
 
         $stmtOverview = $db->prepare('
             SELECT 
-                COUNT(c.id) AS total_courses,
+                COUNT(ts.id) AS total_courses,
                 COUNT(DISTINCT e.trainee_id) AS total_students
-            FROM courses c
-            LEFT JOIN enrolments e ON e.course_id = c.id
-            WHERE c.instructor_id = ?
+            FROM training_sessions ts
+            JOIN courses c ON c.id = ts.course_id
+            LEFT JOIN enrolments e ON e.training_session_id = ts.id
+            WHERE ts.instructor_id = ?
         ');
         $stmtOverview->execute([$instructorId]);
         $overview = $stmtOverview->fetch();
@@ -65,9 +66,10 @@ final class ReportController extends Controller
         $stmtBacklog = $db->prepare('
             SELECT a.title, c.title AS course_title, COUNT(s.id) AS pending_count
             FROM assignments a
-            JOIN courses c ON c.id = a.course_id
+            JOIN training_sessions ts ON ts.id = a.course_id
+            JOIN courses c ON c.id = ts.course_id
             JOIN assignment_submissions s ON s.assignment_id = a.id
-            WHERE c.instructor_id = ? AND s.status = "pending"
+            WHERE ts.instructor_id = ? AND s.status = "pending"
             GROUP BY a.id
             ORDER BY pending_count DESC
         ');
@@ -81,13 +83,14 @@ final class ReportController extends Controller
                 ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate,
                 ROUND(AVG(sub.score), 1) AS avg_assignment_score,
                 ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS completion_rate
-            FROM courses c
-            LEFT JOIN enrolments e ON e.course_id = c.id
+            FROM training_sessions ts
+            JOIN courses c ON c.id = ts.course_id
+            LEFT JOIN enrolments e ON e.training_session_id = ts.id
             LEFT JOIN attendance att ON att.enrolment_id = e.id
-            LEFT JOIN assignments a ON a.course_id = c.id
+            LEFT JOIN assignments a ON a.course_id = ts.id
             LEFT JOIN assignment_submissions sub ON sub.assignment_id = a.id AND sub.status = "graded"
-            WHERE c.instructor_id = ?
-            GROUP BY c.id
+            WHERE ts.instructor_id = ?
+            GROUP BY ts.id
             ORDER BY c.title
         ');
         $stmtPerformance->execute([$instructorId]);
@@ -113,9 +116,9 @@ final class ReportController extends Controller
         $stmtCompleted->execute([$traineeId]);
         
         $stmtHours = $db->prepare('
-            SELECT SUM((DATEDIFF(IFNULL(c.end_date, c.start_date), c.start_date) + 1) * 8) 
+            SELECT SUM((DATEDIFF(IFNULL(ts_e2.end_date, ts_e2.start_date), ts_e2.start_date) + 1) * 8) 
             FROM courses c 
-            JOIN enrolments e ON e.course_id = c.id 
+            JOIN training_sessions ts_e2 ON ts_e2.course_id = c.id JOIN enrolments e ON e.training_session_id = ts_e2.id 
             WHERE e.trainee_id = ? AND e.status = "completed"
         ');
         $stmtHours->execute([$traineeId]);
@@ -134,7 +137,7 @@ final class ReportController extends Controller
                 e.status,
                 (SELECT ROUND(AVG(score), 0) FROM quiz_results qr JOIN quizzes q ON q.id = qr.quiz_id WHERE q.course_id = c.id AND qr.trainee_id = e.trainee_id) as quiz_avg_score
             FROM enrolments e
-            JOIN courses c ON c.id = e.course_id
+            JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id
             WHERE e.trainee_id = ?
             ORDER BY e.created_at DESC
         ');
@@ -143,7 +146,7 @@ final class ReportController extends Controller
         $stmtCertList = $db->prepare('
             SELECT c.title AS course_title, cert.issued_at, cert.certificate_no, cert.id
             FROM certificates cert
-            JOIN courses c ON c.id = cert.course_id
+            JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id
             WHERE cert.trainee_id = ? AND cert.approval_status = "approved"
             ORDER BY cert.issued_at DESC
         ');
@@ -176,7 +179,7 @@ final class ReportController extends Controller
             case 'attendance':
                 $title = 'Attendance Report';
                 $headers = ['Course', 'Attendance Rate (%)', 'Total Records'];
-                $data = $db->query('SELECT c.title, ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate, COUNT(att.id) AS records FROM courses c LEFT JOIN enrolments e ON e.course_id = c.id LEFT JOIN attendance att ON att.enrolment_id = e.id GROUP BY c.id ORDER BY c.title')->fetchAll();
+                $data = $db->query('SELECT c.title, ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate, COUNT(att.id) AS records FROM courses c LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id LEFT JOIN attendance att ON att.enrolment_id = e.id GROUP BY c.id ORDER BY c.title')->fetchAll();
                 foreach ($data as $row) {
                     $rows[] = [$row['title'], $row['attendance_rate'], $row['records']];
                 }
@@ -184,7 +187,7 @@ final class ReportController extends Controller
             case 'certificates':
                 $title = 'Certificates Report';
                 $headers = ['Course', 'Total Certificates', 'Approved', 'Pending'];
-                $data = $db->query('SELECT c.title, COUNT(cert.id) AS total, SUM(cert.approval_status = "approved") AS approved, SUM(cert.approval_status = "pending") AS pending FROM courses c LEFT JOIN certificates cert ON cert.course_id = c.id GROUP BY c.id ORDER BY c.title')->fetchAll();
+                $data = $db->query('SELECT c.title, COUNT(cert.id) AS total, SUM(cert.approval_status = "approved") AS approved, SUM(cert.approval_status = "pending") AS pending FROM courses c LEFT JOIN training_sessions ts_cert ON ts_cert.course_id = c.id LEFT JOIN certificates cert ON cert.course_id = ts_cert.id GROUP BY c.id ORDER BY c.title')->fetchAll();
                 foreach ($data as $row) {
                     $rows[] = [$row['title'], (int)$row['total'], (int)$row['approved'], (int)$row['pending']];
                 }
@@ -201,7 +204,7 @@ final class ReportController extends Controller
             default:
                 $title = 'Course Completion Report';
                 $headers = ['Course', 'Total Participants', 'Completed', 'Completion Rate (%)'];
-                $data = $db->query('SELECT c.title, COUNT(e.id) AS total, SUM(e.status = "completed") AS completed, ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS rate FROM courses c LEFT JOIN enrolments e ON e.course_id = c.id GROUP BY c.id ORDER BY c.title')->fetchAll();
+                $data = $db->query('SELECT c.title, COUNT(e.id) AS total, SUM(e.status = "completed") AS completed, ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS rate FROM courses c LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id GROUP BY c.id ORDER BY c.title')->fetchAll();
                 foreach ($data as $row) {
                     $rows[] = [$row['title'], (int)$row['total'], (int)$row['completed'], $row['rate']];
                 }
@@ -245,7 +248,7 @@ final class ReportController extends Controller
     public function verifyCertificate(): void
     {
         $code = Security::cleanString($_GET['code'] ?? '');
-        $stmt = Database::connection()->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id WHERE cert.verification_code = ?');
+        $stmt = Database::connection()->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id WHERE cert.verification_code = ?');
         $stmt->execute([$code]);
         $this->render('public/certificate-verify', ['certificate' => $stmt->fetch() ?: null, 'code' => $code]);
     }
@@ -256,10 +259,10 @@ final class ReportController extends Controller
         $code = Security::cleanString($_GET['code'] ?? '');
         $db = Database::connection();
         if ($id) {
-            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.id = ?');
+            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.id = ?');
             $stmt->execute([$id]);
         } elseif ($code) {
-            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.verification_code = ?');
+            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.verification_code = ?');
             $stmt->execute([$code]);
         } else {
             http_response_code(400);
@@ -293,10 +296,10 @@ final class ReportController extends Controller
         $code = Security::cleanString($_GET['code'] ?? '');
         $db = Database::connection();
         if ($id) {
-            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.id = ?');
+            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.id = ?');
             $stmt->execute([$id]);
         } elseif ($code) {
-            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.verification_code = ?');
+            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.verification_code = ?');
             $stmt->execute([$code]);
         } else {
             http_response_code(400);
@@ -355,10 +358,10 @@ final class ReportController extends Controller
         $code = Security::cleanString($_GET['code'] ?? '');
         $db = Database::connection();
         if ($id) {
-            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.id = ?');
+            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.id = ?');
             $stmt->execute([$id]);
         } elseif ($code) {
-            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN courses c ON c.id = cert.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.verification_code = ?');
+            $stmt = $db->prepare('SELECT cert.*, u.name AS trainee_name, c.title AS course_title, t.template_id, t.template_name, t.background_image, t.logo, t.signature, t.font_family, t.font_size, t.text_color, t.layout_json FROM certificates cert JOIN users u ON u.id = cert.trainee_id JOIN training_sessions ts ON ts.id = cert.course_id JOIN courses c ON c.id = ts.course_id LEFT JOIN certificate_templates t ON t.template_id = cert.template_id WHERE cert.verification_code = ?');
             $stmt->execute([$code]);
         } else {
             http_response_code(400);

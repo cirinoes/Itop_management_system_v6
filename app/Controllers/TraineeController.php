@@ -81,19 +81,19 @@ final class TraineeController extends Controller
     private function instructorStats(int $userId): array
     {
         $db = \App\Core\Model::getDb();
-        $stmt1 = $db->prepare('SELECT COUNT(*) FROM courses WHERE instructor_id = ?');
+        $stmt1 = $db->prepare('SELECT COUNT(*) FROM training_sessions WHERE instructor_id = ?');
         $stmt1->execute([$userId]);
         $courses = (int) $stmt1->fetchColumn();
 
-        $stmt2 = $db->prepare('SELECT COUNT(DISTINCT trainee_id) FROM enrolments e JOIN courses c ON c.id = e.course_id WHERE c.instructor_id = ?');
+        $stmt2 = $db->prepare('SELECT COUNT(DISTINCT trainee_id) FROM enrolments e JOIN training_sessions ts ON ts.id = e.training_session_id WHERE ts.instructor_id = ?');
         $stmt2->execute([$userId]);
         $students = (int) $stmt2->fetchColumn();
 
-        $stmt3 = $db->prepare('SELECT COUNT(*) FROM certificates cert JOIN courses c ON c.id = cert.course_id WHERE c.instructor_id = ? AND cert.status = "issued"');
+        $stmt3 = $db->prepare('SELECT COUNT(*) FROM certificates cert JOIN training_sessions ts ON ts.id = cert.course_id WHERE ts.instructor_id = ? AND cert.status = "issued"');
         $stmt3->execute([$userId]);
         $certs = (int) $stmt3->fetchColumn();
 
-        $stmt4 = $db->prepare('SELECT AVG(instructor_rating) FROM evaluations ev JOIN courses c ON c.id = ev.course_id WHERE c.instructor_id = ?');
+        $stmt4 = $db->prepare('SELECT AVG(instructor_rating) FROM evaluations ev JOIN training_sessions ts ON ts.id = ev.course_id WHERE ts.instructor_id = ?');
         $stmt4->execute([$userId]);
         $avgRating = $stmt4->fetchColumn();
 
@@ -212,7 +212,7 @@ final class TraineeController extends Controller
     private function learningSummary(int $userId): array
     {
         $db = \App\Core\Database::connection();
-        $stmt = $db->prepare('SELECT e.*, c.title AS course_title, c.start_date, c.end_date, i.name AS instructor_name FROM enrolments e JOIN courses c ON c.id = e.course_id LEFT JOIN users i ON i.id = c.instructor_id WHERE e.trainee_id = ? ORDER BY e.created_at DESC LIMIT 5');
+        $stmt = $db->prepare('SELECT e.*, c.title AS course_title, ts.start_date, ts.end_date, i.name AS instructor_name FROM enrolments e JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id LEFT JOIN users i ON i.id = ts.instructor_id WHERE e.trainee_id = ? ORDER BY e.created_at DESC LIMIT 5');
         $stmt->execute([$userId]);
         $courses = $stmt->fetchAll();
         $activity = $db->prepare('SELECT * FROM login_activity WHERE user_id = ? ORDER BY created_at DESC LIMIT 8');

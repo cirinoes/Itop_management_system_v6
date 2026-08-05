@@ -18,8 +18,8 @@ final class Evaluation extends Model
         return $this->table('evaluations e')
             ->select('e.*', 'u.name AS trainee_name', 'c.title AS course_title', 'i.name AS instructor_name')
             ->join('users u', 'u.id', '=', 'e.trainee_id')
-            ->join('courses c', 'c.id', '=', 'e.course_id')
-            ->leftJoin('users i', 'i.id', '=', 'c.instructor_id')
+            ->join('training_sessions ts', 'ts.id', '=', 'e.course_id')->join('courses c', 'c.id', '=', 'ts.course_id')
+            ->leftJoin('users i', 'i.id', '=', 'ts.instructor_id')
             ->orderBy('COALESCE(e.completed_at, e.created_at)', 'DESC')
             ->get();
     }
@@ -27,9 +27,9 @@ final class Evaluation extends Model
     public function completedCoursesNeedingEvaluation(int $traineeId): array
     {
         return $this->table('enrolments e')
-            ->select('e.course_id', 'c.title')
-            ->join('courses c', 'c.id', '=', 'e.course_id')
-            ->leftJoin('evaluations ev', 'ev.course_id', '=', 'e.course_id AND ev.trainee_id = e.trainee_id')
+            ->select('e.training_session_id AS course_id', 'c.title')
+            ->join('training_sessions ts', 'ts.id', '=', 'e.training_session_id')->join('courses c', 'c.id', '=', 'ts.course_id')
+            ->leftJoin('evaluations ev', 'ev.course_id', '=', 'e.training_session_id AND ev.trainee_id = e.trainee_id')
             ->where('e.trainee_id', $traineeId)
             ->where('e.status', 'completed')
             ->whereNull('ev.id')
