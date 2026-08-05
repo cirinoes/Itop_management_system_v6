@@ -67,7 +67,7 @@ final class TraineeController extends Controller
         $stmt2->execute([$userId]);
         $completed = (int) $stmt2->fetchColumn();
 
-        $stmt3 = $db->prepare('SELECT COUNT(*) FROM certificates WHERE trainee_id = ? AND status = "issued"');
+        $stmt3 = $db->prepare('SELECT COUNT(*) FROM certificates WHERE trainee_id = ? AND status = "issued" AND approval_status = "approved"');
         $stmt3->execute([$userId]);
         $certificates = (int) $stmt3->fetchColumn();
 

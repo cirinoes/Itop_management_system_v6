@@ -33,12 +33,12 @@
     background-color: rgba(5, 77, 158, 0.025);
 }
 
-/* Stat Cards */
+/* Stat Cards - Executive Glass Theme */
 .stat-card {
     border-radius: var(--ims-radius-lg, 16px);
-    border: 1px solid var(--ims-border, #e2e8f0);
-    box-shadow: var(--ims-shadow, 0 1px 3px rgba(24,34,48,.06), 0 1px 2px rgba(24,34,48,.04));
-    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
     height: 100%;
     position: relative;
     overflow: hidden;
@@ -63,6 +63,7 @@
     font-size: 1.25rem;
     margin-bottom: 0;
     align-self: center;
+    box-shadow: 0 2px 10px -2px rgba(0,0,0,0.1);
 }
 .stat-card .value {
     grid-area: value;
@@ -107,8 +108,56 @@
     margin: 0;
 }
 .chart-card-body {
-    padding: 1.5rem;
-    position: relative;
+    padding: 1.25rem;
+}
+
+/* Executive Glass Nav Tabs */
+.glass-tabs {
+    background: #f1f5f9;
+    padding: 0.35rem;
+    border-radius: 50px;
+    display: inline-flex;
+    margin-bottom: 1rem;
+}
+.glass-tabs .nav-link {
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 0.6rem 1.25rem !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    transition: all 0.3s ease;
+}
+.glass-tabs .nav-link:hover {
+    color: #182230 !important;
+}
+.glass-tabs .nav-link.active {
+    background: white !important;
+    color: #0d6efd !important;
+    box-shadow: 0 2px 8px -2px rgba(0,0,0,0.1) !important;
+}
+
+/* Instructor Grid Cards */
+.instructor-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    background: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.instructor-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+}
+.instructor-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    color: #3b82f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 /* KPI Rings (Trainee View) */

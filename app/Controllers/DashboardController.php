@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Core\Activity;
 use App\Core\Auth;
 use App\Core\Controller;
+use App\Core\Security;
 use App\Models\Certificate;
 use App\Models\Content;
 use App\Models\Course;
@@ -58,19 +60,75 @@ final class DashboardController extends Controller
             }
         }
 
+        $courses = $courseModel->assignedTo($userId);
+
+        $enrollmentModel = new Enrollment();
+        $sessionIds = array_map(static fn (array $c): int => (int) $c['id'], $courses);
+        $enrolledSessionIds = $enrollmentModel->enrolledSessionIds($userId, $sessionIds);
+        foreach ($courses as &$course) {
+            $course['self_enrolled'] = in_array((int) $course['id'], $enrolledSessionIds, true);
+        }
+        unset($course);
+
         $this->render('dashboard/instructor', [
-            'courses' => $courseModel->assignedTo($userId),
+            'courses' => $courses,
             'submissions' => (new Lms())->submissionsForInstructor($userId),
             'editing' => $editingCourse,
+            'availableSessions' => $courseModel->availableToClaim(),
         ]);
+    }
+
+    /** Instructor self-enrols into one of their own assigned sessions */
+    public function selfEnroll(): void
+    {
+        Auth::requireRole(['instructor']);
+        Security::verifyCsrf();
+        $userId = (int) Auth::id();
+        $sessionId = (int) ($_POST['session_id'] ?? 0);
+
+        $course = (new Course())->find($sessionId);
+        if (!$course || (int) $course['instructor_id'] !== $userId) {
+            http_response_code(403);
+            exit('You can only enrol in your own assigned courses.');
+        }
+
+        (new Enrollment())->selfEnroll($sessionId, $userId);
+        Activity::log('Self-enrolled in assigned course', $userId);
+        $this->redirect('index.php?page=instructor-dashboard');
+    }
+
+    /** Instructor withdraws their own self-enrolment (blocked once the session has ended) */
+    public function selfWithdraw(): void
+    {
+        Auth::requireRole(['instructor']);
+        Security::verifyCsrf();
+        $userId = (int) Auth::id();
+        $sessionId = (int) ($_POST['session_id'] ?? 0);
+
+        $course = (new Course())->find($sessionId);
+        if (!$course || (int) $course['instructor_id'] !== $userId) {
+            http_response_code(403);
+            exit('You do not have access to this course.');
+        }
+
+        $endDate = $course['end_date'] ?? null;
+        if ($endDate && strtotime($endDate) < time()) {
+            $this->redirect('index.php?page=instructor-dashboard');
+        }
+
+        (new Enrollment())->selfWithdraw($sessionId, $userId);
+        Activity::log('Withdrew self-enrolment from assigned course', $userId);
+        $this->redirect('index.php?page=instructor-dashboard');
     }
 
     public function instructorCourses(): void
     {
         Auth::requireRole(['instructor']);
         $userId = (int) Auth::id();
+        $courseModel = new Course();
         $this->render('instructor/courses', [
-            'courses' => (new Course())->assignedTo($userId),
+            'courses' => $courseModel->assignedTo($userId),
+            'availableSessions' => $courseModel->availableToClaim(),
         ]);
     }
 

@@ -81,13 +81,13 @@ final class Content extends Model
         foreach ($customCharts as $cc) {
             $data = [];
             if ($cc['data_source'] === 'academy') {
-                $data = $this->db->query('SELECT a.code AS label, SUM(ts.participants) AS value FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id GROUP BY a.id ORDER BY value DESC')->fetchAll();
+                $data = $this->db->query('SELECT a.code AS label, SUM(ts.participants) AS value FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id GROUP BY a.id HAVING value > 0 ORDER BY value DESC')->fetchAll();
             } elseif ($cc['data_source'] === 'category') {
-                $data = $this->db->query('SELECT tc.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN training_categories tc ON tc.id = ps.category_id WHERE ps.statistic_type = "category" GROUP BY tc.id ORDER BY value DESC')->fetchAll();
+                $data = $this->db->query('SELECT tc.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN training_categories tc ON tc.id = ps.category_id WHERE ps.statistic_type = "category" GROUP BY tc.id HAVING value > 0 ORDER BY value DESC')->fetchAll();
             } elseif ($cc['data_source'] === 'company') {
-                $data = $this->db->query('SELECT co.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN companies co ON co.id = ps.company_id WHERE ps.statistic_type = "company" GROUP BY co.id ORDER BY value DESC LIMIT 10')->fetchAll();
+                $data = $this->db->query('SELECT co.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN companies co ON co.id = ps.company_id WHERE ps.statistic_type = "company" GROUP BY co.id HAVING value > 0 ORDER BY value DESC LIMIT 10')->fetchAll();
             } elseif ($cc['data_source'] === 'profession') {
-                $data = $this->db->query('SELECT p.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN professions p ON p.id = ps.profession_id WHERE ps.statistic_type = "profession" GROUP BY p.id ORDER BY value DESC LIMIT 10')->fetchAll();
+                $data = $this->db->query('SELECT p.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN professions p ON p.id = ps.profession_id WHERE ps.statistic_type = "profession" GROUP BY p.id HAVING value > 0 ORDER BY value DESC LIMIT 10')->fetchAll();
             } elseif ($cc['data_source'] === 'custom_manual') {
                 $stmt = $this->db->prepare('SELECT id, label, value FROM custom_analytics_data WHERE custom_analytic_id = ? ORDER BY label ASC');
                 $stmt->execute([$cc['id']]);
@@ -103,16 +103,16 @@ final class Content extends Model
         }
 
         return [
-            'programme' => $this->db->query('SELECT a.code AS label, SUM(ts.participants) AS value FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id GROUP BY a.id ORDER BY value DESC')->fetchAll(),
-            'course_participants' => $this->db->query('SELECT course_name AS label, participants AS value FROM training_statistics ORDER BY participants DESC LIMIT 12')->fetchAll(),
-            'years' => $this->db->query('SELECT report_year AS label, participants AS value FROM yearly_reports ORDER BY report_year')->fetchAll(),
-            'monthly' => $this->db->query('SELECT DATE_FORMAT(created_at, "%Y-%m") AS label, COUNT(*) AS value FROM enrolments GROUP BY DATE_FORMAT(created_at, "%Y-%m") ORDER BY label DESC LIMIT 12')->fetchAll(),
-            'categories' => $this->db->query('SELECT tc.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN training_categories tc ON tc.id = ps.category_id WHERE ps.statistic_type = "category" GROUP BY tc.id ORDER BY value DESC')->fetchAll(),
-            'companies' => $this->db->query('SELECT co.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN companies co ON co.id = ps.company_id WHERE ps.statistic_type = "company" GROUP BY co.id ORDER BY value DESC LIMIT 10')->fetchAll(),
-            'professions' => $this->db->query('SELECT p.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN professions p ON p.id = ps.profession_id WHERE ps.statistic_type = "profession" GROUP BY p.id ORDER BY value DESC LIMIT 10')->fetchAll(),
+            'programme' => $this->db->query('SELECT a.code AS label, SUM(ts.participants) AS value FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id GROUP BY a.id HAVING value > 0 ORDER BY value DESC')->fetchAll(),
+            'course_participants' => $this->db->query('SELECT course_name AS label, participants AS value FROM training_statistics WHERE participants > 0 ORDER BY participants DESC LIMIT 12')->fetchAll(),
+            'years' => $this->db->query('SELECT report_year AS label, participants AS value FROM yearly_reports WHERE participants > 0 ORDER BY report_year')->fetchAll(),
+            'monthly' => $this->db->query('SELECT DATE_FORMAT(created_at, "%Y-%m") AS label, COUNT(*) AS value FROM enrolments GROUP BY DATE_FORMAT(created_at, "%Y-%m") HAVING value > 0 ORDER BY label DESC LIMIT 12')->fetchAll(),
+            'categories' => $this->db->query('SELECT tc.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN training_categories tc ON tc.id = ps.category_id WHERE ps.statistic_type = "category" GROUP BY tc.id HAVING value > 0 ORDER BY value DESC')->fetchAll(),
+            'companies' => $this->db->query('SELECT co.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN companies co ON co.id = ps.company_id WHERE ps.statistic_type = "company" GROUP BY co.id HAVING value > 0 ORDER BY value DESC LIMIT 10')->fetchAll(),
+            'professions' => $this->db->query('SELECT p.name AS label, SUM(ps.participant_count) AS value FROM participant_statistics ps JOIN professions p ON p.id = ps.profession_id WHERE ps.statistic_type = "profession" GROUP BY p.id HAVING value > 0 ORDER BY value DESC LIMIT 10')->fetchAll(),
             'completion' => $this->db->query('SELECT "Training Completion Rate" AS label, COALESCE((SELECT metric_value FROM dashboard_summary WHERE metric_key = "training_completion_rate"), 100) AS value')->fetchAll(),
-            'certificates' => $this->db->query('SELECT DATE_FORMAT(COALESCE(issue_date, issued_at), "%Y-%m") AS label, COUNT(*) AS value FROM certificates GROUP BY DATE_FORMAT(COALESCE(issue_date, issued_at), "%Y-%m") ORDER BY label DESC LIMIT 12')->fetchAll(),
-            'popularity' => $this->db->query('SELECT course_name AS label, participants AS value FROM training_statistics ORDER BY participants DESC LIMIT 8')->fetchAll(),
+            'certificates' => $this->db->query('SELECT DATE_FORMAT(COALESCE(issue_date, issued_at), "%Y-%m") AS label, COUNT(*) AS value FROM certificates GROUP BY DATE_FORMAT(COALESCE(issue_date, issued_at), "%Y-%m") HAVING value > 0 ORDER BY label DESC LIMIT 12')->fetchAll(),
+            'popularity' => $this->db->query('SELECT course_name AS label, participants AS value FROM training_statistics WHERE participants > 0 ORDER BY participants DESC LIMIT 8')->fetchAll(),
             'custom_charts' => $customChartsCompiled,
         ];
     }

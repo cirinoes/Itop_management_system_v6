@@ -143,7 +143,8 @@ $statusClass = $statusColors[$courseStatus] ?? 'cm-status-draft';
                     <a class="cm-btn-footer cm-btn-footer-secondary" href="index.php?page=dashboard&edit=<?= (int) $course['id'] ?>">Edit</a>
                     <form method="post" action="index.php?page=instructor-unassign-course" onsubmit="return confirm('Stop teaching this course? This will unassign you.')" style="margin:0;">
                         <input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>">
-                        <input type="hidden" name="course_id" value="<?= (int) $course['id'] ?>">
+                        <input type="hidden" name="session_id" value="<?= (int) ($course['session_id'] ?? $course['id']) ?>">
+                        <input type="hidden" name="redirect" value="instructor-courses">
                         <button class="cm-btn-footer cm-btn-footer-danger" type="submit">Unassign</button>
                     </form>
                 <?php elseif ($actions === 'trainee'): ?>

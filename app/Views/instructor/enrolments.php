@@ -107,8 +107,12 @@
                                     <form class="m-0" method="post" action="index.php?page=instructor-enrolment-status">
                                         <input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>">
                                         <input type="hidden" name="id" value="<?= (int) $row['id'] ?>">
-                                        <button name="status" value="active" class="btn btn-sm btn-success" title="Approve"><i class="bi bi-check-lg"></i></button>
-                                        <button name="status" value="rejected" class="btn btn-sm btn-outline-danger" title="Reject"><i class="bi bi-x-lg"></i></button>
+                                        <button name="status" value="active" class="btn btn-sm btn-success" title="Approve">
+                                            <i class="bi bi-check-lg me-1"></i> Approve
+                                        </button>
+                                        <button name="status" value="rejected" class="btn btn-sm btn-outline-danger" title="Reject">
+                                            <i class="bi bi-x-lg me-1"></i> Reject
+                                        </button>
                                     </form>
                                 <?php else: ?>
                                     <a href="index.php?page=messages" class="btn btn-sm btn-outline-primary" title="Direct Message"><i class="bi bi-chat-dots"></i> Message</a>

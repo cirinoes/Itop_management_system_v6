@@ -76,11 +76,12 @@ final class Course extends Model
         }
 
         return $this->table('academies a')
-            ->select('a.*', 'COUNT(c.id) AS course_count', 'COALESCE(SUM(stat.participants), 0) AS participant_count')
-            ->leftJoin('courses c', 'c.academy_id', '=', 'a.id AND c.status IN ("published","active")')
-            ->leftJoin('training_statistics stat', 'stat.academy_id', '=', 'a.id')
+            ->select(
+                'a.*',
+                '(SELECT COUNT(id) FROM courses c WHERE c.academy_id = a.id AND c.status IN ("published","active")) AS course_count',
+                '(SELECT COALESCE(SUM(participants), 0) FROM training_statistics stat WHERE stat.academy_id = a.id) AS participant_count'
+            )
             ->whereIn('a.code', ['ADGEA', 'IESGA'])
-            ->groupBy('a.id')
             ->orderBy('FIELD(a.code, "ADGEA", "IESGA")', '')
             ->get();
     }
@@ -244,5 +245,44 @@ final class Course extends Model
     public function instructors(): array
     {
         return $this->db->query('SELECT users.id, users.name FROM users JOIN roles ON roles.id = users.role_id WHERE roles.slug = "instructor" AND users.status = "active" ORDER BY users.name')->fetchAll();
+    }
+
+    /** Sessions with no instructor that an instructor can claim */
+    public function availableToClaim(): array
+    {
+        return $this->table('training_sessions ts')
+            ->select('ts.id AS session_id', 'ts.start_date', 'ts.end_date', 'ts.status AS session_status', 'c.title', 'c.category', 'c.status AS course_status')
+            ->join('courses c', 'c.id', '=', 'ts.course_id')
+            ->whereNull('ts.instructor_id')
+            ->whereIn('ts.status', ['scheduled', 'active'])
+            ->whereIn('c.status', ['published', 'active'])
+            ->orderBy('c.title', 'ASC')
+            ->get();
+    }
+
+    /** Claim a training session as instructor (only if currently unassigned) */
+    public function claimSession(int $sessionId, int $instructorId): bool
+    {
+        $updated = $this->table('training_sessions')
+            ->where('id', $sessionId)
+            ->whereNull('instructor_id')
+            ->update([
+                'instructor_id' => $instructorId,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        return $updated > 0;
+    }
+
+    /** Release a session the instructor currently teaches */
+    public function unassignSession(int $sessionId, int $instructorId): bool
+    {
+        $updated = $this->table('training_sessions')
+            ->where('id', $sessionId)
+            ->where('instructor_id', $instructorId)
+            ->update([
+                'instructor_id' => null,
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        return $updated > 0;
     }
 }
