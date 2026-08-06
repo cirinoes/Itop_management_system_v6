@@ -123,15 +123,15 @@ $userTheme = Auth::check() ? (Auth::user()['theme_preference'] ?? 'light') : 'li
                         <h4 class="footer-heading">Contact Us</h4>
                         <div class="footer-contact-item">
                             <span class="footer-contact-icon">📍</span>
-                            <span><?= Security::e($footerSettings['footer_address'] ?? 'CENTEXS Kuching, Jalan Canna, Off Jalan Wan Alwi, 93350 Kuching, Sarawak, Malaysia') ?></span>
+                            <span><?= Security::e($footerSettings['footer_address'] ?? 'CENTEXS Kuching, Jalan Sultan Tengah, Rampangi Santubong, 93050 Kuching, Sarawak') ?></span>
                         </div>
                         <div class="footer-contact-item">
                             <span class="footer-contact-icon">📧</span>
-                            <span><?= Security::e($footerSettings['footer_email'] ?? 'info@centexs.my') ?></span>
+                            <span><?= Security::e($footerSettings['footer_email'] ?? 'corporate@centex-sarawak.my') ?></span>
                         </div>
                         <div class="footer-contact-item">
                             <span class="footer-contact-icon">📞</span>
-                            <span><?= Security::e($footerSettings['footer_phone'] ?? '+60 82-363 200') ?></span>
+                            <span><?= Security::e($footerSettings['footer_phone'] ?? '+6082-846408 / +6082-846419') ?></span>
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ $userTheme = Auth::check() ? (Auth::user()['theme_preference'] ?? 'light') : 'li
                         <?php if (!empty($footerSettings['footer_social_linkedin'])): ?>
                             <a href="<?= Security::e($footerSettings['footer_social_linkedin']) ?>" target="_blank" rel="noopener" title="LinkedIn">in</a>
                         <?php endif; ?>
-                        <a href="mailto:<?= Security::e($footerSettings['footer_email'] ?? 'info@centexs.my') ?>" title="Email">@</a>
+                        <a href="mailto:<?= Security::e($footerSettings['footer_email'] ?? 'corporate@centex-sarawak.my') ?>" title="Email">@</a>
                     </div>
                 </div>
             </div>
@@ -217,15 +217,19 @@ $userTheme = Auth::check() ? (Auth::user()['theme_preference'] ?? 'light') : 'li
                     <h4 class="footer-heading">Contact Us</h4>
                     <div class="footer-contact-item">
                         <span class="footer-contact-icon">📍</span>
-                        <span><?= Security::e($footerSettings['footer_address'] ?? 'CENTEXS Kuching, Jalan Canna, Off Jalan Wan Alwi, 93350 Kuching, Sarawak, Malaysia') ?></span>
+                        <span><?= Security::e($footerSettings['footer_address'] ?? 'CENTEXS Kuching, Jalan Sultan Tengah, Rampangi Santubong, 93050 Kuching, Sarawak') ?></span>
                     </div>
                     <div class="footer-contact-item">
                         <span class="footer-contact-icon">📧</span>
-                        <span><?= Security::e($footerSettings['footer_email'] ?? 'info@centexs.my') ?></span>
+                        <span><?= Security::e($footerSettings['footer_email'] ?? 'corporate@centex-sarawak.my') ?></span>
                     </div>
                     <div class="footer-contact-item">
                         <span class="footer-contact-icon">📞</span>
-                        <span><?= Security::e($footerSettings['footer_phone'] ?? '+60 82-363 200') ?></span>
+                        <span><?= Security::e($footerSettings['footer_phone'] ?? '+6082-846408 / +6082-846419') ?></span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <span class="footer-contact-icon">📠</span>
+                        <span><?= Security::e($footerSettings['footer_fax'] ?? '+6082-846409') ?></span>
                     </div>
                 </div>
             </div>

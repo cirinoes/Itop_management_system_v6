@@ -4,9 +4,11 @@
         <div class="col-lg-6">
             <div class="info-tile">
                 <h2 class="h5">Centre for Technology Excellence Sarawak</h2>
-                <p class="mb-1">Sarawak, Malaysia</p>
-                <p class="mb-1">Email: info@centexs.my</p>
-                <p class="mb-0">Phone: +60 82-000 000</p>
+                <p class="mb-1">Jalan Sultan Tengah, Rampangi Santubong,</p>
+                <p class="mb-1">93050 Kuching, Sarawak</p>
+                <p class="mb-1">Email: corporate@centex-sarawak.my</p>
+                <p class="mb-0">Tel. No : +6082-846408 / +6082-846419</p>
+                <p class="mb-0">Fax. No : +6082-846409</p>
             </div>
         </div>
         <div class="col-lg-6">

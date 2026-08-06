@@ -10,10 +10,7 @@
                 industry-based certification, rapid upskilling, and technical competencies tailored to meet the
                 immediate demands of modern industries.
             </p>
-            <p class="text-secondary">
-                ITOP serves as a vital bridge between education and employment, empowering school graduates, university
-                alumni, and existing industry professionals to stay ahead in an ever-evolving technological landscape.
-            </p>
+
         </div>
         <div class="col-lg-6">
             <div class="p-4 rounded-4 bg-primary bg-gradient text-white shadow-lg"
