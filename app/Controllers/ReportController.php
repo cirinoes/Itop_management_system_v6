@@ -34,12 +34,16 @@ final class ReportController extends Controller
             ],
             'academies' => $db->query('SELECT id, code, name FROM academies ORDER BY code')->fetchAll(),
             'courses' => $db->query('SELECT id, title FROM courses ORDER BY title')->fetchAll(),
-            'completion' => $db->query('SELECT c.title, COUNT(e.id) AS total, SUM(e.status = "completed") AS completed, ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS rate FROM courses c LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'attendance' => $db->query('SELECT c.title, ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate, COUNT(att.id) AS records FROM courses c LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id LEFT JOIN attendance att ON att.enrolment_id = e.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'assignments' => $db->query('SELECT c.title, COUNT(a.id) AS assignments, COUNT(s.id) AS submissions, SUM(s.status = "graded") AS graded FROM courses c LEFT JOIN training_sessions ts_a ON ts_a.course_id = c.id LEFT JOIN assignments a ON a.course_id = ts_a.id LEFT JOIN assignment_submissions s ON s.assignment_id = a.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'evaluations' => $db->query('SELECT c.title, ROUND(AVG(e.rating), 2) AS avg_rating, COUNT(e.id) AS responses FROM courses c LEFT JOIN training_sessions ts_ev ON ts_ev.course_id = c.id LEFT JOIN evaluations e ON e.course_id = ts_ev.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
-            'certificates' => $db->query('SELECT c.title, COUNT(cert.id) AS total, SUM(cert.approval_status = "approved") AS approved, SUM(cert.approval_status = "pending") AS pending FROM courses c LEFT JOIN training_sessions ts_cert ON ts_cert.course_id = c.id LEFT JOIN certificates cert ON cert.course_id = ts_cert.id' . $whereSql . ' GROUP BY c.id ORDER BY c.title')->fetchAll(),
+            'completion' => $db->query('SELECT a.name AS academy_name, c.title, COUNT(e.id) AS total, SUM(e.status = "completed") AS completed, ROUND((SUM(e.status = "completed") / GREATEST(COUNT(e.id), 1)) * 100, 0) AS rate FROM courses c JOIN academies a ON a.id = c.academy_id LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id' . $whereSql . ' GROUP BY c.id HAVING total > 0 ORDER BY a.name, c.title')->fetchAll(),
+            'attendance' => $db->query('SELECT a.name AS academy_name, c.title, ROUND(AVG(att.status = "present") * 100, 0) AS attendance_rate, COUNT(att.id) AS records FROM courses c JOIN academies a ON a.id = c.academy_id LEFT JOIN training_sessions ts_e ON ts_e.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts_e.id LEFT JOIN attendance att ON att.enrolment_id = e.id' . $whereSql . ' GROUP BY c.id HAVING records > 0 ORDER BY a.name, c.title')->fetchAll(),
+            'assignments' => $db->query('SELECT a.name AS academy_name, c.title, COUNT(assign.id) AS assignments, COUNT(s.id) AS submissions, SUM(s.status = "graded") AS graded FROM courses c JOIN academies a ON a.id = c.academy_id LEFT JOIN training_sessions ts_a ON ts_a.course_id = c.id LEFT JOIN assignments assign ON assign.course_id = ts_a.id LEFT JOIN assignment_submissions s ON s.assignment_id = assign.id' . $whereSql . ' GROUP BY c.id HAVING assignments > 0 ORDER BY a.name, c.title')->fetchAll(),
+            'evaluations' => $db->query('SELECT a.name AS academy_name, c.title, ROUND(AVG(eval.rating), 2) AS avg_rating, COUNT(eval.id) AS responses FROM courses c JOIN academies a ON a.id = c.academy_id LEFT JOIN evaluations eval ON eval.course_id = c.id' . $whereSql . ' GROUP BY c.id HAVING responses > 0 ORDER BY a.name, c.title')->fetchAll(),
+            'certificates' => $db->query('SELECT c.title, COUNT(cert.id) AS total, SUM(cert.approval_status = "approved") AS approved, SUM(cert.approval_status = "pending") AS pending FROM courses c LEFT JOIN training_sessions ts_cert ON ts_cert.course_id = c.id LEFT JOIN certificates cert ON cert.course_id = ts_cert.id' . $whereSql . ' GROUP BY c.id HAVING total > 0 ORDER BY c.title')->fetchAll(),
             'master_data_stats' => $db->query('SELECT ts.*, a.code AS academy_code, a.name AS academy_name, c.title AS course_title FROM training_statistics ts JOIN academies a ON a.id = ts.academy_id LEFT JOIN courses c ON c.id = ts.course_id ORDER BY a.code, ts.participants DESC')->fetchAll(),
+            'detailed_log' => $db->query('SELECT u.name AS trainee_name, u.email, COALESCE(u.institution_company, "Unknown") AS background, c.title AS course_title, e.status, e.progress_percent, e.created_at AS enrolled_date FROM enrolments e JOIN users u ON u.id = e.trainee_id JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id ORDER BY e.created_at DESC')->fetchAll(),
+            'revenue' => $db->query('SELECT c.title, COUNT(e.id) AS total_enrolments, ts.fee, (COUNT(e.id) * ts.fee) AS total_revenue FROM courses c JOIN training_sessions ts ON ts.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts.id GROUP BY ts.id HAVING total_enrolments > 0 ORDER BY total_revenue DESC')->fetchAll(),
+            'instructor_performance' => $db->query('SELECT u.name AS instructor_name, COUNT(DISTINCT ts.id) AS assigned_courses, COUNT(e.id) AS total_students FROM users u JOIN training_sessions ts ON ts.instructor_id = u.id LEFT JOIN enrolments e ON e.training_session_id = ts.id WHERE u.role_id = (SELECT id FROM roles WHERE slug = "instructor") GROUP BY u.id HAVING total_students > 0 ORDER BY total_students DESC')->fetchAll(),
+            'demographics' => $db->query('SELECT DATE_FORMAT(e.created_at, "%Y-%m") AS enrolment_month, c.title AS course_title, COALESCE(NULLIF(u.institution_company, ""), "Independent/Student") AS background, COUNT(e.id) AS total_enrolments FROM enrolments e JOIN users u ON u.id = e.trainee_id JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id GROUP BY enrolment_month, c.id, background ORDER BY enrolment_month DESC, total_enrolments DESC')->fetchAll(),
             'academyId' => $academy,
             'courseId' => $course,
         ]);
@@ -209,6 +213,38 @@ final class ReportController extends Controller
                     $rows[] = [$row['title'], (int)$row['total'], (int)$row['completed'], $row['rate']];
                 }
                 break;
+            case 'detailed_log':
+                $title = 'Detailed Trainee Enrolment Log';
+                $headers = ['Trainee Name', 'Email', 'Institution/Company', 'Course Title', 'Status', 'Progress (%)', 'Enrolled Date'];
+                $data = $db->query('SELECT u.name AS trainee_name, u.email, COALESCE(u.institution_company, "Unknown") AS background, c.title AS course_title, e.status, e.progress_percent, e.created_at AS enrolled_date FROM enrolments e JOIN users u ON u.id = e.trainee_id JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id ORDER BY e.created_at DESC')->fetchAll();
+                foreach ($data as $row) {
+                    $rows[] = [$row['trainee_name'], $row['email'], $row['background'], $row['course_title'], ucfirst($row['status']), $row['progress_percent'], substr($row['enrolled_date'], 0, 10)];
+                }
+                break;
+            case 'revenue':
+                $title = 'Financial & Revenue Report';
+                $headers = ['Course Title', 'Total Enrolments', 'Course Fee (RM)', 'Total Revenue (RM)'];
+                $data = $db->query('SELECT c.title, COUNT(e.id) AS total_enrolments, ts.fee, (COUNT(e.id) * ts.fee) AS total_revenue FROM courses c JOIN training_sessions ts ON ts.course_id = c.id LEFT JOIN enrolments e ON e.training_session_id = ts.id GROUP BY ts.id ORDER BY total_revenue DESC')->fetchAll();
+                foreach ($data as $row) {
+                    $rows[] = [$row['title'], (int)$row['total_enrolments'], number_format((float)$row['fee'], 2), number_format((float)$row['total_revenue'], 2)];
+                }
+                break;
+            case 'instructor_performance':
+                $title = 'Instructor Performance Report';
+                $headers = ['Instructor Name', 'Assigned Courses', 'Total Students'];
+                $data = $db->query('SELECT u.name AS instructor_name, COUNT(DISTINCT ts.id) AS assigned_courses, COUNT(e.id) AS total_students FROM users u JOIN training_sessions ts ON ts.instructor_id = u.id LEFT JOIN enrolments e ON e.training_session_id = ts.id WHERE u.role_id = (SELECT id FROM roles WHERE slug = "instructor") GROUP BY u.id ORDER BY total_students DESC')->fetchAll();
+                foreach ($data as $row) {
+                    $rows[] = [$row['instructor_name'], (int)$row['assigned_courses'], (int)$row['total_students']];
+                }
+                break;
+            case 'demographics':
+                $title = 'Demographics & Trend Report';
+                $headers = ['Enrolment Month', 'Course Title', 'Trainee Background (Institution/Company)', 'Total Enrolments'];
+                $data = $db->query('SELECT DATE_FORMAT(e.created_at, "%Y-%m") AS enrolment_month, c.title AS course_title, COALESCE(NULLIF(u.institution_company, ""), "Independent/Student") AS background, COUNT(e.id) AS total_enrolments FROM enrolments e JOIN users u ON u.id = e.trainee_id JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id GROUP BY enrolment_month, c.id, background ORDER BY enrolment_month DESC, total_enrolments DESC')->fetchAll();
+                foreach ($data as $row) {
+                    $rows[] = [$row['enrolment_month'], $row['course_title'], $row['background'], (int)$row['total_enrolments']];
+                }
+                break;
         }
 
         if ($format === 'pdf' && class_exists('Dompdf\\Dompdf')) {
@@ -235,8 +271,29 @@ final class ReportController extends Controller
             return;
         }
 
-        header('Content-Type: ' . ($format === 'excel' ? 'application/vnd.ms-excel' : 'text/csv'));
-        header('Content-Disposition: attachment; filename="itop-report.' . ($format === 'excel' ? 'xls' : 'csv') . '"');
+        if ($format === 'excel') {
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment; filename="itop-report.xls"');
+            echo '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+            echo '<head><meta charset="UTF-8"></head><body>';
+            echo '<table border="1"><thead><tr>';
+            foreach ($headers as $header) {
+                echo '<th style="background-color:#f8f9fa; font-weight:bold;">' . Security::e($header) . '</th>';
+            }
+            echo '</tr></thead><tbody>';
+            foreach ($rows as $row) {
+                echo '<tr>';
+                foreach ($row as $col) {
+                    echo '<td>' . Security::e((string)$col) . '</td>';
+                }
+                echo '</tr>';
+            }
+            echo '</tbody></table></body></html>';
+            return;
+        }
+
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="itop-report.csv"');
         $out = fopen('php://output', 'w');
         fputcsv($out, $headers);
         foreach ($rows as $row) {

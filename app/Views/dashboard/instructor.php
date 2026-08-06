@@ -84,6 +84,47 @@
             </div>
         <?php endif; ?>
 
+        <!-- Claim Available Courses -->
+        <div class="overview-panel mb-4 animate-in" style="border-top: 4px solid var(--ims-accent)">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <span class="section-label">Available to Teach</span>
+                    <h2 class="overview-panel-title mb-0">Claim a Course</h2>
+                </div>
+            </div>
+            <?php if (!empty($availableSessions)): ?>
+                <form method="post" action="index.php?page=instructor-claim-course" class="bg-white border rounded shadow-sm p-4">
+                    <input type="hidden" name="_csrf" value="<?= Security::e(Security::csrfToken()) ?>">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-9">
+                            <label for="claimCourseSelect" class="form-label fw-semibold text-secondary">Select an available course to teach</label>
+                            <select name="session_id" id="claimCourseSelect" class="form-select" required>
+                                <option value="" disabled selected>-- Choose a course --</option>
+                                <?php foreach ($availableSessions as $course): 
+                                    $sessionEnded = !empty($course['end_date']) && strtotime((string) $course['end_date']) < time();
+                                    if ($sessionEnded) continue; // Skip closed sessions
+                                ?>
+                                    <option value="<?= (int) $course['session_id'] ?>">
+                                        <?= Security::e($course['title']) ?> (<?= Security::e($course['start_date'] ?? '-') ?> to <?= Security::e($course['end_date'] ?? '-') ?>)
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary w-100 fw-medium">
+                                <i class="bi bi-check-circle me-1"></i> Claim
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            <?php else: ?>
+                <div class="text-center p-4 border rounded bg-white shadow-sm">
+                    <div class="text-muted mb-2" style="font-size: 2rem;"><i class="bi bi-journal-check"></i></div>
+                    <p class="text-muted fw-medium mb-0">No unassigned courses available to claim at the moment.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+
         <!-- Class Engagement Tracker (Mocked UI) -->
         <div class="overview-panel animate-in">
             <span class="section-label">Analytics</span>

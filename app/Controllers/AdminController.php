@@ -263,9 +263,11 @@ final class AdminController extends Controller
             exit;
         }
         
-        // Fetch current occupancy
-        $participantCount = (int) $db->query('SELECT COUNT(*) FROM enrolments WHERE training_session_id = ' . (int) $row['course_id'] . ' AND status IN ("active","completed")')->fetchColumn();
-        $row['course_occupancy'] = $participantCount;
+        // Occupancy is per training session (not course catalogue id)
+        $sessionId = (int) ($row['training_session_id'] ?? 0);
+        $occStmt = $db->prepare('SELECT COUNT(*) FROM enrolments WHERE training_session_id = ? AND status IN ("active","completed")');
+        $occStmt->execute([$sessionId]);
+        $row['course_occupancy'] = (int) $occStmt->fetchColumn();
         
         echo json_encode(['status' => 'success', 'enrolment' => $row]);
         exit;
@@ -795,28 +797,42 @@ final class AdminController extends Controller
     {
         Auth::requireRole(['instructor']);
         Security::verifyCsrf();
-        $courseId = (int) ($_POST['course_id'] ?? 0);
-        if ($courseId) {
-            $db = \App\Core\Model::getDb();
-            $stmt = $db->prepare('UPDATE courses SET instructor_id = ? WHERE id = ? AND instructor_id IS NULL');
-            $stmt->execute([Auth::id(), $courseId]);
-            Activity::log('Instructor claimed course');
+        $sessionId = (int) ($_POST['session_id'] ?? $_POST['course_id'] ?? 0);
+        if ($sessionId) {
+            $claimed = (new Course())->claimSession($sessionId, (int) Auth::id());
+            if ($claimed) {
+                Activity::log('Instructor claimed training session #' . $sessionId);
+                $_SESSION['flash_success'] = 'Course claimed successfully. It now appears in your assigned courses.';
+            } else {
+                $_SESSION['flash_error'] = 'Unable to claim this course. It may already be assigned.';
+            }
         }
-        $this->redirect('index.php?page=instructor-dashboard');
+        $redirect = Security::cleanString($_POST['redirect'] ?? 'instructor-dashboard');
+        if (!in_array($redirect, ['instructor-dashboard', 'instructor-courses', 'dashboard'], true)) {
+            $redirect = 'instructor-dashboard';
+        }
+        $this->redirect('index.php?page=' . $redirect);
     }
 
     public function unassignCourse(): void
     {
         Auth::requireRole(['instructor']);
         Security::verifyCsrf();
-        $courseId = (int) ($_POST['course_id'] ?? 0);
-        if ($courseId) {
-            $db = \App\Core\Model::getDb();
-            $stmt = $db->prepare('UPDATE courses SET instructor_id = NULL WHERE id = ? AND instructor_id = ?');
-            $stmt->execute([$courseId, Auth::id()]);
-            Activity::log('Instructor unassigned from course');
+        $sessionId = (int) ($_POST['session_id'] ?? $_POST['course_id'] ?? 0);
+        if ($sessionId) {
+            $released = (new Course())->unassignSession($sessionId, (int) Auth::id());
+            if ($released) {
+                Activity::log('Instructor unassigned from training session #' . $sessionId);
+                $_SESSION['flash_success'] = 'You have been unassigned from the course.';
+            } else {
+                $_SESSION['flash_error'] = 'Unable to unassign. You may not be the instructor for this course.';
+            }
         }
-        $this->redirect('index.php?page=instructor-dashboard');
+        $redirect = Security::cleanString($_POST['redirect'] ?? 'instructor-courses');
+        if (!in_array($redirect, ['instructor-dashboard', 'instructor-courses', 'dashboard'], true)) {
+            $redirect = 'instructor-courses';
+        }
+        $this->redirect('index.php?page=' . $redirect);
     }
 
     public function fetchAnalyticsDetails(): void
@@ -1200,10 +1216,10 @@ final class AdminController extends Controller
 
         $db = \App\Core\Model::getDb();
         
-        // Fetch courses enrolled
+        // Fetch courses enrolled (dates live on training_sessions after restructure)
         $coursesStmt = $db->prepare('
             SELECT e.status AS enrolment_status, e.progress_percent, e.completed_at,
-                   c.title AS course_title, c.start_date, c.end_date,
+                   c.title AS course_title, ts.start_date, ts.end_date,
                    a.code AS academy_code
             FROM enrolments e
             JOIN training_sessions ts ON ts.id = e.training_session_id JOIN courses c ON c.id = ts.course_id

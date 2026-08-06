@@ -1,4 +1,4 @@
-﻿<?php use App\Core\Security; use App\Core\View; ?>
+<?php use App\Core\Security; use App\Core\View; ?>
 <section class="container py-5">
     <div class="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
         <div>
@@ -24,7 +24,6 @@
                         <p><?= Security::e($academy['description'] ?? 'Browse academy courses and request enrolment.') ?></p>
                         <div class="academy-meta">
                             <strong><?= (int) $academy['course_count'] ?></strong><span>Courses</span>
-                            <strong><?= (int) $academy['participant_count'] ?></strong><span>Participants</span>
                         </div>
                         <span class="btn btn-primary mt-3">View Courses</span>
                     </a>

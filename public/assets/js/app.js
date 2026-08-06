@@ -9,16 +9,73 @@
     const overlay = document.getElementById('sidenavOverlay');
     const toggleBtn = document.getElementById('sidenavToggle');
     const closeBtn = document.getElementById('sidenavCloseBtn');
+    const collapseBtn = document.getElementById('sidenavCollapseBtn');
+    const STORAGE_KEY = 'sidenav_collapsed';
+    const DESKTOP_MIN = 992;
 
     if (!sidenav) return; // Public page — no sidenav
+
+    function isDesktop() {
+        return window.innerWidth >= DESKTOP_MIN;
+    }
+
+    function setCollapsed(collapsed) {
+        document.documentElement.classList.toggle('sidenav-collapsed', collapsed);
+        try {
+            localStorage.setItem(STORAGE_KEY, collapsed ? '1' : '0');
+        } catch (e) {
+            /* ignore quota / private mode */
+        }
+        if (collapseBtn) {
+            collapseBtn.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+            collapseBtn.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+            collapseBtn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        }
+        if (toggleBtn && isDesktop()) {
+            toggleBtn.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+            toggleBtn.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+        }
+    }
+
+    function getStoredCollapsed() {
+        try {
+            return localStorage.getItem(STORAGE_KEY) === '1';
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function applyDesktopPreference() {
+        if (isDesktop()) {
+            setCollapsed(getStoredCollapsed());
+        } else {
+            // Mobile uses off-canvas; keep class for preference but CSS ignores it
+            document.documentElement.classList.toggle('sidenav-collapsed', getStoredCollapsed());
+        }
+    }
+
+    function toggleCollapse() {
+        if (!isDesktop()) return;
+        if (collapseBtn) {
+            collapseBtn.classList.remove('is-animating');
+            // restart animation even on rapid clicks
+            void collapseBtn.offsetWidth;
+            collapseBtn.classList.add('is-animating');
+        }
+        setCollapsed(!document.documentElement.classList.contains('sidenav-collapsed'));
+    }
+
+    if (collapseBtn) {
+        collapseBtn.addEventListener('animationend', () => {
+            collapseBtn.classList.remove('is-animating');
+        });
+    }
 
     function openSidenav() {
         sidenav.classList.add('open');
         if (overlay) {
-            overlay.classList.add('active');
             overlay.style.display = 'block';
-            // Force reflow for animation
-            overlay.offsetHeight;
+            overlay.offsetHeight; // Force reflow for animation
             overlay.classList.add('active');
         }
         document.body.style.overflow = 'hidden';
@@ -39,12 +96,18 @@
 
     if (toggleBtn) {
         toggleBtn.addEventListener('click', () => {
-            if (sidenav.classList.contains('open')) {
+            if (isDesktop()) {
+                toggleCollapse();
+            } else if (sidenav.classList.contains('open')) {
                 closeSidenav();
             } else {
                 openSidenav();
             }
         });
+    }
+
+    if (collapseBtn) {
+        collapseBtn.addEventListener('click', toggleCollapse);
     }
 
     if (closeBtn) {
@@ -55,22 +118,27 @@
         overlay.addEventListener('click', closeSidenav);
     }
 
-    // Close on Escape key
+    // Escape closes mobile drawer only
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && sidenav.classList.contains('open')) {
             closeSidenav();
         }
     });
 
-    // Close sidenav on resize to desktop
+    // Close mobile drawer when crossing to desktop; re-apply collapse preference
     let lastWidth = window.innerWidth;
     window.addEventListener('resize', () => {
         const width = window.innerWidth;
-        if (width >= 992 && lastWidth < 992) {
+        if (width >= DESKTOP_MIN && lastWidth < DESKTOP_MIN) {
+            closeSidenav();
+            applyDesktopPreference();
+        } else if (width < DESKTOP_MIN && lastWidth >= DESKTOP_MIN) {
             closeSidenav();
         }
         lastWidth = width;
     });
+
+    applyDesktopPreference();
 })();
 
 /* ── Legacy Chart Canvas (backward compat) ─────────────── */

@@ -187,11 +187,12 @@ $buildUrl = static function(array $extra) use ($queryParams): string {
                         <th>Profession</th>
                         <th>Profile Status</th>
                         <th>Profile Complete</th>
+                        <th class="pm-text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($users as $user): ?>
-                    <tr onclick="openTraineeDetail(<?= (int) $user['id'] ?>)">
+                    <tr>
                         <td>
                             <div class="pm-table-avatar-cell">
                                 <div class="pm-avatar-small"><?= strtoupper(substr($user['name'] ?? 'T', 0, 1)) ?></div>
@@ -227,6 +228,27 @@ $buildUrl = static function(array $extra) use ($queryParams): string {
                                 <span class="small font-weight-bold"><?= $comp ?>%</span>
                             </div>
                         </td>
+                        <td>
+                            <div class="pm-actions">
+                                <button class="pm-action-trigger" type="button" aria-label="Actions" data-pm-dropdown>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                                </button>
+                                <div class="pm-dropdown-menu">
+                                    <button class="pm-dropdown-item" type="button" data-pm-view="<?= (int) $user['id'] ?>">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                        View Details
+                                    </button>
+                                    <a class="pm-dropdown-item" href="index.php?page=admin-enrolments&q=<?= urlencode((string) $user['email']) ?>">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+                                        View Registrations
+                                    </a>
+                                    <a class="pm-dropdown-item" href="index.php?page=admin-users&role=trainee&q=<?= urlencode((string) $user['email']) ?>">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        Open in Users
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -238,12 +260,33 @@ $buildUrl = static function(array $extra) use ($queryParams): string {
     <div class="pm-view-section" id="pmViewGrid">
         <div class="pm-grid">
             <?php foreach ($users as $user): ?>
-            <div class="pm-card" onclick="openTraineeDetail(<?= (int) $user['id'] ?>)">
-                <div class="pm-card-avatar-wrapper">
-                    <div class="pm-avatar-large"><?= strtoupper(substr($user['name'] ?? 'T', 0, 1)) ?></div>
-                    <div>
-                        <h3 class="pm-card-title"><?= Security::e($user['name']) ?></h3>
-                        <p class="pm-card-email"><?= Security::e($user['email']) ?></p>
+            <div class="pm-card">
+                <div class="pm-card-top">
+                    <div class="pm-card-avatar-wrapper">
+                        <div class="pm-avatar-large"><?= strtoupper(substr($user['name'] ?? 'T', 0, 1)) ?></div>
+                        <div>
+                            <h3 class="pm-card-title"><?= Security::e($user['name']) ?></h3>
+                            <p class="pm-card-email"><?= Security::e($user['email']) ?></p>
+                        </div>
+                    </div>
+                    <div class="pm-actions">
+                        <button class="pm-action-trigger" type="button" aria-label="Actions" data-pm-dropdown>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+                        </button>
+                        <div class="pm-dropdown-menu">
+                            <button class="pm-dropdown-item" type="button" data-pm-view="<?= (int) $user['id'] ?>">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                View Details
+                            </button>
+                            <a class="pm-dropdown-item" href="index.php?page=admin-enrolments&q=<?= urlencode((string) $user['email']) ?>">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M9 14l2 2 4-4"/></svg>
+                                View Registrations
+                            </a>
+                            <a class="pm-dropdown-item" href="index.php?page=admin-users&role=trainee&q=<?= urlencode((string) $user['email']) ?>">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                Open in Users
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="pm-card-body">
@@ -540,6 +583,62 @@ if (btnGrid) {
 
 // Initial view application
 applyViewPreference();
+
+// ── Triple-dot action menus (same pattern as Users / Registration) ──
+(function () {
+    let activeDropdown = null;
+
+    function closeAllPmDropdowns() {
+        document.querySelectorAll('.pm-dropdown-menu.pm-dropdown-visible').forEach(function (menu) {
+            menu.classList.remove('pm-dropdown-visible');
+        });
+        document.querySelectorAll('.pm-action-trigger.pm-dropdown-open').forEach(function (btn) {
+            btn.classList.remove('pm-dropdown-open');
+        });
+        activeDropdown = null;
+    }
+
+    document.addEventListener('click', function (e) {
+        const trigger = e.target.closest('[data-pm-dropdown]');
+        if (trigger) {
+            e.preventDefault();
+            e.stopPropagation();
+            const menu = trigger.nextElementSibling;
+            if (menu && menu.classList.contains('pm-dropdown-menu')) {
+                const isOpen = menu.classList.contains('pm-dropdown-visible');
+                closeAllPmDropdowns();
+                if (!isOpen) {
+                    menu.classList.add('pm-dropdown-visible');
+                    trigger.classList.add('pm-dropdown-open');
+                    activeDropdown = menu;
+                }
+            }
+            return;
+        }
+
+        const viewBtn = e.target.closest('[data-pm-view]');
+        if (viewBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeAllPmDropdowns();
+            const userId = viewBtn.getAttribute('data-pm-view');
+            if (userId && typeof openTraineeDetail === 'function') {
+                openTraineeDetail(parseInt(userId, 10));
+            }
+            return;
+        }
+
+        if (activeDropdown && !e.target.closest('.pm-dropdown-menu')) {
+            closeAllPmDropdowns();
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeAllPmDropdowns();
+        }
+    });
+})();
 
 // Drawer Modal Controls
 const panelOverlay = document.getElementById('pmPanelOverlay');
